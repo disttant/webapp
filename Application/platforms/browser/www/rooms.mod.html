@@ -1,0 +1,66 @@
+<div class="w3-row" style="height: 30%;">
+    <div class="w3-container w3-padding-24">
+        <div class="w3-card-4 w3-padding-16 w3-dark-grey">
+
+            <h1 class="w3-center" disabled="">Groups</h1>
+            <div class="w3-container w3-padding-16" id="group_list">
+            </div>
+
+            <button class="w3-button w3-round w3-black w3-margin">Add new Room</button>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function loadMap(group){
+
+        sessionStorage.setItem('groupMap', group);
+        $('#content').load('map.html');
+
+    }
+
+    function getGroupList(){
+
+        $.ajax({
+            url: 'https://broker.dalher.net/v3/groups/list',
+            type: 'get',
+            headers: {
+                "Authorization" : "Bearer " + sessionStorage.access_token
+            },
+            beforeSend: function(){
+                console.log("Obteniendo Grupos del Usuario...");
+            },
+            success: function(response){
+                console.log("Obtenidos...");
+
+                var i;
+                for(i = 0 ; i < response.length ; i++){
+                    var button = document.createElement("button");
+                    var node = document.createTextNode(response[i].group);
+                    button.appendChild(node);
+                    button.className = "w3-button w3-block w3-border";
+                    button.setAttribute('onclick', "loadMap('"+ response[i].group +"')");
+
+                    var groupName = response[i].group;
+
+                    button.setAttribute("id", response[i].group);
+
+                    var newBtn = document.getElementById("group_list");
+                    newBtn.appendChild(button);
+                }
+            },
+            error: function(){
+                console.log("Error");
+                console.log(response);
+            }
+        });
+
+    }
+
+    $(function () {
+        getGroupList();
+    });
+
+</script>

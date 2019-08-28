@@ -6,13 +6,113 @@
             <div class="w3-container w3-padding-16" id="group_list">
             </div>
 
-            <button class="w3-button w3-round w3-black w3-margin">Add new Room</button>
+            <button class="w3-button w3-round w3-black w3-margin" onclick="document.getElementById('modalNewGroup').style.display='block'">Add new Room</button>
+            <button class="w3-button w3-round w3-black w3-margin" onclick="document.getElementById('modalDeleteGroup').style.display='block'">Delete Room</button>
+            <button class="w3-button w3-circle w3-margin" onclick="getGroupList()">
+                <img src="libs/octicons/sync.svg" width="30rem" height="30rem" class="w3-circle w3-border"  style="background: #fafafa;"> 
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<div class="w3-modal" id="modalNewGroup">
+    <div class="w3-modal-content">
+        <div class="w3-container w3-dark-gray">
+
+            <form class="w3-padding">
+                <label>New room name</label>
+                <input class="w3-input w3-padding" type="text" id="newGroupName" required autofocus>
+            </form>
+
+            <button class="w3-button w3-round w3-black w3-margin w3-padding" onclick="document.getElementById('modalNewGroup').style.display='none'">Close</button>
+            <button class="w3-button w3-round w3-black w3-margin w3-padding" onclick="addGroup()">Add</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="w3-modal" id="modalDeleteGroup">
+    <div class="w3-modal-content">
+        <div class="w3-container w3-dark-gray">
+
+            <form class="w3-padding">
+                <select class="w3-select w3-padding" id="toDelete">
+                    <option value="" disabled selected>Choose room to delete</option>
+                </select>
+            </form>
+
+            <button class="w3-button w3-round w3-black w3-margin w3-padding" onclick="document.getElementById('modalDeleteGroup').style.display='none'">Close</button>
+            <button class="w3-button w3-round w3-black w3-margin w3-padding" onclick="deleteGroup()">Delete</button>
 
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+
+    function deleteGroup(){
+
+        var groupSelected = document.getElementById('toDelete').value;
+        console.log(groupSelected);
+
+        $.ajax({
+            url: 'https://broker.dalher.net/v3/groups/' + groupSelected,
+            type: 'delete',
+            headers: {
+                "Authorization" : "Bearer " + sessionStorage.access_token
+            },
+            beforeSend: function(){
+                console.log("Borrando Grupo...");
+            },
+            success: function(response){
+                console.log("Creado");
+                console.log(response);
+            },
+            error: function(){
+                console.log("Error");
+                console.log(response);
+            },
+            complete: function(jqXHR){
+                console.log(jqXHR.status);
+            }
+        });
+
+        document.getElementById('modalDeleteGroup').style.display='none';
+        getGroupList();
+
+    }
+
+    function addGroup(){
+
+        var groupName = document.getElementById('newGroupName').value;
+
+        $.ajax({
+            url: 'https://broker.dalher.net/v3/groups/' + groupName,
+            type: 'post',
+            headers: {
+                "Authorization" : "Bearer " + sessionStorage.access_token
+            },
+            beforeSend: function(){
+                console.log("Creando Grupo...");
+            },
+            success: function(response){
+                console.log("Creado");
+                console.log(response);
+            },
+            error: function(){
+                console.log("Error");
+                console.log(response);
+            },
+            complete: function(jqXHR){
+                console.log(jqXHR.status);
+            }
+        });
+
+        document.getElementById('modalNewGroup').style.display='none';
+        getGroupList();
+
+    }
 
     function loadMap(group){
 
@@ -22,6 +122,19 @@
     }
 
     function getGroupList(){
+
+        $('#group_list').empty();
+        $('#toDelete').empty();
+
+        var defaultOption = document.createElement("option");
+        var nodeOption = document.createTextNode("Choose room to delete");
+        defaultOption.appendChild(nodeOption);
+        defaultOption.value = "";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+
+        var newOption = document.getElementById("toDelete");
+        newOption.appendChild(defaultOption);
 
         $.ajax({
             url: 'https://broker.dalher.net/v3/groups/list',
@@ -49,6 +162,14 @@
 
                     var newBtn = document.getElementById("group_list");
                     newBtn.appendChild(button);
+
+                    var option = document.createElement("option");
+                    var node = document.createTextNode(response[i].group);
+                    option.appendChild(node);
+                    option.value = response[i].group;
+
+                    var newOption = document.getElementById("toDelete");
+                    newOption.appendChild(option);
                 }
             },
             error: function(){

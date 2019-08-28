@@ -1,0 +1,537 @@
+<style>
+    .mainDot{
+        height: 1rem;
+        width: 1rem;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .lightDot{
+        height: 1rem;
+        width: 1rem;
+        background-color: yellow;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .plugDot{
+        height: 1rem;
+        width: 1rem;
+        background-color: lightgreen;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .multiPlugDot{
+        height: 1rem;
+        width: 1rem;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
+<div class="w3-container w3-center w3-padding">
+    <h1 id="roomName"></h1>
+</div>
+<div class="w3-container w3-padding" style="width: 100%; height: 30rem;">
+    <div class="w3-circle w3-padding-32 w3-white w3-display-container" style="width: 100%; height: 100%; border: 2px solid black">
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;";></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+        <div class="w3-row" style="height: 5%;">
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+            <div class="w3-col" style="width: 5%; height: 100%;"></div>
+        </div>
+
+        <div class="w3-display-bottommiddle" id="content">
+            <span class="mainDot"></span>
+        </div>
+    </div>
+</div>
+
+<div class="w3-container" id="channels_without_position">
+    <div class="w3-row">
+        <div class="w3-col m3" id="1"></div>
+        <div class="w3-col m3" id="2"></div>
+        <div class="w3-col m3" id="3"></div>
+        <div class="w3-col m3" id="4"></div>
+    </div>
+</div>
+
+<button class="w3-button w3-round w3-black w3-margin w3-padding" onclick="$('#content').load('rooms.mod.html');">Close</button>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#roomName').append(sessionStorage.groupMap);
+
+        $.ajax({
+            url: 'https://broker.dalher.net/v3/groups/lists',
+            type: 'get',
+            headers: {
+                "Authorization" : "Bearer " + sessionStorage.access_token
+            },
+            beforeSend: function(){
+                console.log("Obteniendo canales de grupo del Usuario...");
+            },
+            success: function(response){
+                console.log("Obtenidos...");
+                console.log(response);
+
+                for(var i = 0 ; i < response.length ; i++){
+                    if(response[i].group == sessionStorage.groupMap){
+                        for(var j = 0 ; j < response[i].channels.length ; j++){
+                            var channel = response[i].channels[j].channel;
+                            var button = document.createElement("button");
+                            var node = document.createTextNode(channel);
+                            button.appendChild(node);
+                            button.className = "w3-button w3-block w3-border";
+                            button.setAttribute('draggable', "true");
+
+                            var newBtn = document.getElementById("channels_without_position");
+                            newBtn.appendChild(button);
+                        }
+                    }
+                }
+            },
+            error: function(){
+                console.log("Error");
+                console.log(response);
+            }
+        });
+
+    });
+
+</script>

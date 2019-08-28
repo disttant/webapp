@@ -113,11 +113,11 @@
                 }
 
                 if(userSend != '' && passSend !=''){
-                    // Envío de datos para confirmación por el servidor
+
                     var client_id = '8ea2ad8b-42b0-4551-8d34-2bb9128cbe7d';
                     var client_secret = 'secret';
+
                     $.ajax({
-                        // Aclarar URL antes de probar!!!
                         url: 'http://oauth.dalher.net/v2/token',
                         type: 'post',
                         contentType: 'application/x-www-form-urlencoded',

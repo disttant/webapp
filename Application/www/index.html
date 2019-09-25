@@ -7,198 +7,25 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<title>Adaptative</title>
-
-		<!-- W3 CSS CDN-->
-		<link rel="stylesheet" href="libs/w3/w3.css">
-		
-		<style>
-			html, body{
-                width: 100%;
-                height: 100%;
-                margin: 0 auto !important;
-                padding: 0 auto !important;
-            }
-			a:link {
-				text-decoration:none;
-			}
-		</style>
+		<link rel="stylesheet" href="/libs/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="/libs/models.css">
 	</head>
 	<body>
 
-		<div class="w3-sidebar w3-animate-left w3-bar-block w3-black" style="display:none;z-index:1000" id="sidebarMenu">
-
-			<div class="w3-container w3-center w3-padding-16">
-				<img src="libs/ALKE.svg" alt="ProfileImage" width="70" height="70" class="w3-circle w3-border"  style="background: #fafafa;">
-				<h3 id="user"></h3>
-				<a class="w3-tiny" href="#" onclick="location.href = './login.html';">Log out</a>
-			</div>
-			
-			<div class="w3-container" style="padding: 0 !important">
-				
-				<a class="w3-bar-item w3-button" href="?mod=home">
-					<img src="libs/octicons/home.svg" alt="Home" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Main menu
-				</a>
-				<a class="w3-bar-item w3-button" href="?mod=myprofile">
-					<img src="libs/octicons/person.svg" alt="My profile" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Profile
-				</a>
-				<a class="w3-bar-item w3-button" href="?mod=clients">
-					<img src="libs/octicons/file-submodule.svg" alt="Clients" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Clients
-				</a>
-				<a class="w3-bar-item w3-button" href="?mod=rooms">
-					<img src="libs/octicons/file-directory.svg" alt="rooms" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Rooms
-				</a>
-				<a class="w3-bar-item w3-button" href="?mod=shop">
-					<img src="libs/octicons/package.svg" alt="shop" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Shop
-				</a>
-				<a class="w3-bar-item w3-button" href="?mod=contact">
-					<img src="libs/octicons/mail.svg" alt="contact" width="25" height="25" class="w3-circle w3-border" style="background: #fafafa;">
-					Contact
-				</a>
-				
-			</div>
-			
-		</div>
-
-		<div class="w3-overlay w3-animate-opacity" onclick="closeSideBar()" style="cursor:pointer" id="overlay"></div>
-
-		<div class="w3-main">
-
-			<div class="w3-dark-gray">
-				<div class="w3-container">
-					<h2>
-						<button class="w3-button w3-circle w3-xlarge w3-black w3-border-large" onclick="openSideBar()">&#9776;</button>
-						Adaptative	
-					</h2>
-				</div>
-			</div>
-			
-		</div>
-		
-        <div id="content" class="container-fluid p-4">
-		</div>
-
 		<script type="text/javascript" src="libs/jquery/3.4.1/jquery.js"></script>
-		<script type="text/javascript">
-			
-			function openSideBar() {
-				document.getElementById("sidebarMenu").style.display = "block";
-				document.getElementById("overlay").style.display = "block";
-			}
+		<script type="text/javascript" src="libs/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="libs/js/index.js"></script>
+		<script type="text/javascript" src="libs/js/command.js"></script>
 
-			function closeSideBar() {
-				document.getElementById("sidebarMenu").style.display = "none";
-				document.getElementById("overlay").style.display = "none";
-			}
+		<div class="d-flex text-white" style="height: 15%; background-color: #8285A0">
+			<h3 class="mx-3 my-3">
+				<img src="libs/alke.png" style="height: 100%">
+				Adaptative
+			</h3>
+		</div>
 
-			function getUrlParameter(name, url) {
-				
-				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-				var results = regex.exec(url);
-
-				return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-					
-			};
-
-			function checkLogin(){
-				if(sessionStorage.user == '' || !sessionStorage.user){
-					location.href = "./login.html";
-				}
-				
-				if(sessionStorage.pass == '' || !sessionStorage.pass){
-					location.href = "./login.html";
-				}
-
-				if(sessionStorage.sandbox == '' || !sessionStorage.sandbox){
-					location.href = "./login.html";
-				}
-				
-				if(sessionStorage.access_token == '' || !sessionStorage.access_token){
-					location.href = "./login.html";
-				}
-			}
-
-			function requestToken(){
-
-				var rtoken = sessionStorage.refresh_token;
-				var scope = sessionStorage.scope;
-				var client_id = '8ea2ad8b-42b0-4551-8d34-2bb9128cbe7d';
-                var client_secret = 'secret';
-
-				$.ajax({
-
-					url: 'http://oauth.dalher.net/v2/token',
-					type: 'post',
-					contentType: 'application/x-www-form-urlencoded',
-					data: "grant_type=refresh_token&refresh_token="+ rtoken +"&scope="+ scope,
-					headers: {
-						"Authorization": "Basic "+ btoa(client_id + ":" + client_secret)
-					},
-					beforeSend: function(){
-						console.log("Enviando petición de nuevo TOKEN...");
-					},
-					success: function(response){
-						sessionStorage.access_token = response.access_token;
-						console.log(sessionStorage.access_token);
-						var time_to_get = new Date();
-                        var time = time_to_get.getTime();
-						sessionStorage.time_get_token = time;
-					},
-					error: function (){
-						location.href = "login.html";
-                        console.log("Error obteniendo nuevo TOKEN.");
-                    }
-
-				});
-
-			}
-
-			$(function () {	
-
-				console.log("Documento cargado ...");
-				console.log(sessionStorage.access_token);
-				$("#content").load("home.mod.html");
-				$('#user').append(sessionStorage.user_id);
-
-				var checkLoginVar = setInterval(checkLogin, 1000);
-				var requestTokenVar = setInterval(requestToken, 3500000);
-
-				$('#sidebarMenu a').on('click', function(event){
-					
-					closeSideBar();
-					event.preventDefault();
-					var mod = getUrlParameter('mod', this.href);
-
-					if ( !mod ){
-						$( "#content" ).load( 'home.mod.html' );
-					}
-					
-					else if( mod && mod != '' ){
-						
-						$( "#content" ).load( mod + '.mod.html', function( response, status, xhr ) {
-							
-							if ( status == "error" ) {
-								$( "#content" ).load( 'error.mod.html' );
-								console.log("Module not found. Loading error");
-							}
-							
-						});
-						
-					}
-				
-					else{
-						$( "#content" ).load( 'error.mod.html' );
-					}
-				});
-
-			});
-			
-		</script> 
+		<div id="content"></div>
 
 	</body>
 

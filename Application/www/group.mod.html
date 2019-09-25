@@ -1,0 +1,52 @@
+<div id="main" class="card shadow-lg mx-auto mt-5 text-center" style="width: 75%; max-width: 500px; background-color: #8285A0; display: none">
+    <div class="card-body text-white">
+
+        <h1 id="group"></h1>
+
+        <div class="btn-group-vertical btn-group-lg mt-3" id="channelList" style="width:100% !important;"></div>
+
+        <button id="back" class="btn mt-3" type="button" style="background-color: #2D3047;">
+            <i class="material-icons md-36 md-light align-middle">keyboard_backspace</i>
+        </button>
+        <button id="addButton" class="btn mt-3 ml-3" type="button" style="background-color: #2D3047;">
+            <i class="material-icons md-36 md-light align-middle">add</i>
+        </button>
+
+    </div>
+</div>
+
+<div class="modal" id="add_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #8285A0">
+                <h3 class="modal-title text-white">Agregar un dispositivo</h3>
+            </div>
+            <div class="modal-body" style="background-color: #2D3047">
+                <select class="custom-select" id="channel_select">
+                </select>
+            </div>
+            <div class="modal-footer" style="background-color: #8285A0">
+                <button id="addChannel" class="btn ml-3" type="button" style="background-color: #2D3047;">
+                    <i class="material-icons md-36 md-light align-middle">check</i>
+                </button>
+                <button class="btn ml-3" type="button" style="background-color: #2D3047;" data-dismiss="modal">
+                    <i class="material-icons md-36 md-light align-middle">clear</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <div class="spinner-border text-white my-3" id="spinner">
+        <span class="sr-only">Cargando...</span>
+    </div>
+</div>
+
+<div class="collapse" id="collapse">
+    <div class="card card-body shadow-lg mx-auto mt-3 text-center text-white" style="width: 75%; max-width: 500px; background-color: #8285A0;">
+        <h1 id="channel"></h1>
+    </div>
+</div>
+
+<script type="text/javascript" src="libs/js/group.js"></script>

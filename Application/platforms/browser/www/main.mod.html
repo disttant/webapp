@@ -1,55 +1,44 @@
-<!-- Contenido principal de Main -->
 <div id="main" class="card shadow-lg mx-auto mt-5 text-center" style="width: 75%; max-width: 500px; background-color: #8285A0; display: none">
     <div class="card-body">
 
-        <!-- Título principal, Nombre del usuario que inició sesión -->
         <h1 class="bg-white rounded-pill" style="height: 3rem; background-color: #f7f3f3" id="user"></h1>
 
-        <!-- Botón de Logout -->
         <button id="logout" class="btn" style="width: 100%; background-color: #2D3047">
             <i class="material-icons md-24 md-light align-middle">exit_to_app</i>
         </button>
 
-        <!-- Título Secundario -->
         <h4 class="mt-3 bg-white rounded-pill" style="height: 2rem; background-color: #f7f3f3">Tus habitaciones</h4>
 
-        <!-- Contenedor de las listas de grupos -->
         <div class="btn-group-vertical btn-group-lg mt-3" id="groupList" style="width:100% !important;"></div>
 
-        <!-- Contenedor de los botones -->
         <div class="text-center mt-3">
-            <!-- Botón para añadir grupos -->
             <button id="addButton" class="btn" type="button" style="background-color: #2D3047;">
                 <i class="material-icons md-36 md-light align-middle">add</i>
             </button>
-            <!-- Botón para eliminar grupos -->
             <button id="deleteButton" class="btn ml-3" type="button" style="background-color: #2D3047;">
                 <i class="material-icons md-36 md-light align-middle">delete</i>
+            </button>
+            <button id="mapButton" class="btn ml-3" type="button" style="background-color: #2D3047;" data-dismiss="modal">
+                <i class="material-icons md-36 md-light align-middle">explore</i>
             </button>
         </div>
 
     </div>
 </div>
 
-<!-- Modal para añadir grupos -->
 <div class="modal" id="add_modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- Título -->
             <div class="modal-header" style="background-color: #8285A0">
                 <h3 class="modal-title text-white">Agregar una habitación</h3>
             </div>
-            <!-- Entrada texto, nombre del grupo a añadir -->
             <div class="modal-body" style="background-color: #2D3047">
                 <input type="text" class="form-control" placeholder="Habitación" id="roomSend">
             </div>
-            <!-- Contenedor para los botones -->
             <div class="modal-footer" style="background-color: #8285A0">
-                <!-- Botón para confirmar creación del grupo -->
                 <button id="createGroup" class="btn ml-3" type="button" style="background-color: #2D3047;">
                     <i class="material-icons md-36 md-light align-middle">check</i>
                 </button>
-                <!-- Botón para cancelar operación y cerrar modal -->
                 <button class="btn ml-3" type="button" style="background-color: #2D3047;" data-dismiss="modal">
                     <i class="material-icons md-36 md-light align-middle">clear</i>
                 </button>
@@ -58,26 +47,20 @@
     </div>
 </div>
 
-<!-- Modal para eliminar grupos -->
 <div class="modal" id="delete_modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- Título -->
             <div class="modal-header" style="background-color: #8285A0">
                 <h3 class="modal-title text-white">Eliminar una habitación</h3>
             </div>
-            <!-- Selector de grupo a eliminar -->
             <div class="modal-body" style="background-color: #2D3047">
                 <select class="custom-select" id="channel_select">
                 </select>
             </div>
-            <!-- Contenedor botones -->
             <div class="modal-footer" style="background-color: #8285A0">
-                <!-- Botón para confirmar eliminación del grupo -->
                 <button id="deleteGroup" class="btn ml-3" type="button" style="background-color: #2D3047;">
                     <i class="material-icons md-36 md-light align-middle">check</i>
                 </button>
-                <!-- Botón para cancelar operación y cerrar el modal -->
                 <button class="btn ml-3" type="button" style="background-color: #2D3047;" data-dismiss="modal">
                     <i class="material-icons md-36 md-light align-middle">clear</i>
                 </button>
@@ -86,15 +69,12 @@
     </div>
 </div>
 
-<!-- Contenedor para Toasts -->
 <div id="toastWrapper" class="fixed-bottom w-100"></div>
 
-<!-- Spinner -->
 <div class="text-center">
     <div class="spinner-border text-white my-3" id="spinner">
         <span class="sr-only">Cargando...</span>
     </div>
 </div>
 
-<!-- JavaScript del módulo Main -->
 <script type="text/javascript" src="libs/js/main.js"></script>

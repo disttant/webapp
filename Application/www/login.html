@@ -1,3 +1,5 @@
+<!-- Página de Login -->
+
 <!DOCTYPE html>
 <html>
 
@@ -6,21 +8,30 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<title>Adaptative</title>
+        <title>Adaptative</title>
+        <!-- Hoja de estilo de Bootstrap 4.3.1 -->
         <link rel="stylesheet" href="/libs/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- Iconos de Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Hoja de estilo propia -->
 		<link rel="stylesheet" href="/libs/models.css">
 	</head>
 	<body>
 
+        <!-- Contenedor del formulario de Inicio de Sesión -->
+
         <div class="card shadow-lg mx-auto text-center" style="width: 75%; max-width: 500px; background-color: #8285A0">
 
-            <img src="libs/alke.png" class="card-img-top mx-auto mt-3" style="width: 50%">
+            <!-- Icono ALKE -->
+            <img src="libs/alke.png" class="card-img-top mx-auto mt-3" style="width: 30%">
 
+            <!-- Contenido -->
             <div class="card-body">
 
+                <!-- Título principal -->
                 <h4 class="mb-5 bg-white rounded-pill" style="height: 2rem;">Inicio de sesión</h4>
 
+                <!-- Entrada de texto de "Usuario" -->
                 <div class="input-group input-group-lg my-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="userLogin">
@@ -30,6 +41,7 @@
                     <input type="text" class="form-control" placeholder="Usuario" aria-describedby="userLogin" id="userSend">
                 </div>
 
+                <!-- Entrada de texto de "Password" -->
                 <div class="input-group input-group-lg my-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="passLogin">
@@ -39,22 +51,28 @@
                     <input type="password" class="form-control" placeholder="Contraseña" aria-describedby="passLogin" id="passSend">
                 </div>
 
+                <!-- Spinner, solo visible mientras se procesan peticiones -->
                 <div class="text-center">
                     <div class="spinner-border text-white my-3" id="spinner">
                         <span class="sr-only">Cargando...</span>
                     </div>
                 </div>
 
+                <!-- Botón de inicio de sesión -->
                 <button type="button" class="btn text-white mx-3 my-3" onclick="login()" style="background-color: #2D3047" id="login">Iniciar</button>
+                <!-- Botón de registro -->
                 <button type="button" class="btn text-white mx-3 my-3" onclick="register()" style="background-color: #2D3047" id="register">Registrarme</button>
 
             </div>
 
         </div>
 
+        <!-- Contenedor para los avisos -->
         <div class="alert text-white my-3 mx-3" id="warning" style="background-color: #E84855"></div>
 
-		<script type="text/javascript" src="libs/jquery/3.4.1/jquery.js"></script>
+        <!-- Jquery 3.4.1 -->
+        <script type="text/javascript" src="libs/jquery/3.4.1/jquery.js"></script>
+        <!-- JavaScript del módulo Login -->
 		<script type="text/javascript" src="libs/js/login.js"></script> 
 
 	</body>

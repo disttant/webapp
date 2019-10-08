@@ -1,0 +1,31 @@
+<button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 30%;" id="bombillaButton">
+    <i class="material-icons md-36 md-light align-middle" id="bombillaIcon"></i>
+</button>
+
+<script type="text/javascript">
+
+    sessionStorage.setItem(sessionStorage.channel +'hasinput', "no");
+
+    var icon = document.getElementById("bombillaIcon");
+    icon.setAttribute('id', sessionStorage.channel +'iconinput1');
+    var button = document.getElementById("bombillaButton");
+    button.setAttribute('onclick', "change(\""+ sessionStorage.channel +"\", \"input1\");");
+
+    var result = sendCommand("getstate", sessionStorage.channel);
+    result = result.split(" ");
+
+    if(result[3] === "1"){
+
+        icon = document.getElementById(sessionStorage.channel +'iconinput1');
+        icon.append("toggle_on");
+
+    }
+
+    if(result[3] === "0"){
+
+        icon = document.getElementById(sessionStorage.channel +'iconinput1');
+        icon.append("toggle_off");
+
+    }
+
+</script>

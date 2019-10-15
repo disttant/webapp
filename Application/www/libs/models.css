@@ -16,8 +16,16 @@ a:link {
     height: 48px !important; 
     width: 48px !important;
 }
-
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+.lightDot{
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: yellow;
+    border-radius: 100%;
+    display: inline-block;
+    margin: -3px;
+    padding: -3px;
+}

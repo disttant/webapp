@@ -111,6 +111,9 @@ function openCollapse(channel){     // Esta función abre el collapse de un cana
     // Si no está abierto el collapse que vamos a abrir
     if(sessionStorage.getItem('collapseOpen') !== channel){
 
+        // PEDIR ESTADOS EN EL MOMENTO DE VER EL PANEL
+        // FALTARIA AÑADIR LA ACTUALIZACION DE LOS ESTADOS DE MANERA CONTINUA
+
         // Guardar la nueva información
         sessionStorage.setItem('collapseOpen', channel);
         // Esconder spinner
@@ -164,13 +167,10 @@ function ejectChannel(reciever){    // Esta función expulsa un canal de un grup
 
 function getChannels(){     // Esta función obtiene los canales de los grupos
 
-    // URL de la petición
-    var url = "https://broker.dalher.net/v5/groups/lists";
-
     // Petición para obtener canales de los grupos
     $.ajax({
 
-        url: url,
+        url: URL_getfullgroups,
         type: 'get',
         headers: {
             "Authorization": "Bearer "+ sessionStorage.access_token,
@@ -191,85 +191,73 @@ function getChannels(){     // Esta función obtiene los canales de los grupos
                     if(response[i].group == sessionStorage.group){
                         // Vaciamos la lista de canales
                         $('#channelList').empty();
+                        var channel = [];
+                        var k = 0;
 
                         // Para cada canal del grupo
                         for(j = 0 ; j < response[i].channels.length ; j++){
 
                             // Nombre del canal
-                            var channel = response[i].channels[j].channel;
+                            channel[j] = response[i].channels[j].channel;
 
-                            // Vaciar contenedor
-                            $('#'+ channel +'info').empty();
-                            // Crear elemento para la lista de canales
-                            var parent = document.createElement("div");
-                            parent.className = "btn-group";
+                            var container = document.createElement("div");
+                            container.className = "btn-group";
+                            container.style = "width: 100%";
 
-                            // Crear elemento secundario
-                            var eject = document.createElement("button");
-                            eject.className = "btn text-white";
-                            eject.style = "background-color: #2D3047; width: 25%";
-                            eject.setAttribute('onclick', "ejectChannel(\""+ channel +"\")");
-                            eject.innerHTML = '<i class="material-icons md-36 md-light align-middle">clear</i>';
+                            // Botón del canal
+                            var channelButton = document.createElement("button");
+                            channelButton.className = "btn text-white";
+                            channelButton.style = "background-color: #2D3047; width: 75%";
+                            channelButton.setAttribute('id', channel[j] +'Button');
+                            channelButton.setAttribute('onclick', 'openCollapse("'+ channel[j] +'")');
+                            channelButton.innerText = channel[j];
 
-                            // Crear elemento principal
-                            var newItem = document.createElement("button");
-                            newItem.className = "btn text-white";
-                            newItem.style = "background-color: #2D3047; width: 75%";
-                            newItem.setAttribute('onclick', "openCollapse(\""+ channel +"\")");
-                            newItem.innerText = channel;
+                            // Botón para eliminar canal
+                            var ejectButton = document.createElement("button");
+                            ejectButton.className = "btn";
+                            ejectButton.style = "background-color: #2D3047; width: 25%";
+                            ejectButton.setAttribute('id', channel[j] +'Eject');
+                            ejectButton.setAttribute('onclick', 'ejectChannel("'+ channel[j] +'")');
 
-                            // Añadir todos los elementos a la lista de canales del grupo
-                            parent.append(newItem);
-                            parent.append(eject);
-                            $('#channelList').append(parent);
+                            // Icono del botón de eliminar canal
+                            var icon = document.createElement("i");
+                            icon.className = "material-icons md-36 md-light align-middle";
+                            icon.innerText = "clear";
 
-                            // Crear elementos para el contenido del collapse
-                            var collapse = document.createElement("div");
-                            collapse.className = "collapse mx-auto";
-                            collapse.style = "width: 100%";
-                            collapse.setAttribute('id', channel);
-                            var content = document.createElement("div");
-                            content.className = "card card-body text-center";
-                            content.style = "width: 100%; background-color: #f7f3f3";
-                            content.setAttribute('id', channel +"info");
+                            var newDiv = document.createElement("div");
+                            newDiv.style = "width: 100%";
+                            newDiv.setAttribute('id', channel[j] +'panel');
 
-                            // Rellenar la información a mostrar en el collapse
-                            var des = document.createElement("h1");
-                            des.setAttribute('id', "channel"+ channel +"des");
-                            var title = document.createElement("h3");
-                            title.setAttribute('id', "channel"+ channel +"id");
-                            var model = document.createElement("h5");
-                            model.setAttribute('id', "channel"+ channel +"model");
-                            var modelpanel = document.createElement("div");
-                            modelpanel.setAttribute('id', "channel"+ channel +"panel");
-
-                            // Meter todo en el collapse
-                            content.append(des);
-                            content.append(title);
-                            content.append(model);
-                            content.append(modelpanel);
-                            collapse.append(content);
-                            // Meter el collapse en su lugar
-                            $('#channelList').append(collapse);
+                            ejectButton.append(icon);
+                            container.append(channelButton);
+                            container.append(ejectButton);
+                            $('#channelList').append(container);
+                            $('#channelList').append(newDiv);
 
                             // Envío de orden para obtener información del canal
-                            var result = sendCommand("getinfo", channel);
+                            var result = sendCommand("getinfo", channel[j]);
                             var info = result.split(" ");
-                            // Obtener la información de la repsuesta del canal
-                            var description = info[5];
-                            for(k = 6 ; k < info.length ; k++){
-                                description = description + " " + info[k];
-                            }
 
-                            // Meter toda la información en su luagr
-                            $('#channel'+ channel +'des').append(description);
-                            $('#channel'+ channel +'id').append(channel);
-                            $('#channel'+ channel +'model').append(info[2]);
+                            $('#'+ channel[j] +'panel').load("/models/"+ info[2] +".model.html", function(){
 
-                            sessionStorage.setItem('channelStorage'+ i, channel);
+                                $('#collapse').attr('id', channel[k]);
+                                $('#des').attr('id', channel[k] +"des");
+                                $('#id').attr('id', channel[k] +"id");
+                                $('#model').attr('id', channel[k] +"model");
+                                $('#panel').attr('id', channel[k] +"panel");
 
-                            // Montar en el collapse botones e indicadores en función del modelo (SIN TERMINAR)
-                            //mountcollapse(info[2], channel);
+                                // Obtener la información de la repsuesta del canal
+                                var description = info[5];
+                                for(z = 6 ; z < info.length ; z++){
+                                    description = description + " " + info[z];
+                                }
+
+                                $('#'+ channel[k] +'des').append(description);
+                                $('#'+ channel[k] +'id').append(channel[k]);
+                                $('#'+ channel[k] +'model').append(info[2]);
+                                k++;
+                            
+                            });
 
                         }
                         break;
@@ -318,13 +306,10 @@ function getChannels(){     // Esta función obtiene los canales de los grupos
 
 function getFreeChannels(){     // Esta función obtiene los canales libres
 
-    // URL para petición de obtener canales libres
-    var url = "https://broker.dalher.net/v5/channels/list/free";
-
     // Petición para obtener canales libres
     $.ajax({
 
-        url: url,
+        url: URL_getfreechannels,
         type: 'get',
         headers: {
             "Authorization": "Bearer "+ sessionStorage.access_token,
@@ -402,10 +387,10 @@ $(function () {
     $('#group').append(sessionStorage.group);
 
     // Acción botón Back para volver al módulo Main
-    $('#back').on('click', function(){
-        sessionStorage.removeItem('group');
-        $('#content').load("main.mod.html");
-    });
+    // $('#back').on('click', function(){
+    //     sessionStorage.removeItem('group');
+    //     $('#content').load("main.mod.html");
+    // });
 
     // Acción del botón para añadir canales al grupo
     $('#addButton').on('click', function(){
@@ -415,6 +400,11 @@ $(function () {
         $('#spinner').show();
         // Obtener los canales libres
         getFreeChannels();
+    });
+
+    // Acción del botón para abrir mapa interactivo
+    $('#mapButton').on('click', function(){
+        $('#content').load("map.mod.html");
     });
 
     // Acción del botón para añadir un canal al grupo
@@ -440,7 +430,7 @@ $(function () {
                     // Obtener lista de canales del grupo
                     getChannels();
                     // Borrar intervalo
-                    clearInterval(timer);
+                    //clearInterval(timer);
                     // Mostrar mensaje de completado con éxito
                     showToast("Dispositivo incluido en la habitación :)");
             }

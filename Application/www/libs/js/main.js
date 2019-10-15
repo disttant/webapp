@@ -15,7 +15,7 @@ function deleteGroup(){     // Esta función elimina un grupo
     // Comprobar que se escogió un grupo válido
     if(group !== "none"){
         // URL para petición de borrar grupo
-        var url = "https://broker.dalher.net/v5/groups/"+ group;
+        var url = URL_deletegroup + group;
 
         // Petición para borrar grupo
         $.ajax({
@@ -71,7 +71,7 @@ function createGroup(){     // Esta función crea un grupo
     // Coger nombre del nuevo grupo
     var group = $('#roomSend').val();
     // URL para petición de crear grupo
-    var url = "https://broker.dalher.net/v5/groups/"+ group;
+    var url = URL_creategroup + group;
 
     // Petición para crear un grupo
     $.ajax({
@@ -115,13 +115,10 @@ function createGroup(){     // Esta función crea un grupo
 
 function getGroupList(){        // Esta función obtiene la lista de grupos
 
-    // URL para la petición de obtener listas de grupos
-    var url = "https://broker.dalher.net/v5/groups/list";
-
     // Petición para obtener listas de grupos
     $.ajax({
 
-        url: url,
+        url: URL_getgrouplist,
         type: 'get',
         headers: {
             "Authorization": "Bearer "+ sessionStorage.access_token,
@@ -129,10 +126,10 @@ function getGroupList(){        // Esta función obtiene la lista de grupos
             "Accept" : "application/json"
         },
         beforeSend: function(){
-            console.log("Pidiendo Grupos");
+            //console.log("Pidiendo Grupos");
         },
         success: function(response){
-            console.log("Grupos obtenidos");
+            //console.log("Grupos obtenidos");
             //console.log(response);
             // Comprobación de la cantidad de grupos obtenidos
             if(response.length > 0){

@@ -9,12 +9,16 @@
         <div class="btn-group-vertical btn-group-lg mt-3" id="channelList" style="width:100% !important;"></div>
 
         <!-- Botón para volver a Main -->
-        <button id="back" class="btn mt-3" type="button" style="background-color: #2D3047;">
+        <button id="back" class="btn mt-3" type="button" style="background-color: #2D3047;" onclick='$("#content").load("main.mod.html");'>
             <i class="material-icons md-36 md-light align-middle">keyboard_backspace</i>
         </button>
         <!-- Botón para añadir un canal al grupo -->
         <button id="addButton" class="btn mt-3 ml-3" type="button" style="background-color: #2D3047;">
             <i class="material-icons md-36 md-light align-middle">add</i>
+        </button>
+        <!-- Botón para abrir el grupo con mapa interactivo -->
+        <button id="mapButton" class="btn mt-3 ml-3" type="button" style="background-color: #2D3047;">
+            <i class="material-icons md-36 md-light align-middle">explore</i>
         </button>
 
     </div>

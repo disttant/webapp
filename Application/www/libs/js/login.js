@@ -85,7 +85,7 @@ function login(){       // Esta función la llama el botón de inicio de sesión
         var client_secret = 'secret';
 
         $.ajax({
-            url: 'http://oauth.dalher.net/v1/token?flow=password',
+            url: URL_authorization,
             type: 'post',
             headers: {
                 "Authorization": "Basic "+ btoa(client_id + ":" + client_secret),

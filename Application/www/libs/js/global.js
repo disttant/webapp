@@ -1,4 +1,15 @@
 var interval;   // Variable para almacenar intervalos generados en el JavaScript de distintos módulos
+var brokerVersion = "v5";   // Versión del broker
+var accountsVersion = "v1"; // Versión del oauth + sign + etc
+
+var URL_authorization = "http://oauth.dalher.net/"+ accountsVersion +"/token?flow=password";
+var URL_refreshToken = "http://oauth.dalher.net/"+ accountsVersion +"/token?flow=refresh";
+
+var URL_deletegroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
+var URL_creategroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
+var URL_getgrouplist = "https://broker.dalher.net/"+ brokerVersion +"/groups/list";
+var URL_getfullgroups = "https://broker.dalher.net/"+ brokerVersion +"/groups/lists";
+var URL_getfreechannels = "https://broker.dalher.net/"+ brokerVersion +"/channels/list/free";
 
 window.showToast = function (msg){      // Esta función global genera y muestra un Toast
 
@@ -21,12 +32,6 @@ window.showToast = function (msg){      // Esta función global genera y muestra
         });
 
     }, 3000);
-
-}
-
-window.mountcollapse = function(model, channel){    // Esta función DEBERÍA generar un collapse para cada canal en función del modelo
-
-    $('#channel'+ channel +'panel').load("/models/"+ model +".model.html");
 
 }
 
@@ -61,7 +66,7 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
         case "subgroup":
 
             //console.log("Entra en SUBGROUP");
-            var url = "https://broker.dalher.net/v5/channels/link/"+ reciever +"/"+ data;
+            var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/link/"+ reciever +"/"+ data;
 
             $.ajax({
 
@@ -90,7 +95,7 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
         case "ungroup":
 
             //console.log("Entra en UNGROUP");
-            var url = "https://broker.dalher.net/v5/channels/link/"+ reciever;
+            var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/link/"+ reciever;
 
             $.ajax({
 

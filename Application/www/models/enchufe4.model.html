@@ -1,91 +1,25 @@
-<script type="text/javascript">
-
-    var channelToInfo = sessionStorage.getItem('channelStorage'+ num);
-    sessionStorage.setItem(channelToInfo +'hasinput', "no");
-    num++;
-
-    for(i = 1 ; i <= 4 ; i++){
-
-        var icon = document.getElementById("enchufe4Icon" + i);
-        icon.setAttribute('id', channelToInfo +'iconoutput'+ i);
-        var button = document.getElementById("enchufe4Button" + i);
-        button.setAttribute('onclick', "change(\""+ channelToInfo +"\", \"output"+ i +"\");");
-
-    }
-
-    var result = sendCommand("getstate", channelToInfo);
-    result = result.split(" ");
-
-    if(result[3] === "1"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput1');
-        icon.append("toggle_on");
-
-    }
-
-    if(result[3] === "0"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput1');
-        icon.append("toggle_off");
-
-    }
-
-    if(result[5] === "1"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput2');
-        icon.append("toggle_on");
-
-    }
-
-    if(result[5] === "0"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput2');
-        icon.append("toggle_off");
-
-    }
-
-    if(result[7] === "1"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput3');
-        icon.append("toggle_on");
-
-    }
-
-    if(result[7] === "0"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput3');
-        icon.append("toggle_off");
-
-    }
-
-    if(result[9] === "1"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput4');
-        icon.append("toggle_on");
-
-    }
-
-    if(result[9] === "0"){
-
-        icon = document.getElementById(channelToInfo +'iconoutput4');
-        icon.append("toggle_off");
-
-    }
-
-</script>
-
-<button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button1">
-    <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon1"></i>
-</button>
-
-<button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button2">
-    <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon2"></i>
-</button>
-
-<button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button3">
-    <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon3"></i>
-</button>
-
-<button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button4">
-    <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon4"></i>
-</button>
+<div class="collapse mx-auto" style="width: 100%" id="collapse">
+    <div class="card card-body text-center" style="width: 100%; background-color: #f7f3f3">
+        <h1 id="des"></h1>
+        <h3 id="id"></h3>
+        <h5 id="model"></h5>
+        <div id="panel">
+            <button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button1">
+                <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon1"></i>
+            </button>
+            
+            <button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button2">
+                <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon2"></i>
+            </button>
+            
+            <button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button3">
+                <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon3"></i>
+            </button>
+            
+            <button class="btn mx-auto mt-3" style="background-color: #2D3047; width: 20%;" id="enchufe4Button4">
+                <i class="material-icons md-36 md-light align-middle" id="enchufe4Icon4"></i>
+            </button>
+        </div>
+        <h6 id="relations"></h6>
+    </div>
+</div>

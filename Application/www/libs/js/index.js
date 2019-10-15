@@ -38,7 +38,7 @@ function requestToken(){        // Esta función renueva el token actual
     // Petición renovación token
     $.ajax({
 
-        url: 'http://oauth.dalher.net/v1/token?flow=refresh',
+        url: URL_refreshToken,
         type: 'post',
         headers: {
             "Authorization": "Basic "+ btoa(client_id + ":" + client_secret),
@@ -93,7 +93,7 @@ $(function () {
 
     // Cargamos la página principal
     console.log("Documento cargado ...");
-    console.log(sessionStorage.access_token);
+    //console.log(sessionStorage.access_token);
     $("#content").load("main.mod.html");
 
     // Comprobar la sesión periódicamente

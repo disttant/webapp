@@ -31,10 +31,10 @@ function deleteGroup(){     // Esta función elimina un grupo
                     "Accept" : "application/json"
                 },
                 beforeSend: function(){
-                    console.log("Borrando Grupo");
+                    //console.log("Borrando Grupo");
                 },
                 success: function(response){
-                    console.log("Grupo borrado");
+                    //console.log("Grupo borrado");
                     //console.log(response);
                     // Cargar lista de grupos
                     getGroupList();
@@ -89,10 +89,10 @@ function createGroup(){     // Esta función crea un grupo
                 "Accept" : "application/json"
             },
             beforeSend: function(){
-                console.log("Creando Grupo");
+                //console.log("Creando Grupo");
             },
             success: function(response){
-                console.log("Grupo creado");
+                //console.log("Grupo creado");
                 //console.log(response);
                 // Cargar lista de grupos
                 getGroupList();

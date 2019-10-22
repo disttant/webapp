@@ -179,3 +179,74 @@ window.openmenu = function(icon){
     }
 
 }
+
+window.prepareToModel = function(model, channel, states){
+
+    if(model == "bombilla"){
+
+        $('#bombillaIcon').attr('id', channel +"output1");
+        $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
+
+
+        if(states[3] == "0"){
+            $('#'+ channel +"output1").empty();
+            $('#'+ channel +"output1").append("star_border");
+        }
+        if(states[3] == "1"){
+            $('#'+ channel +'output1').empty();
+            $('#'+ channel +'output1').append("star");
+        }
+
+    }
+
+    if(model == "multiple4"){
+
+        $('#multiple1Icon').attr('id', channel +"output1");
+        $('#multiple2Icon').attr('id', channel +"output2");
+        $('#multiple3Icon').attr('id', channel +"output3");
+        $('#multiple4Icon').attr('id', channel +"output4");
+        $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
+        $('#'+ channel +"output2").parent().attr('onclick', "change(\""+ channel +"\", \"output2\");");
+        $('#'+ channel +"output3").parent().attr('onclick', "change(\""+ channel +"\", \"output3\");");
+        $('#'+ channel +"output4").parent().attr('onclick', "change(\""+ channel +"\", \"output4\");");
+
+
+        if(states[3] == "0"){
+            $('#'+ channel +"output1").empty();
+            $('#'+ channel +"output1").append("star_border");
+        }
+        if(states[3] == "1"){
+            $('#'+ channel +'output1').empty();
+            $('#'+ channel +'output1').append("star");
+        }
+
+        if(states[5] == "0"){
+            $('#'+ channel +"output2").empty();
+            $('#'+ channel +"output2").append("star_border");
+        }
+        if(states[5] == "1"){
+            $('#'+ channel +'output2').empty();
+            $('#'+ channel +'output2').append("star");
+        }
+
+        if(states[7] == "0"){
+            $('#'+ channel +"output3").empty();
+            $('#'+ channel +"output3").append("star_border");
+        }
+        if(states[7] == "1"){
+            $('#'+ channel +'output3').empty();
+            $('#'+ channel +'output3').append("star");
+        }
+
+        if(states[9] == "0"){
+            $('#'+ channel +"output4").empty();
+            $('#'+ channel +"output4").append("star_border");
+        }
+        if(states[9] == "1"){
+            $('#'+ channel +'output4').empty();
+            $('#'+ channel +'output4').append("star");
+        }
+
+    }
+
+}

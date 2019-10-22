@@ -407,18 +407,7 @@ function openmodal(channel){
                 $('#des').append(info[5]);
                 $('#id').append(channel);
                 $('#model').append(info[2]);
-                $('#bombillaIcon').attr('id', channel +"output1");
-                $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
-
-
-                if(states[3] == "0"){
-                    $('#'+ channel +"output1").empty();
-                    $('#'+ channel +"output1").append("star_border");
-                }
-                if(states[3] == "1"){
-                    $('#'+ channel +'output1').empty();
-                    $('#'+ channel +'output1').append("star");
-                }
+                prepareToModel(info[2], channel, states);
 
                 $('#spinner').hide();
                 $('#main').show();
@@ -435,7 +424,7 @@ function openmodal(channel){
             $('#spinner').hide();
             $('#main').show();
             $('#collapse').collapse('show');
-            $('#modal').modal('show');
+            $('#modal').modal('hide');
 
         }
 
@@ -570,88 +559,118 @@ function drag(dragevent){
 }
 
 function drop(dropevent){
+
     $('#rubbish').hide();
+    
     dropevent.preventDefault();
     var data = dropevent.dataTransfer.getData("text");
     dropevent.target.appendChild(document.getElementById(data));
 
     if(dropevent.target.id !== "rubbish"){
         if(dropevent.target.id.indexOf('sideline') === -1){
+
             if($('#'+ data).attr('onlcick') == undefined){
                 $('#'+ data).attr('onclick', 'openmodal("'+ data +'")');
             }
+
             localStorage.setItem(data +'pos', dropevent.target.id);
+
         }
     }
+
     if(dropevent.target.id === "rubbish"){
 
-        localStorage.removeItem(data +'pos');
+        // Esconder contenido principal
+        $('#main').hide();
+        // Mostrar spinner
+        $('#spinner').show();
+
         $('#rubbish').empty();
         $('#rubbish').html("<i class=\"material-icons md-24 md-light align-middle\">delete</i>");
         $('#rubbish').append("Expulsar del grupo");
-        sendCommand("ungroup", data);
 
-        var cycle = 0;
-        var result = "";
-        var answer = "error";
-        var infoGet = false;
-        var time = new Date();
-        var now = time.getTime();
+        setTimeout(function(){
 
-        while(cycle < 15){
+            sendCommand("ungroup", data);
 
-            result = getResponse(data);
-            result = JSON.parse(result.responseText);
+            var cycle = 0;
+            var result = "";
+            var answer = "error";
+            var infoGet = false;
+            var time = new Date();
+            var now = time.getTime();
 
-            for(i = 0 ; i < result.length ; i++){
+            while(cycle < 15){
 
-                if((now - result[i].time * 1000) < 10000){
-                    resultSplit = result[i].message.split("|");
-                    if(resultSplit[0] == "ok"){
-                        if(resultSplit[1] == data){
+                result = getResponse(data);
+                result = JSON.parse(result.responseText);
 
-                            answer = "ok";
-                            infoGet = true;
+                for(i = 0 ; i < result.length ; i++){
 
+                    if((now - result[i].time * 1000) < 10000){
+                        resultSplit = result[i].message.split("|");
+                        if(resultSplit[0] == "ok"){
+                            if(resultSplit[1] == data){
+
+                                answer = "ok";
+                                infoGet = true;
+
+                            }
                         }
+
                     }
 
                 }
 
+                if(infoGet == true)
+                    break;
+                    
+                cycle++;
+
             }
 
-            if(infoGet == true)
-                break;
-                
-            cycle++;
-
-        }
-
-        // Para una respuesta positiva
-        if(answer == "ok"){
+            // Para una respuesta positiva
+            if(answer == "ok"){
+                localStorage.removeItem(data +'pos');
                 // Obtener lista de canales del grupo
                 getChannels();
                 // Borrar intervalo
                 //clearInterval(timer);
                 // Mostrar mensaje de completado con éxito
                 showToast("Dispositivo incluido en la habitación :)");
-        }
-        // Para una respuesta negativa
-        else{
-            // Mostrar mensaje de error
-            showToast("No se ha podido incluir el dispositivo en el habitación :(");
+            }
+            // Para una respuesta negativa
+            else{
+                // Mostrar mensaje de error
+                showToast("No se ha podido incluir el dispositivo en el habitación :(");
+
+                var dot = document.createElement("span");
+                dot.className = "lightDot";
+                dot.setAttribute('id', channel);
+                dot.setAttribute('draggable', "true");
+                dot.setAttribute('ondragstart', "drag(event)");
+                dot.setAttribute('onclick', 'openmodal("'+ channel +'")');
+
+                $('#'+ localStorage.getItem(data +'pos')).append(dot);
+
+            }
+
             // Mostrar contenido principal
             $('#main').show();
             // Esconder spinner
             $('#spinner').hide();
-        }
+
+        }, 100);
 
     }
+
     if(dropevent.target.id.indexOf("sideline") !== -1){
+
         var dot = $('#'+ dropevent.target.id).html();
         $('#'+ dropevent.target.id).empty();
         var pos = localStorage.getItem(data +'pos');
         $('#'+ pos).append(dot);
+
     }
 
 }

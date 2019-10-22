@@ -88,17 +88,45 @@ function checkToken () {        // Esta función comprueba la vida del token
 
 $(function () {	
 
+    $('#spinner').hide();
+
     // Comprobar la sesión
     checkLogin();
 
     // Cargamos la página principal
     console.log("Documento cargado ...");
     //console.log(sessionStorage.access_token);
-    $("#content").load("main.mod.html");
+    openmenu("center");
+    $("#content").load("center.html");
 
     // Comprobar la sesión periódicamente
     var checkLoginVar = setInterval(checkLogin, 1000);
     // Comprobar el token de manera periódica
     var checkTokenVar = setInterval(checkToken, 1000);
+
+    // Acción para el botón Logout
+    $('#logout').on('click', function(){
+        sessionStorage.removeItem("expires_in");
+        sessionStorage.removeItem("refresh_token");
+        sessionStorage.removeItem("scope");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("pass");
+        sessionStorage.removeItem("exp");
+        sessionStorage.removeItem("access_token");
+        sessionStorage.removeItem("sandbox");
+        sessionStorage.removeItem("user_id");
+    });
+
+    $('#leftButton').on('click', function(){
+        $("#content").load("left.html");
+    });
+
+    $('#centerButton').on('click', function(){
+        $("#content").load("center.html");
+    });
+
+    $('#rightButton').on('click', function(){
+        $("#content").load("right.html");
+    });
 
 });

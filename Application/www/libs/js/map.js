@@ -15,10 +15,47 @@ function openCron(){
 
 function getInputInfo(channel){
 
+    var result = "";
+
     if(channel != "none"){
 
-        var result = sendCommand("getinfo", channel);
-        result = result.split(" ");
+        // Envío de orden para obtener información del canal
+        sendCommand("getinfo", channel);
+
+        var cycle = 0;
+        var info = "none|none|none|none|none|none";
+        var infoGet = false;
+        var time = new Date();
+        var now = time.getTime();
+
+        while(cycle < 15){
+
+            result = getResponse(channel);
+            result = JSON.parse(result.responseText);
+
+            for(i = 0 ; i < result.length ; i++){
+
+                if((now - result[i].time * 1000) < 10000){
+                    resultSplit = result[i].message.split("|");
+                    if(resultSplit[0] == "info"){
+                        if(resultSplit[1] == channel){
+
+                            result = resultSplit;
+                            infoGet = true;
+
+                        }
+                    }
+
+                }
+
+            }
+
+            if(infoGet == true)
+                break;
+                
+            cycle++;
+
+        }
 
         $('#linkInputNum').empty();
 
@@ -67,10 +104,47 @@ function getInputInfo(channel){
 
 function getOutputInfo(channel){
 
+    var result = "";
+
     if(channel != "none"){
 
-        var result = sendCommand("getinfo", channel);
-        result = result.split(" ");
+        // Envío de orden para obtener información del canal
+        sendCommand("getinfo", channel);
+
+        var cycle = 0;
+        var info = "none|none|none|none|none|none";
+        var infoGet = false;
+        var time = new Date();
+        var now = time.getTime();
+
+        while(cycle < 15){
+
+            result = getResponse(channel);
+            result = JSON.parse(result.responseText);
+
+            for(i = 0 ; i < result.length ; i++){
+
+                if((now - result[i].time * 1000) < 10000){
+                    resultSplit = result[i].message.split("|");
+                    if(resultSplit[0] == "info"){
+                        if(resultSplit[1] == channel){
+
+                            result = resultSplit;
+                            infoGet = true;
+
+                        }
+                    }
+
+                }
+
+            }
+
+            if(infoGet == true)
+                break;
+                
+            cycle++;
+
+        }
 
         $('#linkOutputNum').empty();
 
@@ -232,34 +306,140 @@ function openLink(){
 
 function openmodal(channel){
 
-    $('#spinnerModal').show();
+    $('#main').hide();
+    $('#spinner').show();
     $('#link').collapse('hide');
     $('#cron').collapse('hide');
     $('#confirmCron').hide();
     $('#confirmLink').hide();
     $('#panel').empty();
 
-    // Envío de orden para obtener información del canal
-    var result = sendCommand("getinfo", channel);
-    var info = result.split(" ");
+    setTimeout(function(){
 
-    $('#panel').load("/models/"+ info[2] +".model.html", function(){
+        // Envío de orden para obtener información del canal
+        sendCommand("getinfo", channel);
 
-        // Obtener la información de la repsuesta del canal
-        var description = info[5];
-        for(z = 6 ; z < info.length ; z++){
-            description = description + " " + info[z];
+        var cycle = 0;
+        var result = "";
+        var info = "none|none|none|none|none|none";
+        var infoGet = false;
+        var time = new Date();
+        var now = time.getTime();
+
+        while(cycle < 15){
+
+            result = getResponse(channel);
+            result = JSON.parse(result.responseText);
+
+            for(i = 0 ; i < result.length ; i++){
+
+                if((now - result[i].time * 1000) < 10000){
+                    resultSplit = result[i].message.split("|");
+                    if(resultSplit[0] == "info"){
+                        if(resultSplit[1] == channel){
+
+                            info = resultSplit;
+                            infoGet = true;
+
+                        }
+                    }
+
+                }
+
+            }
+
+            if(infoGet == true)
+                break;
+                
+            cycle++;
+
         }
 
-        $('#des').append(description);
-        $('#id').append(channel);
-        $('#model').append(info[2]);
+        sendCommand("getstate", channel);
 
-        $('#spinnerModal').hide();
-        $('#collapse').collapse('show');
-        $('#modal').modal('show');
-        
-    });
+        var cycle = 0;
+        var result = "";
+        var states = "none|none|none|none";
+        var infoGet = false;
+        var time = new Date();
+        var now = time.getTime();
+
+        while(cycle < 15){
+
+            result = getResponse(channel);
+            result = JSON.parse(result.responseText);
+
+            for(i = 0 ; i < result.length ; i++){
+
+                if((now - result[i].time * 1000) < 10000){
+                    resultSplit = result[i].message.split("|");
+                    if(resultSplit[0] == "states"){
+                        if(resultSplit[1] == channel){
+                            if(resultSplit[2].indexOf("output") !== -1){
+
+                                states = resultSplit;
+                                infoGet = true;
+
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+            if(infoGet == true)
+                break;
+                
+            cycle++;
+
+        }
+
+        if(info != "none|none|none|none|none|none"){
+
+            $('#'+ channel +'Button').empty();
+            $('#'+ channel +'Button').append(channel);
+
+            $('#panel').load("/models/"+ info[2] +".model.html", function(){
+
+                // Obtener la información de la repsuesta del canal
+
+                $('#des').append(info[5]);
+                $('#id').append(channel);
+                $('#model').append(info[2]);
+                $('#bombillaIcon').attr('id', channel +"output1");
+                $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
+
+
+                if(states[3] == "0"){
+                    $('#'+ channel +"output1").empty();
+                    $('#'+ channel +"output1").append("star_border");
+                }
+                if(states[3] == "1"){
+                    $('#'+ channel +'output1').empty();
+                    $('#'+ channel +'output1').append("star");
+                }
+
+                $('#spinner').hide();
+                $('#main').show();
+                $('#collapse').collapse('show');
+                $('#modal').modal('show');
+                
+            });
+
+        }
+        else{
+
+            $('#'+ channel +'Button').empty();
+            $('#'+ channel +'Button').append(channel +" (No disponible)");
+            $('#spinner').hide();
+            $('#main').show();
+            $('#collapse').collapse('show');
+            $('#modal').modal('show');
+
+        }
+
+    }, 100);
 
 }
 
@@ -337,7 +517,7 @@ function loadGrid(){
             var col = document.createElement("div");
             col.className = "mx-auto";
             if((i == 20) && ((j == 10) || (j == 11))){
-                col.style = "width: 5%; height: 100%; background-color: white";
+                col.style = "width: 5%; height: 100%; background-color: #A5A5A5";
             }
             else{
                 col.style = "width: 5%; height: 100%;";
@@ -409,19 +589,57 @@ function drop(dropevent){
         $('#rubbish').empty();
         $('#rubbish').html("<i class=\"material-icons md-24 md-light align-middle\">delete</i>");
         $('#rubbish').append("Expulsar del grupo");
-        var response = sendCommand("ungroup", data, sessionStorage.group);
+        sendCommand("ungroup", data);
 
-        // Para respuesta positiva (FALLA)
-        if(response.indexOf("ok") !== -1){
-                // Obtener canales del grupo tras la operación
-                getChannels();
-                // Mostrar mensaje de éxito
-                showToast("Dispositivo expulsado de la habitación :)");
+        var cycle = 0;
+        var result = "";
+        var answer = "error";
+        var infoGet = false;
+        var time = new Date();
+        var now = time.getTime();
+
+        while(cycle < 15){
+
+            result = getResponse(data);
+            result = JSON.parse(result.responseText);
+
+            for(i = 0 ; i < result.length ; i++){
+
+                if((now - result[i].time * 1000) < 10000){
+                    resultSplit = result[i].message.split("|");
+                    if(resultSplit[0] == "ok"){
+                        if(resultSplit[1] == data){
+
+                            answer = "ok";
+                            infoGet = true;
+
+                        }
+                    }
+
+                }
+
+            }
+
+            if(infoGet == true)
+                break;
+                
+            cycle++;
+
         }
-        // Para respuesta negativa
+
+        // Para una respuesta positiva
+        if(answer == "ok"){
+                // Obtener lista de canales del grupo
+                getChannels();
+                // Borrar intervalo
+                //clearInterval(timer);
+                // Mostrar mensaje de completado con éxito
+                showToast("Dispositivo incluido en la habitación :)");
+        }
+        // Para una respuesta negativa
         else{
             // Mostrar mensaje de error
-            showToast("No se ha podido expulsar el dispositivo de la habitación :(");
+            showToast("No se ha podido incluir el dispositivo en el habitación :(");
             // Mostrar contenido principal
             $('#main').show();
             // Esconder spinner
@@ -435,75 +653,6 @@ function drop(dropevent){
         var pos = localStorage.getItem(data +'pos');
         $('#'+ pos).append(dot);
     }
-
-}
-
-function getFreeChannels(){     // Esta función obtiene los canales libres
-
-    // Petición para obtener canales libres
-    $.ajax({
-
-        url: URL_getfreechannels,
-        type: 'get',
-        headers: {
-            "Authorization": "Bearer "+ sessionStorage.access_token,
-            "Content-Type" : "application/json",
-            "Accept" : "application/json"
-        },
-        beforeSend: function(){
-            //console.log("Pidiendo canales libres");
-        },
-        success: function(response){
-            //console.log("Canales obtenidos");
-            //console.log(response);
-            // Si hay canales libres
-            if(response.length > 0){
-                // Vaciamos opciones del selector del modal de añadir canal a grupo
-                $('#channel_select').empty();
-
-                // Crear opción por defecto
-                var defaultItem = document.createElement("option");
-                defaultItem.innerText = "Escoge cuál agregar...";
-                defaultItem.value = "none";
-                defaultItem.selected = true;
-
-                // Meter opción por defecto
-                $('#channel_select').append(defaultItem);
-
-                // Para los canales libres
-                for(i = 0 ; i < response.length ; i++){
-                    // Crear opción del selector
-                    var newItem = document.createElement("option");
-                    newItem.innerText = response[i].channel;
-                    newItem.value = response[i].channel;
-
-                    // Meter opción en el selector
-                    $('#channel_select').append(newItem);
-                }
-            }
-            // Si no hay canales libres
-            else{
-                // Vaciamos opciones del selector del modal de añadir canal a grupo
-                $('#channel_select').empty();
-                // Crear elemento indicador
-                var newItem = document.createElement("option");
-                newItem.innerText = "No hay dispositivos libres";
-                newItem.value = "none";
-                newItem.selected = true;
-
-                // Meter elemento indicador
-                $('#channel_select').append(newItem);
-            }
-            $('#main').show();
-            $('#spinner').hide();
-            $('#add_modal').modal('show');
-        },
-        error: function (response){
-            console.log("Error");
-            console.log(response);
-        }
-
-    });
 
 }
 
@@ -527,46 +676,6 @@ $(function () {
     loadGrid();
     loadSideline();
     getChannels();
-
-    // Acción del botón para añadir un canal al grupo
-    $('#addChannel').on('click', function(){
-        // Obtener canal a añadir al grupo
-        var reciever = $('#channel_select option:selected').attr('value');
-
-        // Comprobación de canal válido
-        if(reciever !== "none"){
-            // Esconder contenido principal
-            $('#main').hide();
-            // Mostrar spinner
-            $('#spinner').show();
-            // Esconder modal
-            $('#add_modal').modal('hide');
-
-            // Envío de comando de suscripción del canal al grupo
-            var response = sendCommand("subgroup", reciever, sessionStorage.group);
-
-            // Para una respuesta positiva
-            if(sessionStorage.response.indexOf("ok") !== -1){
-                    console.log(sessionStorage.response);
-                    // Obtener lista de canales del grupo
-                    getChannels();
-                    // Borrar intervalo
-                    //clearInterval(timer);
-                    // Mostrar mensaje de completado con éxito
-                    showToast("Dispositivo incluido en la habitación :)");
-            }
-            // Para una respuesta negativa
-            else{
-                // Mostrar mensaje de error
-                showToast("No se ha podido incluir el dispositivo en el habitación :(");
-                // Mostrar contenido principal
-                $('#main').show();
-                // Esconder spinner
-                $('#spinner').hide();
-            }
-            
-        }
-    });
 
     $('#linkInput').on("change", function(){
         getInputInfo($('#linkInput').val());
@@ -617,11 +726,91 @@ $(function () {
             var inputState = $('#linkInputState').val();
             var outputState = $('#linkOutputState').val();
 
-            var response1 = sendCommand("relpins", input, "toalainfo");  // FALTA AÑADIR LA INFORMACION DEL COMANDO
-            var response2 = sendCommand("relpins", output, "toalainfo"); // FALTA AÑADIR LA INFORMACION DEL COMANDO
+            sendCommand("relpins", input, input +"|"+ output +"|"+ inputPin +"|"+ outputPin +"|"+ inputState +"|"+ outputState);
 
-            showToast("Operación realizada con éxito! :)");
-            // COMPROBAR RESPUESTAS "OK" DE AMBOS
+            var cycle = 0;
+            var result = "";
+            var fstRel = "none|none|none";
+            var infoGet = false;
+            var time = new Date();
+            var now = time.getTime();
+        
+            while(cycle < 15){
+        
+                result = getResponse(channel[k]);
+                result = JSON.parse(result.responseText);
+        
+                for(i = 0 ; i < result.length ; i++){
+        
+                    if((now - result[i].time * 1000) < 10000){
+                        resultSplit = result[i].message.split("|");
+                        if(resultSplit[0] == "ok"){
+                            if(resultSplit[1] == channel[k]){
+
+                                fstRel = resultSplit;
+                                infoGet = true;
+
+                            }
+                        }
+        
+                    }
+        
+                }
+        
+                if(infoGet == true)
+                    break;
+                    
+                cycle++;
+        
+            }
+
+            sendCommand("relpins", output, input +"|"+ output +"|"+ inputPin +"|"+ outputPin +"|"+ inputState +"|"+ outputState);
+
+            var cycle = 0;
+            var result = "";
+            var scdRel = "none|none|none";
+            var infoGet = false;
+            var time = new Date();
+            var now = time.getTime();
+        
+            while(cycle < 15){
+        
+                result = getResponse(channel[k]);
+                result = JSON.parse(result.responseText);
+        
+                for(i = 0 ; i < result.length ; i++){
+        
+                    if((now - result[i].time * 1000) < 10000){
+                        resultSplit = result[i].message.split("|");
+                        if(resultSplit[0] == "ok"){
+                            if(resultSplit[1] == channel[k]){
+
+                                scdRel = resultSplit;
+                                infoGet = true;
+
+                            }
+                        }
+        
+                    }
+        
+                }
+        
+                if(infoGet == true)
+                    break;
+                    
+                cycle++;
+        
+            }
+
+            if((fstRel[0] == "ok") && (scdRel[0] != "ok")){
+                showToast("Primer dispositivo relacionado :)");
+            }
+            if((fstRel[0] != "ok") && (scdRel[0] == "ok")){
+                showToast("Segundo dispositivo relacionado :)");
+            }
+            if((fstRel[0] == "ok") && (scdRel[0] == "ok")){
+                showToast("Dispositivos relacionados :)");
+            }
 
         }
 

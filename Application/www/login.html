@@ -5,7 +5,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <title>Adaptative</title>
@@ -20,48 +20,50 @@
 
         <!-- Contenedor del formulario de Inicio de Sesión -->
 
-        <div class="card shadow-lg mx-auto text-center" style="width: 75%; max-width: 500px; background-color: #8285A0">
+        <div class="card shadow-lg mx-auto text-center mt-3" style="width: 75%; max-width: 500px; background-color: #D7D7D7">
 
             <!-- Icono ALKE -->
-            <img src="libs/alke.png" class="card-img-top mx-auto mt-3" style="width: 30%">
+            <img src="libs/alke.png" class="card-img-top mx-auto mt-3" style="width: 20vw">
 
             <!-- Contenido -->
             <div class="card-body">
 
                 <!-- Título principal -->
-                <h4 class="mb-5 bg-white rounded-pill" style="height: 2rem;">Inicio de sesión</h4>
+                <h4 class="mb-5 text-white rounded" style="background-color: #1C1C1C; height: 2rem;">Inicio de sesión</h4>
 
                 <!-- Entrada de texto de "Usuario" -->
                 <div class="input-group input-group-lg my-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="userLogin">
-                            <i class="material-icons md-24 md-dark align-middle">face</i>
+                        <span class="input-group-text" style="background-color: #1C1C1C;" id="userLogin">
+                            <i class="material-icons md-24 md-light align-middle">face</i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Usuario" aria-describedby="userLogin" id="userSend">
+                    <input type="text" class="form-control" placeholder="Usuario" aria-describedby="userLogin" id="userSend" style="border: 0; border-bottom: 1px solid #1C1C1C !important">
                 </div>
 
                 <!-- Entrada de texto de "Password" -->
                 <div class="input-group input-group-lg my-4">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="passLogin">
-                            <i class="material-icons md-24 md-dark align-middle">lock</i>
+                        <span class="input-group-text" style="background-color: #1C1C1C;" id="passLogin">
+                            <i class="material-icons md-24 md-light align-middle">lock</i>
                         </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Contraseña" aria-describedby="passLogin" id="passSend">
+                    <input type="password" class="form-control" placeholder="Contraseña" aria-describedby="passLogin" id="passSend" style="border: 0; border-bottom: 1px solid #1C1C1C !important">
                 </div>
 
                 <!-- Spinner, solo visible mientras se procesan peticiones -->
                 <div class="text-center">
-                    <div class="spinner-border text-white my-3" id="spinner">
+                    <div class="spinner-border my-3" id="spinner">
                         <span class="sr-only">Cargando...</span>
                     </div>
                 </div>
 
-                <!-- Botón de inicio de sesión -->
-                <button type="button" class="btn text-white mx-3 my-3" onclick="login()" style="background-color: #2D3047" id="login">Iniciar</button>
-                <!-- Botón de registro -->
-                <button type="button" class="btn text-white mx-3 my-3" onclick="register()" style="background-color: #2D3047" id="register">Registrarme</button>
+                <div class="my-3">
+                    <!-- Botón de inicio de sesión -->
+                    <button type="button" class="btn text-white mx-auto" onclick="login()" style="background-color: #1C1C1C" id="login"><h5>Iniciar</h5></button>
+                    <!-- Botón de registro -->
+                    <button type="button" class="btn text-white mx-auto" onclick="register()" style="background-color: #1C1C1C" id="register"><h5>Registrarme</h5></button>
+                </div>
 
             </div>
 

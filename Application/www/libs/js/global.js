@@ -2,14 +2,15 @@ var interval;   // Variable para almacenar intervalos generados en el JavaScript
 var brokerVersion = "v5";   // Versión del broker
 var accountsVersion = "v1"; // Versión del oauth + sign + etc
 
-var URL_authorization = "http://oauth.dalher.net/"+ accountsVersion +"/token?flow=password";
-var URL_refreshToken = "http://oauth.dalher.net/"+ accountsVersion +"/token?flow=refresh";
+var URL_authorization = "http://accounts.dalher.net/oauth/"+ accountsVersion +"/token?flow=password";
+var URL_refreshToken = "http://accounts.dalher.net/oauth/"+ accountsVersion +"/token?flow=refresh";
 
 var URL_deletegroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
 var URL_creategroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
 var URL_getgrouplist = "https://broker.dalher.net/"+ brokerVersion +"/groups/list";
 var URL_getfullgroups = "https://broker.dalher.net/"+ brokerVersion +"/groups/lists";
 var URL_getfreechannels = "https://broker.dalher.net/"+ brokerVersion +"/channels/list/free";
+var URL_sendmessage = "https://broker.dalher.net/"+ brokerVersion +"/channels/message/";
 
 window.showToast = function (msg){      // Esta función global genera y muestra un Toast
 
@@ -35,111 +36,145 @@ window.showToast = function (msg){      // Esta función global genera y muestra
 
 }
 
+window.getResponse = function (reciever){
+
+    var url = "https://broker.dalher.net/v5/channels/messages/" + reciever + "/5";
+    var result = "no result";
+
+    return $.ajax({
+
+        url: url,
+        type: 'get',
+        async: false,
+        headers: {
+            "Authorization": "Bearer "+ sessionStorage.access_token,
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        },
+        success: function(response){
+            //console.log("Mensajes obtenidos");
+            //console.log(response);                
+        },
+        error: function (response){
+            console.log("Error");
+            console.log(response);
+            result = "error";
+        }
+
+    });
+
+}
+
 window.sendCommand = function (command, reciever, data="none"){     // Esta función envía un mensaje a un canal y devuelve su respuesta
-    
-    //console.log("COMANDO: "+ command);
-    
+
+    var message = "";
+
     switch(command){
 
         case "getinfo":
 
-            //console.log("Entra en GETINFO");
-            var result = "info "+ reciever +" enchufe4 0 1 luz de la entrada";
-            return result;
+            message = reciever +"|getinfo";
+            break;
 
         case "getstate":
 
-            //console.log("Entra en GETSTATE");
-            var result = "states "+ reciever +" output1 0 output2 1 output3 1 output4 1";
-            return result;
+            message = reciever +"|getstate";
+            break;
 
         case "getrels":
 
-            //console.log("Entra en GETRELS");
-            return "norels "+ reciever;
+            message = reciever +"|getrels";
+            break;
 
         case "newdesc":
 
-            //console.log("Entra en NEWDESC");
-            return "ok "+ reciever;
+            message = reciever +"|newdesc|"+ data;
+            break;
 
         case "subgroup":
 
-            //console.log("Entra en SUBGROUP");
-            var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/link/"+ reciever +"/"+ data;
-
-            $.ajax({
-
-                url: url,
-                type: 'post',
-                headers: {
-                    "Authorization": "Bearer "+ sessionStorage.access_token,
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-                },
-                beforeSend: function(){
-                   //console.log("Suscribir a grupo "+ reciever);
-                },
-                error: function(response){
-                    console.log(response);
-                }
-        
-            }).done(function(){
-
-                sessionStorage.setItem('response', "ok "+ reciever);
-
-            });
-
+            message = reciever +"|subgroup|"+ data;
             break;
 
         case "ungroup":
 
-            //console.log("Entra en UNGROUP");
-            var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/link/"+ reciever;
-
-            $.ajax({
-
-                url: url,
-                type: 'delete',
-                headers: {
-                    "Authorization": "Bearer "+ sessionStorage.access_token,
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-                },
-                beforeSend: function(){
-                    //console.log("Desuscribir a grupo "+ reciever);
-                },
-                error: function(response){
-                    console.log(response);
-                }
-        
-            }).done(function(){
-
-                sessionStorage.setItem('response', "ok "+ reciever);
-                
-            });
-
+            message = reciever +"|ungroup";
             break;
 
         case "relpins":
 
-            //console.log("Entra en RELPINS");
-            return "ok "+ reciever;
+            message = reciever +"|relpins|"+ data;
+            break;
 
         case "unrelpins":
 
-            //console.log("Entra en UNRELPINS");
-            return "ok "+ reciever;
+            message = reciever +"|unrelpins|"+ data;
+            break;
 
         case "changepinstate":
 
-            //console.log("Entra en CHANGEPINSTATE");
-            return "ok "+ reciever;
+            message = reciever +"|changepinstate|"+ data;
+            break;
 
         default:
 
-            //console.log("Entra en NINGUNA");
-            return "[X]";
+            break;
+
+    }
+
+    if(message != ""){
+
+        var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/message/" + reciever;
+        message = "{\"message\":\""+ message +"\"}";
+
+        return $.ajax({
+
+            url: url,
+            type: 'post',
+            headers: {
+                "Authorization": "Bearer "+ sessionStorage.access_token,
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            data: message,
+            success: function(response){
+                console.log("Mensaje enviado");
+                //console.log(response);
+            },
+            error: function (response){
+                console.log("Error");
+                //console.log(response);
+            }
+
+        });
+
+    }
+
+}
+
+window.openmenu = function(icon){
+
+    if(icon == "left"){
+
+        $('#leftIcon').addClass("md-light").removeClass("md-dark");
+        $('#centerIcon').addClass("md-dark").removeClass("md-light");
+        $('#rightIcon').addClass("md-dark").removeClass("md-light");
+
+    }
+
+    if(icon == "center"){
+
+        $('#centerIcon').addClass("md-light").removeClass("md-dark");
+        $('#leftIcon').addClass("md-dark").removeClass("md-light");
+        $('#rightIcon').addClass("md-dark").removeClass("md-light");
+
+    }
+
+    if(icon == "right"){
+
+        $('#rightIcon').addClass("md-light").removeClass("md-dark");
+        $('#centerIcon').addClass("md-dark").removeClass("md-light");
+        $('#leftIcon').addClass("md-dark").removeClass("md-light");
 
     }
 

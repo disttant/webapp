@@ -1,5 +1,5 @@
 var interval;   // Variable para almacenar intervalos generados en el JavaScript de distintos módulos
-var brokerVersion = "v5";   // Versión del broker
+var brokerVersion = "v1";   // Versión del broker
 var accountsVersion = "v1"; // Versión del oauth + sign + etc
 
 var URL_authorization = "http://accounts.dalher.net/oauth/"+ accountsVersion +"/token?flow=password";

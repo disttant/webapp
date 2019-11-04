@@ -100,7 +100,7 @@ $(function () {
     $("#content").load("center.html");
 
     // Comprobar la sesión periódicamente
-    var checkLoginVar = setInterval(checkLogin, 1000);
+    //var checkLoginVar = setInterval(checkLogin, 1000);
     // Comprobar el token de manera periódica
     var checkTokenVar = setInterval(checkToken, 1000);
 

@@ -10,11 +10,11 @@
 
         <title>Adaptative</title>
         <!-- Hoja de estilo de Bootstrap 4.3.1 -->
-        <link rel="stylesheet" href="/libs/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Iconos de Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Hoja de estilo propia -->
-		<link rel="stylesheet" href="/libs/models.css">
+		<link rel="stylesheet" href="libs/models.css">
 	</head>
 	<body>
 
@@ -31,25 +31,6 @@
                 <!-- Título principal -->
                 <h4 class="mb-5 text-white rounded" style="background-color: #1C1C1C; height: 2rem;">Inicio de sesión</h4>
 
-                <!-- Entrada de texto de "Usuario" -->
-                <div class="input-group input-group-lg my-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="background-color: #1C1C1C;" id="userLogin">
-                            <i class="material-icons md-24 md-light align-middle">face</i>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Usuario" aria-describedby="userLogin" id="userSend" style="border: 0; border-bottom: 1px solid #1C1C1C !important">
-                </div>
-
-                <!-- Entrada de texto de "Password" -->
-                <div class="input-group input-group-lg my-4">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="background-color: #1C1C1C;" id="passLogin">
-                            <i class="material-icons md-24 md-light align-middle">lock</i>
-                        </span>
-                    </div>
-                    <input type="password" class="form-control" placeholder="Contraseña" aria-describedby="passLogin" id="passSend" style="border: 0; border-bottom: 1px solid #1C1C1C !important">
-                </div>
 
                 <!-- Spinner, solo visible mientras se procesan peticiones -->
                 <div class="text-center">
@@ -73,7 +54,11 @@
         <div class="alert text-white my-3 mx-3" id="warning" style="background-color: #E84855"></div>
 
         <!-- Jquery 3.4.1 -->
-        <script type="text/javascript" src="libs/jquery/3.4.1/jquery.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- JavaScript de Bootstrap 4.3.1 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
         <!-- JavaScript general -->
         <script type="text/javascript" src="libs/js/global.js"></script> 
         <!-- JavaScript del módulo Login -->

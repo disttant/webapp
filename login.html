@@ -32,26 +32,17 @@
                 <h4 class="mb-5 text-white rounded" style="background-color: #1C1C1C; height: 2rem;">Inicio de sesión</h4>
 
 
-                <!-- Spinner, solo visible mientras se procesan peticiones -->
-                <div class="text-center">
-                    <div class="spinner-border my-3" id="spinner">
-                        <span class="sr-only">Cargando...</span>
-                    </div>
-                </div>
-
                 <div class="my-3">
                     <!-- Botón de inicio de sesión -->
-                    <button type="button" class="btn text-white mx-auto" onclick="login()" style="background-color: #1C1C1C" id="login"><h5>Iniciar</h5></button>
+                    <button type="button" class="btn text-white mx-auto" style="background-color: #1C1C1C" id="login"><h5>Iniciar</h5></button>
                     <!-- Botón de registro -->
-                    <button type="button" class="btn text-white mx-auto" onclick="register()" style="background-color: #1C1C1C" id="register"><h5>Registrarme</h5></button>
+                    <button type="button" class="btn text-white mx-auto" style="background-color: #1C1C1C" id="register"><h5>Registrarme</h5></button>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- Contenedor para los avisos -->
-        <div class="alert text-white my-3 mx-3" id="warning" style="background-color: #E84855"></div>
 
         <!-- Jquery 3.4.1 -->
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -60,9 +51,12 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
         <!-- JavaScript general -->
-        <script type="text/javascript" src="libs/js/global.js"></script> 
+        <script type="text/javascript" src="libs/js/global.js"></script>
+        <!-- JavaScript del módulo Oauth 2 -->
+		<script type="text/javascript" src="libs/js/oauth2.js"></script> 
         <!-- JavaScript del módulo Login -->
-		<script type="text/javascript" src="libs/js/login.js"></script> 
+        <script type="text/javascript" src="libs/js/login.js"></script>
+
 
 	</body>
 

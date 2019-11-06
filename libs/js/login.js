@@ -153,10 +153,24 @@ function login(){       // Esta función la llama el botón de inicio de sesión
 }
 
 $(function () {
-    // Esconder contenedor avisos y spinner
-    $("#warning").hide();
-    $("#spinner").hide();
-    // Mostrar botones de inicio de sesión y registro
-    $("#login").show();
-    $("#register").show();
+
+    let oauthConfig = {
+
+        auth_uri: "http://accounts.dalher.net/oauth/authorize",
+        client_id: "12",
+        redirect_uri: "http://adaptative.dalher.net/gimme.html",
+        scope: "broker_r broker_w broker_d"
+    
+    };
+
+    var oauth = new oauthClient(oauthConfig);
+
+
+    $("#login").on( 'click', function(){
+
+        oauth.getAuthorization();
+
+    });
+
+
 });

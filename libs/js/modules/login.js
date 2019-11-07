@@ -1,4 +1,12 @@
-$(function () {
+export function t() {
+    return "Technology";
+}
+
+
+
+
+
+/*$(function () {
 
     let oauthConfig = {
 
@@ -12,6 +20,7 @@ $(function () {
     var oauth = new oauthClient(oauthConfig);
 
     $("#login").on( 'click', function(){
+        console.log('nepe');
         oauth.getAuthorization();
     });
 
@@ -20,4 +29,4 @@ $(function () {
     });
 
 
-});
+});*/

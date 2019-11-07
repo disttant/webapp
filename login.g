@@ -1,6 +1,6 @@
 <!-- Contenedor del formulario de Inicio de Sesión -->
 
-<div class="card mx-auto text-center mt-3" style="width: 75%; max-width: 500px; background-color: #f8f8f8; border: none;">
+<div class="card mx-auto text-center mt-3" >
 
     <!-- Contenido -->
     <div class="card-body">
@@ -21,6 +21,3 @@
     </div>
 
 </div>
-
-<!-- JavaScript del módulo login -->
-<script type="text/javascript" src="libs/js/modules/login.js"></script>

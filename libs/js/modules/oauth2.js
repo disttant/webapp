@@ -13,7 +13,7 @@
 
 
 
-class oauthClient {
+export class oauthClient {
 
 
 
@@ -77,10 +77,10 @@ class oauthClient {
     * returns string
     * 
     * */
-    static checkCallback = function () {
+    checkCallback = function () {
 
         // Comprobar los campos requeridos en el fragment
-        let uriParams = this.getAllUrlParams( window.location.href );
+        let uriParams = this.getImplicitUrlParams( window.location.href );
         let sentState = localStorage.current_state;
 
         // PREG MATCHES
@@ -97,7 +97,7 @@ class oauthClient {
         localStorage.setItem('expires_in', uriParams.expires_in);
 
         // Exit the flow
-        //window.close();
+        window.close();
 
     }
 
@@ -138,7 +138,7 @@ class oauthClient {
     }
 
 
-    static getAllUrlParams = function (url) {
+    getImplicitUrlParams = function (url) {
 
         // get query string from url (optional) or window
         var queryString = url ? url.split('#')[1] : window.location.search.slice(1);

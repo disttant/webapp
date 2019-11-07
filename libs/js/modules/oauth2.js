@@ -88,16 +88,16 @@ class oauthClient {
         // Comprobar que el state que llega es el enviado
         if ( uriParams.state !== sentState ){
             localStorage.clear();
-            window.close();
+            //window.close();
         }
-        
+
         // Guardar el access token y el refresh token en sessionStorage
         localStorage.removeItem('current_state');
         localStorage.setItem('access_token', uriParams.access_token);
         localStorage.setItem('expires_in', uriParams.expires_in);
 
         // Exit the flow
-        window.close();
+        //window.close();
 
     }
 
@@ -124,6 +124,18 @@ class oauthClient {
 
     }
 
+
+    static parseJWT = function (token) {
+
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+
+    }
 
 
     static getAllUrlParams = function (url) {

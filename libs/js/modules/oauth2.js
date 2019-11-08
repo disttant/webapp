@@ -96,8 +96,13 @@ export class oauthClient {
         localStorage.setItem('access_token', uriParams.access_token);
         localStorage.setItem('expires_in', uriParams.expires_in);
 
+        var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImNiN2Y0ZGVjOTMwZDU2MDY0YjYyY2IzMTE5ZWQwZTUxOGYyNmQ3NTdhMzIzZTE2N2ZmNzhkYjc5NDY1ZGMwN2Q1MGM5ODBiNjI5M2ViYWI5In0.eyJhdWQiOiIxNCIsImp0aSI6ImNiN2Y0ZGVjOTMwZDU2MDY0YjYyY2IzMTE5ZWQwZTUxOGYyNmQ3NTdhMzIzZTE2N2ZmNzhkYjc5NDY1ZGMwN2Q1MGM5ODBiNjI5M2ViYWI5IiwiaWF0IjoxNTczMjE4NDM5LCJuYmYiOjE1NzMyMTg0MzksImV4cCI6MTU3MzMwNDgzOSwic3ViIjoiMSIsInNjb3BlcyI6WyJicm9rZXJfciIsImJyb2tlcl93IiwiYnJva2VyX2QiXX0.iQvPQ4vSt9yw8pKgZOuPrVR7r9sYcDsuwZIpX8NgaeuKkVX2vpI7xghzanY_FwJyue5IxQhasetrhs__D1vCodfSG8S97nWr_ZwaEPjzo4k5mbolEcfq8JQYswTc2lEAgFb9dJIT1O-PO4pmohtvCB6xH529tvqPzesufSFnCwraUfgr5htQYhQQFQUKWWg4Zk-of9e-HloS16Z2BbJYEGnSisemU63WdbdlDXLQEkRtJ3xgQPBfonp05ZadRBNbFV-MsXM1UiXcH9rXtNwJNPjuM4So_JtQf62EK8cLS6oQD436oy4FkXs5_brW6_WYzMrRFv8Cr0VEBb7FwdQtlkZuF_e5CZd7b-6AQWHjkJsYbpOHCRmCxexASbkjvTIR8Ok96Mv0e4-IlFYeHQf7_fT7blxTFJlgBHuqSb5m3qf3zSSK1LcAEcuyhCQfBl-2OgtzySr7klP82iqD--MZd8PZz27Se7i9An18J1NCLWBKqxlpwt2d74GgvZ0CZBXkuy6mOx8ugwkxw14o64Ip6w1xYpqFQHI1OFkaoOPfYDjWY6z5kvdqOhcY_UK4Zz_A1cz0TDJjhmrgpzKXhPWJ4DpRvxEGnBhUiEC_KN6fLZOwTuVt2dPlco9I9NSPHhwYIqUzAOKHT9BVYWj96skfEPJI-9ecsbpLyFY6jNpFbZs';
+
+        var decoded = jwt_decode(token);
+        console.log(decoded);
+
         // Exit the flow
-        window.close();
+        //window.close();
 
     }
 
@@ -162,7 +167,7 @@ export class oauthClient {
             
                 // (optional) keep case consistent
                 paramName = paramName.toLowerCase();
-                if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+                //if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
             
                 // if the paramName ends with square brackets, e.g. colors[] or colors[2]
                 if (paramName.match(/\[(\d+)?\]$/)) {

@@ -1,3 +1,7 @@
+// Importing external libraries
+import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
+
+// Importing custom libraries
 import * as oauth2_md from './modules/oauth2.js';
 import * as index_md from './modules/index.js';
 import * as login_md from './modules/login.js';

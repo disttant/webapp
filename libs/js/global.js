@@ -2,17 +2,25 @@
 import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
 
 // Importing custom libraries
-import * as oauth2_md from './modules/oauth2.js';
 import * as index_md from './modules/index.js';
+import * as oauth2_md from './modules/oauth2.js';
 import * as login_md from './modules/login.js';
-
-
 
 
 
 /* *
  *
- * OAuth 2 Actions
+ * Index Library
+ * Initialize this module
+ * 
+ * */
+window.index = new index_md.index();
+
+
+
+/* *
+ *
+ * OAuth 2 Library
  * Initialize this module
  * 
  * */
@@ -25,19 +33,26 @@ let oauthConfig = {
 
 };
 
-window.oauth = new oauth2_md.oauthClient(oauthConfig);
-
+window.oauth = new oauth2_md.oauthController(oauthConfig);
 
 
 
 /* *
  *
- * Global Actions
+ * Login Library
+ * Initialize this module
+ * 
+ * */
+window.login = new login_md.loginController();
+
+
+
+/* *
+ *
+ * Index Actions
  * Call the module with its actions
  * 
  * */
-
-window.index         = new index_md.index;
 window.uriParams     = index.getAllUrlParams(window.location.href);
 
 $(function () {	
@@ -68,7 +83,6 @@ $(function () {
     })
     .always(function(){
         
-        $('#spinner').hide();
         $("#app-wrapper").load(currModule + '.g', function(){
 
             $.getScript('libs/js/actions/' + currModule + '.js')

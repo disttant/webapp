@@ -1,22 +1,49 @@
 <!-- Contenedor del formulario de Inicio de Sesión -->
 
-<div class="card mx-auto text-center mt-3" >
+<div class="d-flex align-items-center justify-content-center min-vh-100" >
 
-    <!-- Contenido -->
-    <div class="card-body">
+    <div class="d-flex flex-column flex-grow-1 mb-3">
 
-        <!-- Título principal -->
-        <h4 class="my-3 rounded">Inicio de sesión con <h3>ALKE</h3></h4>
+        <div class="d-flex justify-content-center p-2">
+            <div class="d-flex flex-column mb-3">
+                <div class="d-flex justify-content-center ">
+                    <!-- Icono ALKE -->
+                    <img src="imgs/adaptative.png" class="mx-auto py-3">
+                </div>
 
-        <!-- Icono ALKE -->
-        <img src="libs/alke.png" class="card-img-top mx-auto mb-5" style="width: 20vw">
+                <div class="d-flex justify-content-end ">
+                    <h1 class="font-weight-light">Adaptative!</h1>
+                </div>
 
-        <div class="my-3">
-            <!-- Botón de inicio de sesión -->
-            <button type="button" class="btn text-white mx-3" style="background-color: #1C1C1C" id="login"><h5>Autenticarme</h5></button>
-            <!-- Botón de registro -->
-            <button type="button" class="btn text-white mx-3" style="background-color: #1C1C1C" id="register"><h5>Registrarme</h5></button>
+                <div class="d-flex justify-content-end ">
+                    <small class="font-weight-bold">by ALKE</small>
+                </div>
+            </div>
         </div>
+
+
+        <div class="d-flex justify-content-center py-4"></div>
+
+
+        <div class="d-flex justify-content-center p-2">
+
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center py-2">
+                    <!-- Login button -->
+                    <button type="button" class="btn btn-block btn-dark text-white mx-3 btn-block" id="login">
+                        Login with ALKE
+                    </button>
+                </div>
+
+                <div class="d-flex justify-content-center py-2">
+                    <!-- Register button -->
+                    <button type="button" class="btn btn-block btn-dark text-white mx-3" id="register">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 

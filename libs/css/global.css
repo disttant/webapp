@@ -13,21 +13,60 @@ body {
 a:link {
     text-decoration:none;
 }
+
+/* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { 
-    font-size: 48px !important; 
-    height: 48px !important; 
-    width: 48px !important;
-}
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
 /* ::placeholder {
     color: white !important;
 } */
+
+
+/* SIDEBAR STYLES */
+#sidebar-wrapper {
+}
+
+#sidebar-bg {
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    z-index: 1000; 
+    background-color: black; 
+    width: 100vw; 
+    height: 100vh;  
+    opacity: 0.3;
+}
+
+#sidebar-menu {
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    z-index: 1001 !important; 
+    background-color: white; 
+    width: 20rem; 
+    height: 100vh; 
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
 /* Modelos para el Mapa */
 .lightDot{
     height: 1.5rem;

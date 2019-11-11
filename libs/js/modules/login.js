@@ -24,18 +24,18 @@ export class loginController {
         if( decoded.exp < Math.floor(Date.now() / 1000) ){ return false; }
 
         // Save critical data
-        sessionStorage.setItem('access_token' , atoken );
-        sessionStorage.setItem('expires_in' , localStorage.expires_in );
-        sessionStorage.setItem('exp' , decoded.exp );
+        //sessionStorage.setItem('access_token' , atoken );
+        //sessionStorage.setItem('expires_in' , localStorage.expires_in );
+        localStorage.setItem('exp' , decoded.exp );
 
-        if ( sessionStorage.access_token !== localStorage.access_token ){ return false; }
+        //if ( sessionStorage.access_token !== localStorage.access_token ){ return false; }
 
-        if ( sessionStorage.expires_in !== localStorage.expires_in ){ return false; }
+        //if ( sessionStorage.expires_in !== localStorage.expires_in ){ return false; }
 
-        if ( sessionStorage.exp != decoded.exp ){ return false; }
+        //if ( sessionStorage.exp != decoded.exp ){ return false; }
 
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('expires_in');
+        //localStorage.removeItem('access_token');
+        //localStorage.removeItem('expires_in');
 
         return true;
 
@@ -48,7 +48,7 @@ export class loginController {
         let decoded;
 
         // Try to take access_token from storage
-        atoken = sessionStorage.access_token;
+        atoken = localStorage.access_token;
 
         // Check if the process ended fine
         if ( atoken == undefined || atoken == '' || atoken == null ){ 
@@ -72,7 +72,11 @@ export class loginController {
     }
 
 
+    removeSession = function (){
 
+        localStorage.clear();
+        
+    }
 
 
 }

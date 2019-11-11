@@ -108,7 +108,6 @@ export class index {
         return obj;
     }
 
-    
 
 
 }

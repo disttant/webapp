@@ -5,6 +5,7 @@ import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
 import * as index_md from './modules/index.js';
 import * as oauth2_md from './modules/oauth2.js';
 import * as login_md from './modules/login.js';
+import * as app_md from './modules/app.js';
 
 
 
@@ -44,6 +45,16 @@ window.oauth = new oauth2_md.oauthController(oauthConfig);
  * 
  * */
 window.login = new login_md.loginController();
+
+
+
+/* *
+ *
+ * App Library
+ * Initialize this module
+ * 
+ * */
+window.app = new app_md.appController();
 
 
 
@@ -280,34 +291,6 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
             }
 
         });
-
-    }
-
-}
-
-window.openmenu = function(icon){
-
-    if(icon == "left"){
-
-        $('#leftIcon').addClass("md-light").removeClass("md-dark");
-        $('#centerIcon').addClass("md-dark").removeClass("md-light");
-        $('#rightIcon').addClass("md-dark").removeClass("md-light");
-
-    }
-
-    if(icon == "center"){
-
-        $('#centerIcon').addClass("md-light").removeClass("md-dark");
-        $('#leftIcon').addClass("md-dark").removeClass("md-light");
-        $('#rightIcon').addClass("md-dark").removeClass("md-light");
-
-    }
-
-    if(icon == "right"){
-
-        $('#rightIcon').addClass("md-light").removeClass("md-dark");
-        $('#centerIcon').addClass("md-dark").removeClass("md-light");
-        $('#leftIcon').addClass("md-dark").removeClass("md-light");
 
     }
 

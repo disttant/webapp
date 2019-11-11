@@ -32,9 +32,34 @@ a:link {
     color: white !important;
 } */
 
+.bg-vantablack {
+    background-color: #000000 !important;
+}
+
+.bg-black {
+    background-color: #333333 !important;
+}
+
+.bg-gray {
+    background-color: #666666 !important;
+}
+
+
+
+/*Filter styles*/
+.saturate { filter: saturate(3); }
+.grayscale { filter: grayscale(100%); }
+.contrast { filter: contrast(160%); }
+.brightness { filter: brightness(0.25); }
+.blur { filter: blur(3px); }
+.invert { filter: invert(100%); }
+.sepia { filter: sepia(100%); }
+.huerotate { filter: hue-rotate(180deg); }
+
 
 /* SIDEBAR STYLES */
 #sidebar-wrapper {
+
 }
 
 #sidebar-bg {
@@ -44,7 +69,7 @@ a:link {
     z-index: 1000; 
     background-color: black; 
     width: 100vw; 
-    height: 100vh;  
+    height: 100vh;
     opacity: 0.3;
 }
 
@@ -53,12 +78,64 @@ a:link {
     top: 0; 
     right: 0; 
     z-index: 1001 !important; 
-    background-color: white; 
-    width: 20rem; 
-    height: 100vh; 
-    opacity: 1;
+    background-color: white;  
+    height: 100vh;
 }
 
+#sidebar-menu a {
+    
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+
+/*
+ * Extra small devices (portrait phones, less than 576px)
+ * No media query since this is the default in Bootstrap
+*/
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+    #sidebar-menu {
+        width: 15rem !important; 
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+
+    #sidebar-menu {
+        width: 20rem !important; 
+    }
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+    #sidebar-menu {
+        width: 20rem !important; 
+    }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+
+    #sidebar-menu {
+        width: 30rem !important; 
+    }
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+    #sidebar-menu {
+        width: 30rem !important; 
+    }
+
+}
 
 
 

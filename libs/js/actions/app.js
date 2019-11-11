@@ -36,12 +36,13 @@ $(function () {
 
 
 
-    // Highlighting menu icons
-    $('button[id="logout"]').on('click', function(){
+    // Close session button
+    $('a[id="logout"]').on('click', function(){
 
         login.removeSession();
 
     });
+
 
 
     // Open the menu
@@ -53,8 +54,11 @@ $(function () {
             console.log('animado');
         });
 
-        $('#sidebar-menu').hide().animate({
-            width: "toggle"
+        let width = $('#sidebar-menu').css('width');
+
+        $('#sidebar-menu').hide().css('right', '-' + width).animate({
+            position: [ "toggle", "swing" ],
+            right: "+=" + width
         });
 
     });
@@ -68,16 +72,17 @@ $(function () {
             
         });
 
+        let width = $('#sidebar-menu').css('width');
+
         $('#sidebar-menu').show().animate({
-            width: "toggle"
+            position: [ "toggle", "swing" ],
+            right: "-=" + width
         }, 400, function(){
 
             $('#sidebar-wrapper').toggleClass('d-none');
 
         });
 
-        
-        
     });
 
 

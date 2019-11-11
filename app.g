@@ -14,29 +14,34 @@
 
 
 <!-- Sidebar menu -->
-<div id="sidebar-wrapper" class="d-none" style="">
+<div id="sidebar-wrapper" class="d-none">
 
     <div id="sidebar-bg"></div>
 
-    <div id="sidebar-menu" class="shadow overflow-auto" style="">
+    <div id="sidebar-menu" class="shadow overflow-auto">
 
-        <div class="d-flex flex-column bg-dark text-light min-vh-100">
-            <div class="p-2 border">
+        <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
+            <div class="p-2 bg-warning">
+
                 Header de la barra
-
-                <!-- Logout button -->
-                <button id="logout" class="btn">
-                    <i class="material-icons md-24 md-dark align-middle">exit_to_app</i>
-                </button>
+                pene
+                nepeasd dasd sads d dsdas
+                <div class="d-flex flex-column">
+                    <div class="p-2">
+                        <img class="greyscale" src="./imgs/adaptative.png" />
+                    </div>
+                    <div class="p-2">Flex item 2</div>
+                    <div class="p-2">Flex item 3</div>
+                </div>
             </div>
-            <div class="p-2">
-                <a href="#" onclick="app.moduleLoad('test')" >hola</a>
+            <div class="p-3">
+                <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
+                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('test')">hola</a>
             </div>
-            <div class="p-2">
-                <a href="#" onclick="app.moduleLoad('test')" >hola</a>
+            <div class="p-3">
+                <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>
+                <a id="logout" href="#" class="text-light align-middle">Close session</a>
             </div>
-            <div class="p-2">Flex item 3</div>
-            <div class="p-2">Flex item 3</div>
         </div>
 
     </div>
@@ -48,7 +53,7 @@
 <div id="module-wrapper" class="d-none">
 
     <!-- Top bar -->
-    <nav class="navbar navbar-dark bg-dark shadow">
+    <nav class="navbar navbar-dark bg-black shadow">
         <div class="navbar-brand text-light">
             <h4 class="font-weight-bold d-inline-block">ALKE</h4>
             <h4 class="font-weight-light d-inline-block">Adaptative</h4>
@@ -72,7 +77,7 @@
 
 
     <!-- Bottom bar -->
-    <div id="footer" class="d-flex fixed-bottom p-2 justify-content-around text-light bg-dark" style="z-index: 2 !important;">
+    <div id="footer" class="d-flex fixed-bottom p-2 justify-content-around text-light bg-black" style="z-index: 2 !important;">
 
         <button id="homeMaker" class="btn flex-fill" name="botMenu">
             <i class="material-icons md-36 md-light align-middle" style="opacity: 0.3;">ballot</i>

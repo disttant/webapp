@@ -1,3 +1,147 @@
+// Importing external libraries
+import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
+
+// Importing custom libraries
+import * as index_md from './modules/index.js';
+import * as oauth2_md from './modules/oauth2.js';
+import * as login_md from './modules/login.js';
+import * as app_md from './modules/app.js';
+
+
+
+/* *
+ *
+ * Index Library
+ * Initialize this module
+ * 
+ * */
+window.index = new index_md.index();
+
+
+
+/* *
+ *
+ * OAuth 2 Library
+ * Initialize this module
+ * 
+ * */
+let oauthConfig = {
+
+    auth_uri: "http://accounts.dalher.net/oauth/authorize",
+    client_id: "14",
+    redirect_uri: "http://adaptative.dalher.net/?g=gimme",
+    scope: "broker_r broker_w broker_d"
+
+};
+
+window.oauth = new oauth2_md.oauthController(oauthConfig);
+
+
+
+/* *
+ *
+ * Login Library
+ * Initialize this module
+ * 
+ * */
+window.login = new login_md.loginController();
+
+
+
+/* *
+ *
+ * App Library
+ * Initialize this module
+ * 
+ * */
+window.app = new app_md.appController();
+
+
+
+/* *
+ *
+ * Index Actions
+ * Call the module with its actions
+ * 
+ * */
+window.uriParams     = index.getAllUrlParams(window.location.href);
+
+$(function () {	
+    
+    // Define the default module in case of error
+    let defModule     = 'login';
+
+    // Define wich modules are not callable
+    let excludedFiles = [
+        'index'
+    ];
+
+    
+    let currModule    = null;
+
+    $.get(uriParams.g + '.g')
+    .done(function() {
+
+        currModule = uriParams.g;
+
+        if( $.inArray(currModule, excludedFiles) !== -1 ){
+            currModule = defModule;
+        }
+        
+    })
+    .fail(function() { 
+        currModule = defModule;
+    })
+    .always(function(){
+        
+        $("#app-wrapper").load(currModule + '.g', function(){
+
+            $.getScript('libs/js/actions/' + currModule + '.js')
+            .done(function() {
+            })
+            .fail(function(){
+                console.warn('LOG: No actions needed');
+            });
+
+        });
+
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var interval;   // Variable para almacenar intervalos generados en el JavaScript de distintos módulos
 var brokerVersion = "v1";   // Versión del broker
 var accountsVersion = "v1"; // Versión del oauth + sign + etc
@@ -147,34 +291,6 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
             }
 
         });
-
-    }
-
-}
-
-window.openmenu = function(icon){
-
-    if(icon == "left"){
-
-        $('#leftIcon').addClass("md-light").removeClass("md-dark");
-        $('#centerIcon').addClass("md-dark").removeClass("md-light");
-        $('#rightIcon').addClass("md-dark").removeClass("md-light");
-
-    }
-
-    if(icon == "center"){
-
-        $('#centerIcon').addClass("md-light").removeClass("md-dark");
-        $('#leftIcon').addClass("md-dark").removeClass("md-light");
-        $('#rightIcon').addClass("md-dark").removeClass("md-light");
-
-    }
-
-    if(icon == "right"){
-
-        $('#rightIcon').addClass("md-light").removeClass("md-dark");
-        $('#centerIcon').addClass("md-dark").removeClass("md-light");
-        $('#leftIcon').addClass("md-dark").removeClass("md-light");
 
     }
 

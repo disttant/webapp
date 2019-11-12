@@ -21,17 +21,10 @@
     <div id="sidebar-menu" class="shadow overflow-auto">
 
         <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
-            <div class="p-2 bg-warning">
-
-                Header de la barra
-                pene
-                nepeasd dasd sads d dsdas
+            <div id="sidebar-header" class="p-2 bg-yellow">
                 <div class="d-flex flex-column">
-                    <div class="p-2">
-                        <img class="greyscale" src="./imgs/adaptative.png" />
-                    </div>
-                    <div class="p-2">Flex item 2</div>
-                    <div class="p-2">Flex item 3</div>
+                    <div class="p-2 text-dark">Cosas</div>
+                    <div class="p-2 text-dark">Flex item 3</div>
                 </div>
             </div>
             <div class="p-3">
@@ -53,10 +46,10 @@
 <div id="module-wrapper" class="d-none">
 
     <!-- Top bar -->
-    <nav class="navbar navbar-dark bg-black shadow">
+    <nav class="navbar navbar-dark bg-black shadow-sm">
         <div class="navbar-brand text-light">
             <h4 class="font-weight-bold d-inline-block">ALKE</h4>
-            <h4 class="font-weight-light d-inline-block">Adaptative</h4>
+            <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
         </div>
         <!-- Menu button -->
         <button id="sidebarOpener" class="btn">

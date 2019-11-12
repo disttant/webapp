@@ -28,10 +28,7 @@ a:link {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
-/* ::placeholder {
-    color: white !important;
-} */
-
+/* Custom Bootstrap-like styles */
 .bg-vantablack {
     background-color: #000000 !important;
 }
@@ -40,24 +37,21 @@ a:link {
     background-color: #333333 !important;
 }
 
-.bg-gray {
-    background-color: #666666 !important;
+.bg-yellow {
+    background-color: #EDD75D !important;
+}
+
+.text-yellow {
+    color: #EDD75D !important;
 }
 
 
 
-/*Filter styles*/
-.saturate { filter: saturate(3); }
-.grayscale { filter: grayscale(100%); }
-.contrast { filter: contrast(160%); }
-.brightness { filter: brightness(0.25); }
-.blur { filter: blur(3px); }
-.invert { filter: invert(100%); }
-.sepia { filter: sepia(100%); }
-.huerotate { filter: hue-rotate(180deg); }
-
-
-/* SIDEBAR STYLES */
+/* 
+ *
+ * SIDEBAR STYLES 
+ *
+ */
 #sidebar-wrapper {
 
 }
@@ -89,10 +83,12 @@ a:link {
 }
 
 
-/*
- * Extra small devices (portrait phones, less than 576px)
- * No media query since this is the default in Bootstrap
-*/
+
+/* 
+ *
+ * RESPONSIVENESS 
+ *
+ */
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
@@ -136,7 +132,6 @@ a:link {
     }
 
 }
-
 
 
 

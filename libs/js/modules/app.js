@@ -61,7 +61,8 @@ export class appController {
             $("#content").html(data);
         })
         .fail(function() {
-            $("#content").html('404 not found');
+            //$("#content").html('404 not found');
+            $("#content").load('404.m');
         })
         .always(function(){});
 

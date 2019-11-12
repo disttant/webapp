@@ -24,7 +24,48 @@ setInterval(function(){
 
 
 
+
+
 $(function () {
+
+    // Detecting network status
+    window.addEventListener('online', function(e) {
+        
+        $('#infobar-conn-error').addClass('d-none');
+    });
+
+    window.addEventListener('offline', function(e) {
+
+        $('#infobar-conn-error').removeClass('d-none');
+    });
+
+
+
+    // Show the sync icon when AJAX is calling
+    $( document ).ajaxStart(function() {
+
+        $('#infobar-sync').removeClass('d-none');
+    });
+
+    $( document ).ajaxStop(function() {
+
+        $('#infobar-sync').addClass('d-none');
+    });
+
+
+
+    // Detecting AJAX errors
+    $( document ).ajaxError(function() {
+
+        $('#infobar-sync-error').removeClass('d-none');
+    });
+
+    $( document ).ajaxSuccess(function() {
+
+        $('#infobar-sync-error').addClass('d-none');
+    });
+
+
 
     // Hide the spinner
     setTimeout(() => {
@@ -40,7 +81,6 @@ $(function () {
     $('a[id="logout"]').on('click', function(){
 
         login.removeSession();
-
     });
 
 
@@ -87,15 +127,16 @@ $(function () {
 
 
 
-    // Highlighting menu icons
+    // Highlighting selected menu icon
     $('button[name="botMenu"]').on('click', function(){
 
-        // Shadow every menu
+        // Shadow every icon
         $('button[name="botMenu"] > i').attr('style', 'opacity: 0.1;');
 
-        // Highlight this icon
+        // Highlight selected one
         $(this).find('i').attr('style', 'opacity: 1;');
 
+        // Load the asked global module
         app.moduleLoad( $(this).attr('id') );
 
     });

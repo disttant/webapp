@@ -23,8 +23,16 @@
         <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
             <div id="sidebar-header" class="p-2 bg-yellow">
                 <div class="d-flex flex-column">
-                    <div class="p-2 text-dark">Cosas</div>
-                    <div class="p-2 text-dark">Flex item 3</div>
+                    <!--<div class="p-2 text-dark">Infobar</div>-->
+                    <!-- The Infobar -->
+                    <div class="p-2 text-dark">
+                        <i id="infobar-placeholder" class="material-icons md-24 md-dark text-black align-middle pr-2">label</i>
+                        
+                        <i id="infobar-info" class="material-icons md-24 md-dark align-middle pr-2 d-none">info</i>
+                        <i id="infobar-sync" class="material-icons md-24 md-dark align-middle pr-2 d-none">sync</i>
+                        <i id="infobar-sync-error" class="material-icons md-24 md-dark align-middle pr-2 d-none">sync_disabled</i>
+                        <i id="infobar-conn-error" class="material-icons md-24 md-dark align-middle pr-2 d-none">wifi_off</i>
+                    </div>
                 </div>
             </div>
             <div class="p-3">

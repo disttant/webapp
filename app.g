@@ -37,7 +37,7 @@
             </div>
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
-                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('test')">hola</a>
+                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('example')">Example module</a>
             </div>
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>

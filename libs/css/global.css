@@ -48,6 +48,9 @@ a:link {
 .text-black {
     color: #333333 !important;
 }
+.no-border{
+    border: none !important;
+}
 
 
 

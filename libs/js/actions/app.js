@@ -5,8 +5,6 @@
  * 
  * */
 
-console.log('LOG: Executing actions');
-
 
 
 setInterval(function(){
@@ -90,9 +88,7 @@ $(function () {
 
         $('#sidebar-wrapper').toggleClass('d-none');
 
-        $('#sidebar-bg').hide().fadeIn( "slow", function() {
-            console.log('animado');
-        });
+        $('#sidebar-bg').hide().fadeIn( "slow", function() {});
 
         let width = $('#sidebar-menu').css('width');
 
@@ -108,9 +104,7 @@ $(function () {
     // Close the menu (cases)
     $('div[id="sidebar-bg"], div[id="sidebar-menu"] > a ').on('click', function(){
 
-        $('#sidebar-bg').show().fadeOut( "slow", function() {
-            
-        });
+        $('#sidebar-bg').show().fadeOut( "slow", function() {});
 
         let width = $('#sidebar-menu').css('width');
 

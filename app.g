@@ -21,9 +21,10 @@
     <div id="sidebar-menu" class="shadow overflow-auto">
 
         <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
+
+            <!-- Sidebar header -->
             <div id="sidebar-header" class="p-2 bg-yellow">
                 <div class="d-flex flex-column">
-                    <!--<div class="p-2 text-dark">Infobar</div>-->
                     <!-- The Infobar -->
                     <div class="p-2 text-dark">
                         <i id="infobar-placeholder" class="material-icons md-24 md-dark text-black align-middle pr-2">label</i>
@@ -35,6 +36,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sidebar body -->
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
                 <a href="#" class="text-light align-middle" onclick="app.moduleLoad('example')">Example module</a>
@@ -43,6 +46,7 @@
                 <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>
                 <a id="logout" href="#" class="text-light align-middle">Close session</a>
             </div>
+
         </div>
 
     </div>

@@ -6,6 +6,9 @@ import * as index_md from './modules/index.js';
 import * as oauth2_md from './modules/oauth2.js';
 import * as login_md from './modules/login.js';
 import * as app_md from './modules/app.js';
+import * as group_md from './modules/groups.js';
+import * as channel_md from './modules/channels.js';
+
 
 
 
@@ -60,6 +63,53 @@ window.app = new app_md.appController();
 
 /* *
  *
+ * Groups Library
+ * Initialize this module
+ * 
+ * */
+
+let groupConfig = {
+   
+    numberofmessagestoget: 3,
+    getgrouplist: "http://broker.dalher.net/v1/groups/list",
+    creategroup: "http://broker.dalher.net/v1/groups/",
+    deletegroup: "http://broker.dalher.net/v1/groups/",
+    getmessages: "http://broker.dalher.net/v1/groups/messages/",
+    getrelatedgroups: "http://broker.dalher.net/v1/groups/list/related",
+    getfullgroups: "http://broker.dalher.net/v1/groups/list/full"
+
+};
+
+window.group = new group_md.groupController(groupConfig);
+
+
+
+/* *
+ *
+ * Groups Library
+ * Initialize this module
+ * 
+ * */
+let channelConfig = {
+
+    numberofmessagestoget: 3,
+    getfreechannels: "http://broker.dalher.net/v1/channels/list/free",
+    sendmessage: "http://broker.dalher.net/v1/channels/message/",
+    getmessages: "http://broker.dalher.net/v1/channels/messages/",
+    getchannels: "http://broker.dalher.net/v1/channels/list",
+    createchannel: "http://broker.dalher.net/v1/channels/",
+    deletechannel: "http://broker.dalher.net/v1/channels/",
+    addchanneltogroup: "http://broker.dalher.net/v1/channels/link/",
+    deletechanneltogroup:  "http://broker.dalher.net/v1/channels/link/"
+
+}
+
+window.channel = new channel_md.channelController(channelConfig);
+
+
+
+/* *
+ *
  * Index Actions
  * Call the module with its actions
  * 
@@ -76,7 +126,6 @@ $(function () {
         'index'
     ];
 
-    
     let currModule    = null;
 
     $.get(uriParams.g + '.g')

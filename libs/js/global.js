@@ -143,7 +143,7 @@ $(function () {
     })
     .always(function(){
         
-        $("#app-wrapper").load(currModule + '.g', function(){
+        $("#index-wrapper").load(currModule + '.g', function(){
 
             $.getScript('libs/js/actions/' + currModule + '.js')
             .done(function() {

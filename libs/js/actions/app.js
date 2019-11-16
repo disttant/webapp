@@ -65,12 +65,12 @@ $(function () {
 
 
 
-    // Hide the spinner
+    // Hide the global spinner
     setTimeout(() => {
         app
             .spinner('hide')
             .moduleLoad('home');
-
+            
     }, 2000);
 
 
@@ -130,7 +130,7 @@ $(function () {
         // Highlight selected one
         $(this).find('i').attr('style', 'opacity: 1;');
 
-        // Load the asked global module
+        // Load the asked module
         app.moduleLoad( $(this).attr('id') );
 
     });

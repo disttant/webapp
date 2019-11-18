@@ -100,7 +100,7 @@ let channelConfig = {
     createchannel: "http://broker.dalher.net/v1/channels/",
     deletechannel: "http://broker.dalher.net/v1/channels/",
     addchanneltogroup: "http://broker.dalher.net/v1/channels/link/",
-    deletechanneltogroup:  "http://broker.dalher.net/v1/channels/link/"
+    deletechannelfromgroup:  "http://broker.dalher.net/v1/channels/link/"
 
 }
 

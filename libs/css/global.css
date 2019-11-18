@@ -48,8 +48,17 @@ a:link {
 .text-black {
     color: #333333 !important;
 }
+
 .no-border{
     border: none !important;
+}
+
+.mb-6 {
+    margin-bottom: 4rem !important;
+}
+
+.mb-7 {
+    margin-bottom: 4.5rem !important;
 }
 
 
@@ -102,6 +111,7 @@ a:link {
     #sidebar-menu {
         width: 15rem !important; 
     }
+
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -118,6 +128,10 @@ a:link {
 
     #sidebar-menu {
         width: 20rem !important; 
+    }
+
+    .toast-width {
+        width: 33vw !important;
     }
 
 }

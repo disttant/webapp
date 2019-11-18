@@ -69,6 +69,13 @@
 
 
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-wrapper" onclick="app.sendModal('nepe', 'pene', 'pruebaza');">
+    Launch demo modal
+</button>
+
+
+
 <!-- Execute module actions -->
 <script>
 
@@ -119,7 +126,8 @@ $(function () {
                     '</div>'+
                 '</div>'+
                 '<div id="collapse'+newId+'" class="collapse" aria-labelledby="heading'+ newId +'" data-parent="#groups-accordion">'+
-                    '<div class="card-body">contenido'+
+                    '<div class="card-body">'+
+                        'No channels added yet' +
                     '</div>'+
                 '</div>'+
             '</div>';
@@ -127,15 +135,76 @@ $(function () {
             // Append the element to the accordion flow
             $('#groups-accordion').append(newGroup);
 
+            // Check if there are channels
+            if( item.channels.length !== 0 )
+            {
+                // Put the channels into the group
+                $('#collapse' + newId + ' > .card-body').html('');
+                $('#collapse' + newId + ' > .card-body').html('<ul class="list-group list-group-flush"></ul>');
+            }
+
+            // Put found channels into each group
+            item.channels.forEach( function( channel ) {
+
+                $('#collapse' + newId + ' > .card-body > .list-group').append( 
+                    '<li class="list-group-item p-0">' +
+                        '<div class="d-flex">' +
+                            '<div class="py-3 w-100">'+
+                                '<div class="d-flex flex-column">' +
+                                    '<div class="py-1">' + channel + '</div>' +
+                                    '<div class="py-1">' +
+                                        '<small class="text-muted">' +
+                                            'aksjdhsadhasd' +
+                                        '</small>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>'+
+                            '<div class="d-flex align-items-center flex-shrink-1">'+
+                                '<a href="#" id="delete-channel'+newId+'" role="button" x-hiden-value="' + channel + '" class="btn btn-light" >'+
+                                    '<i class="material-icons align-middle">close</i>'+
+                                '</a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</li>'
+                );
+            });
+
+            // Button for adding channels
+            $('#collapse' + newId + ' > .card-body').append(
+                '<div class="d-flex mt-3">'+
+                    '<a href="#" role="button" x-hiden-value="lol" class="btn btn-light" >'+
+                        '<i class="material-icons align-middle">add</i>'+
+                    '</a>' +
+                '</div>'
+            );
+
         });
+
         app.moduleSpinner('hide');
     });
     
-
     // Toggle edition mode
     $('#actionbar-toggler').on('click', function(){
         $('#actionbar-wrapper').toggleClass('d-none');
     });
+
+    // Detecting channel removal
+    $('body').on('click', 'a[id^="delete-channel"]', function(){
+
+        console.log( channel );
+
+        channel.ejectChannel( $(this).attr('x-hiden-value'), function( response ) {
+
+            if( response === true )
+            {
+                app.moduleLoad('homeMaker')
+            }else{
+                app.sendToast('Device was not removed');
+            }
+        });
+
+    });
+
 
 });
 

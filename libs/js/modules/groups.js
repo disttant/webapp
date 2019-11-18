@@ -59,37 +59,39 @@ export class groupController {
         if(typeof data.getgrouplist !== 'string')
             return {error: 'getgrouplist URL is not a string'};
 
-        if(data.getgrouplist.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        let URL_pattern = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi;
+
+        if(data.getgrouplist.match(URL_pattern) === null)
             return {error: 'getgrouplist URL does not seem to be a real URL'};
 
         if(typeof data.creategroup !== 'string')
             return {error: 'creategroup URL is not a string'};
 
-        if(data.creategroup.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.creategroup.match(URL_pattern) === null)
             return {error: 'creategroup URL does not seem to be a real URL'};
 
         if(typeof data.deletegroup !== 'string')
             return {error: 'deletegroup URL is not a string'};
 
-        if(data.deletegroup.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.deletegroup.match(URL_pattern) === null)
             return {error: 'deletegroup URL does not seem to be a real URL'};
 
         if(typeof data.getmessages !== 'string')
             return {error: 'getmessages URL is not a string'};
 
-        if(data.getmessages.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.getmessages.match(URL_pattern) === null)
             return {error: 'getmessages URL does not seem to be a real URL'};
 
         if(typeof data.getrelatedgroups !== 'string')
             return {error: 'getrelatedgroups URL is not a string'};
 
-        if(data.getrelatedgroups.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.getrelatedgroups.match(URL_pattern) === null)
             return {error: 'getrelatedgroups URL does not seem to be a real URL'};
 
         if(typeof data.getfullgroups !== 'string')
             return {error: 'getfullgroups URL is not a string'};
 
-        if(data.getfullgroups.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.getfullgroups.match(URL_pattern) === null)
             return {error: 'getfullgroups URL does not seem to be a real URL'};
 
         this.numberofmessagestoget = data.numberofmessagestoget;

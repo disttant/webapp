@@ -53,8 +53,32 @@
 </div>
 
 
+        
+<!-- Modal -->
+<div class="modal fade" id="modal-wrapper" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-0 border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="modal-title">...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div id="modal-footer" class="modal-footer border-0">
+                <button type="button" class="btn btn-light bg-black text-light" x-modal-callback-tag="default">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+
+<!-- Thw wonderfull app -->
 <div id="app-wrapper" class="d-none">
 
     <!-- Top bar -->
@@ -86,11 +110,6 @@
 
 
 
-    <!-- Toasts container-->
-    <div id="toastWrapper" class="fixed-middle w-100"></div>
-
-
-
     <!-- Content -->
     <div id="module-wrapper" class="p-3"></div>
 
@@ -112,5 +131,12 @@
         </button>
 
     </div>
+
+
+
+    <!-- Toast bar-->
+    <div id="toastWrapper" class="fixed-bottom w-100 mb-7"></div>
+
+
 
 </div>

@@ -80,10 +80,10 @@ export class appController {
     moduleLoad = function ( moduleName = null ){
 
         // Fix the 'this' context
-        var thisClass = this ;
+        //var thisClass = this ;
 
         // Show the spinner
-        thisClass.moduleSpinner('show');
+        //thisClass.moduleSpinner('show');
 
         // Load the module and hide the spinner
         $.get(moduleName + '.m')
@@ -94,9 +94,9 @@ export class appController {
             $("#module-wrapper").load('404.m');
         })
         .always(function(){
-            setTimeout(function(){
+            /*setTimeout(function(){
                 thisClass.moduleSpinner('hide');
-            }, 1000);
+            }, 1000);*/
         });
 
     }
@@ -104,6 +104,72 @@ export class appController {
 
     genRandomId = function () {
         return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+
+    /* *
+    *
+    * This function -----
+    * 
+    * */
+    sendToast = function (msg){
+
+        let theAlert =
+            '<div id="toast" class="alert alert-dismissible fade show m-2 bg-black text-light toast-width" role="alert">'+
+                msg +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                    '<i class="material-icons md-light md-18 align-middle">close</i>'+
+                '</button>'+
+            '</div>';
+    
+        $('#toastWrapper').append(theAlert);
+    
+        $('div[class~="alert"][id^="toast"]').hide().show('fast', 'linear');
+    
+        window.setTimeout(function() {
+    
+            $('div[class~="alert"][id^="toast"]').fadeTo(250, 0).slideUp(250, function(){
+                $(this).remove(); 
+            });
+    
+        }, 3000);
+    }
+
+
+
+    /* *
+    *
+    * This function -----
+    * 
+    * */
+   sendModal = function (title, body, tag){
+
+        // Check the fields
+        if( typeof title !== 'string' ){
+            return;
+        }
+
+        if( typeof body !== 'string' ){
+            return;
+        }
+
+        if( typeof tag !== 'string' ){
+            return;
+        }
+
+        // Set the title of the modal
+        $('#modal-title').html('').append(title);
+
+        // Set the content of the modal
+        $('#modal-body').html('').append(body);
+
+        // Set the new tag for callback
+        $('#modal-footer > button[x-modal-callback-tag]').attr('x-modal-callback-tag' , tag);
+
+        /*if( typeof callback !== 'function' ){
+            return;
+        }
+        callback();  */  
     }
 
 }

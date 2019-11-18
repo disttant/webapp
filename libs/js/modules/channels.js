@@ -65,49 +65,51 @@ export class channelController {
         if(typeof data.getfreechannels !== 'string')
             return {error: 'getfreechannels URL is not a string'};
 
-        if(data.getfreechannels.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        let URL_pattern = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi;
+
+        if(data.getfreechannels.match(URL_pattern) === null)
             return {error: 'getfreechannles URL does not seem to be a real URL'};
 
         if(typeof data.sendmessage !== 'string')
             return {error: 'sendmessage URL is not a string'};
 
-        if(data.sendmessage.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.sendmessage.match(URL_pattern) === null)
             return {error: 'sendmessage URL does not seem to be a real URL'};
 
         if(typeof data.getmessages !== 'string')
             return {error: 'getmessages URL is not a string'};
 
-        if(data.getmessages.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.getmessages.match(URL_pattern) === null)
             return {error: 'getmessages URL does not seem to be a real URL'};
 
         if(typeof data.addchanneltogroup !== 'string')
             return {error: 'addchanneltogroup URL is not a string'};
 
-        if(data.addchanneltogroup.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.addchanneltogroup.match(URL_pattern) === null)
             return {error: 'addchanneltogroup URL does not seem to be a real URL'};
 
         if(typeof data.deletechannelfromgroup !== 'string')
             return {error: 'deletechanneltogroup URL is not a string'};
 
-        if(data.deletechannelfromgroup.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.deletechannelfromgroup.match(URL_pattern) === null)
             return {error: 'deletechanneltogroup URL does not seem to be a real URL'};
 
         if(typeof data.getchannels !== 'string')
             return {error: 'getchannels URL is not a string'};
 
-        if(data.getchannels.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.getchannels.match(URL_pattern) === null)
             return {error: 'getchannels URL does not seem to be a real URL'};
 
         if(typeof data.createchannel !== 'string')
             return {error: 'createchannel URL is not a string'};
 
-        if(data.createchannel.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.createchannel.match(URL_pattern) === null)
             return {error: 'createchannel URL does not seem to be a real URL'};
 
         if(typeof data.deletechannel !== 'string')
             return {error: 'deletechannel URL is not a string'};
 
-        if(data.deletechannel.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi) === null)
+        if(data.deletechannel.match(URL_pattern) === null)
             return {error: 'deletechannel URL does not seem to be a real URL'};
 
         this.nummessages = data.numberofmessagestoget;

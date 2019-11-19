@@ -139,10 +139,14 @@ export class appController {
 
     /* *
     *
-    * This function -----
+    * This function changes the content of modal
+    * and exec callback after clicking
     * 
     * */
-   sendModal = function (title, body, tag){
+   sendModal = function (title, body, callback){
+
+        let modalKey = this.genRandomId();
+        let cleanModal = null;
 
         // Check the fields
         if( typeof title !== 'string' ){
@@ -153,23 +157,32 @@ export class appController {
             return;
         }
 
-        if( typeof tag !== 'string' ){
+        if( typeof callback !== 'function' ){
             return;
         }
+
+        // Creates a clean modal by modifying the default one
+        cleanModal = $('#modal-wrapper').find('#modal-footer > button[x-modal-key]').attr('x-modal-key', modalKey);
+        cleanModal = $('#modal-wrapper').html();
+
+        $('#modal-wrapper').html('').html(cleanModal);
 
         // Set the title of the modal
         $('#modal-title').html('').append(title);
 
         // Set the content of the modal
         $('#modal-body').html('').append(body);
+        
+        // Show the modal
+        $('#modal-wrapper').modal('show');
 
-        // Set the new tag for callback
-        $('#modal-footer > button[x-modal-callback-tag]').attr('x-modal-callback-tag' , tag);
+        // Call a callback when clicking this button
+        $('body').find('button[x-modal-key="'+modalKey+'"]').on('click', function(){
 
-        /*if( typeof callback !== 'function' ){
-            return;
-        }
-        callback();  */  
+            callback();
+
+            $('#modal-wrapper').modal('hide');
+        });
     }
 
 }

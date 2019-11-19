@@ -69,13 +69,6 @@
 
 
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-wrapper" onclick="app.sendModal('nepe', 'pene', 'pruebaza');">
-    Launch demo modal
-</button>
-
-
-
 <!-- Execute module actions -->
 <script>
 
@@ -160,7 +153,7 @@ $(function () {
                                 '</div>' +
                             '</div>'+
                             '<div class="d-flex align-items-center flex-shrink-1">'+
-                                '<a href="#" id="delete-channel'+newId+'" role="button" x-hiden-value="' + channel + '" class="btn btn-light" >'+
+                                '<a href="#" x-btn-function="free-channel" role="button" x-hiden-value="' + channel + '" class="btn btn-light" >'+
                                     '<i class="material-icons align-middle">close</i>'+
                                 '</a>'+
                             '</div>'+
@@ -172,7 +165,7 @@ $(function () {
             // Button for adding channels
             $('#collapse' + newId + ' > .card-body').append(
                 '<div class="d-flex mt-3">'+
-                    '<a href="#" role="button" x-hiden-value="lol" class="btn btn-light" >'+
+                    '<a href="#" role="button" x-btn-function="relate-channel" x-hiden-value="'+ item.name +'" class="btn btn-light">'+
                         '<i class="material-icons align-middle">add</i>'+
                     '</a>' +
                 '</div>'
@@ -189,9 +182,7 @@ $(function () {
     });
 
     // Detecting channel removal
-    $('body').on('click', 'a[id^="delete-channel"]', function(){
-
-        console.log( channel );
+    $('body').on('click', 'a[x-btn-function="free-channel"]', function(){
 
         channel.ejectChannel( $(this).attr('x-hiden-value'), function( response ) {
 
@@ -202,8 +193,60 @@ $(function () {
                 app.sendToast('Device was not removed');
             }
         });
+    });
+
+    // Detecting agregation tries
+    $('body').on('click', 'a[x-btn-function="relate-channel"]', function(){
+
+        let groupName = $(this).attr('x-hiden-value');
+
+        //app.moduleSpinner('show');
+        channel.getFreeChannels(function( result ){
+
+            //app.moduleSpinner('hide');
+            let modalBody = null;
+
+            // Check if there is results
+            if( result === false ){
+                sendToast('Error requesting. Try again.');
+                return;
+            }
+
+            if( result.count === 0 ){
+                sendToast('There are not free devices');
+                return;
+            }
+
+            // Building the selectable
+            modalBody = '<select id="channel-name" >';
+
+            result.forEach( function( item ){
+                modalBody += '<option value="'+item.channel+'">'+item.channel +'</option>';
+            });     
+
+            modalBody += '</select>';
+
+            // Building the modal and relating the channel
+            app.sendModal(
+                'Add to ' + groupName, 
+
+                modalBody,
+
+                function(){
+
+                    let channelName = $('#modal-body > #channel-name').val();
+
+                    //console.log( channelName );
+                    //console.log( groupName );
+                }
+            );
+
+        });
+
+        
 
     });
+
 
 
 });

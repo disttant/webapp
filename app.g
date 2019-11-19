@@ -55,7 +55,7 @@
 
         
 <!-- Modal -->
-<div class="modal fade" id="modal-wrapper" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+<div id="modal-wrapper" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-0 border-0">
             <div class="modal-header border-0">
@@ -70,7 +70,9 @@
                 </div>
             </div>
             <div id="modal-footer" class="modal-footer border-0">
-                <button type="button" class="btn btn-light bg-black text-light" x-modal-callback-tag="default">Save changes</button>
+                <button type="button" class="btn btn-light bg-black text-light" x-modal-key="default">
+                    <i class="material-icons md-24 md-light align-middle">done</i>
+                </button>
             </div>
         </div>
     </div>

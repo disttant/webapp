@@ -79,26 +79,21 @@ export class appController {
 
     moduleLoad = function ( moduleName = null ){
 
-        // Fix the 'this' context
-        //var thisClass = this ;
+        // Turn off all body-related click event handlers 
+        $('body').off('click');
 
-        // Show the spinner
-        //thisClass.moduleSpinner('show');
-
-        // Load the module and hide the spinner
-        $.get(moduleName + '.m')
+        // Load the module
+        $.get({
+            url: moduleName + '.m', 
+            cache: false
+        })
         .done(function( data ) {
-            $("#module-wrapper").html(data);
+            $('body').find("#module-wrapper").empty().html(data);
         })
         .fail(function() {
             $("#module-wrapper").load('404.m');
         })
-        .always(function(){
-            /*setTimeout(function(){
-                thisClass.moduleSpinner('hide');
-            }, 1000);*/
-        });
-
+        .always(function(){});
     }
 
 
@@ -165,13 +160,13 @@ export class appController {
         cleanModal = $('#modal-wrapper').find('#modal-footer > button[x-modal-key]').attr('x-modal-key', modalKey);
         cleanModal = $('#modal-wrapper').html();
 
-        $('#modal-wrapper').html('').html(cleanModal);
+        $('#modal-wrapper').empty().html(cleanModal);
 
         // Set the title of the modal
-        $('#modal-title').html('').append(title);
+        $('#modal-title').empty().append(title);
 
         // Set the content of the modal
-        $('#modal-body').html('').append(body);
+        $('#modal-body').empty().append(body);
         
         // Show the modal
         $('#modal-wrapper').modal('show');

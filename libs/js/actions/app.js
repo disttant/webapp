@@ -74,6 +74,31 @@ $(function () {
     }, 2000);
 
 
+    // LABORATORY: Hide bottom bar when scrolling
+    /*$(window).on('mousewheel DOMMouseScroll', function (e) {
+
+        var direction = (function () {
+    
+            var delta = (e.type === 'DOMMouseScroll' ?
+                         e.originalEvent.detail * -40 :
+                         e.originalEvent.wheelDelta);
+    
+            return delta > 0 ? 0 : 1;
+        }());
+    
+        if(direction === 1) {
+           // scroll down
+           console.log ('down');
+           $('#footer').removeClass('d-flex').addClass('d-none');
+        }
+        if(direction === 0) {
+           // scroll up
+           console.log ('up' , $('#footer') );
+           $('#footer').removeClass('d-none').addClass('d-flex');
+        }
+    });*/
+
+
 
     // Close session button
     $('a[id="logout"]').on('click', function(){

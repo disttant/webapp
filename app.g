@@ -90,10 +90,17 @@
             <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
         </div>
         <!-- Menu button -->
-        <button id="sidebarOpener" class="btn">
-            <i class="material-icons md-24 md-light align-middle">menu</i>
-        </button>
+        <div>
+            <button id="sidebarOpener" class="btn">
+                <i class="material-icons md-24 md-light align-middle">menu</i>
+            </button>
+        </div>
     </nav>
+
+    <!-- Preloader infinite bar -->
+    <div id="top-preloader" class="linear-activity invisible">
+        <div class="indeterminate"></div>
+    </div>
     
 
 
@@ -113,7 +120,7 @@
 
 
     <!-- Content -->
-    <div id="module-wrapper" class="p-3"></div>
+    <div id="module-wrapper" class="mb-7 p-3"></div>
 
 
 

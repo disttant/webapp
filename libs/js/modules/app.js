@@ -29,58 +29,70 @@ export class appController {
 
     }*/
 
+    spinnerType = 'page';
+
     
+
+    /* *
+    *
+    * This function must ...
+    * 
+    * */
     spinner = function ( mode ){
+
         switch (mode){
+
             case 'show':
-                
-                $('#app-wrapper').addClass('d-none');
-                $('#app-spinner-wrapper').removeClass('d-none');
-                return this;
+
+                if ( this.spinnerType === 'page' ){
+                    $('#app-wrapper').addClass('d-none');
+                    $('#app-spinner-wrapper').removeClass('d-none');
+                }
+
+                if ( this.spinnerType === 'module' ){
+                    $('#module-wrapper').addClass('d-none');
+                    $('#module-spinner-wrapper').removeClass('d-none');
+                }
+
+                if ( this.spinnerType === 'bar' ){
+                    $('#top-preloader').removeClass('invisible');
+                }
+
                 break;
 
             case 'hide':
 
-                $('#app-spinner-wrapper').addClass('d-none');
-                $('#app-wrapper').removeClass('d-none');
-                return this;
-                break;
-
-            default:
-                return this;
-                break;
-        }
-    }
-
-
-    moduleSpinner = function ( mode ){
-        switch (mode){
-            case 'show':
-                
-                $('#module-wrapper').addClass('d-none');
-                $('#module-spinner-wrapper').removeClass('d-none');
-                return this;
-                break;
-
-            case 'hide':
+                $('#top-preloader').addClass('invisible');
 
                 $('#module-spinner-wrapper').addClass('d-none');
                 $('#module-wrapper').removeClass('d-none');
-                return this;
-                break;
 
-            default:
-                return this;
+                // We need some seconds for getting ready
+                setTimeout(function(){
+                    $('#app-spinner-wrapper').addClass('d-none');
+                    $('#app-wrapper').removeClass('d-none');
+                }, 2000);
+
                 break;
         }
+
+        return this;
+
     }
 
 
 
+    /* *
+    *
+    * This function must ...
+    * 
+    * */
     moduleLoad = function ( moduleName = null ){
 
         // Turn off all body-related click event handlers 
         $('body').off('click');
+
+        app.spinnerType = 'module';
 
         // Load the module
         $.get({
@@ -97,9 +109,16 @@ export class appController {
     }
 
 
+
+    /* *
+    *
+    * This function -----
+    * 
+    * */
     genRandomId = function () {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
+
 
 
     /* *
@@ -138,7 +157,7 @@ export class appController {
     * and exec callback after clicking
     * 
     * */
-   sendModal = function (title, body, callback){
+    sendModal = function (title, body, callback){
 
         let modalKey = this.genRandomId();
         let cleanModal = null;

@@ -128,6 +128,25 @@ $(function () {
 
     let currModule    = null;
 
+    
+
+    // Controller for beginning ajax calls
+    $( document ).ajaxStart(function() {
+
+        app.spinner('show');
+    });
+
+    // Controller for finishing ajax calls
+    $( document ).ajaxStop(function() {
+
+        app.spinner('hide');
+    });
+
+
+
+    // Define the spinner type
+    app.spinnerType = 'page';
+
     $.get(uriParams.g + '.g')
     .done(function() {
 
@@ -142,12 +161,17 @@ $(function () {
         currModule = defModule;
     })
     .always(function(){
-        
+
+        // Define the spinner type
+        app.spinnerType = 'page';
+
         $("#index-wrapper").load(currModule + '.g', function(){
 
+            // Define the spinner type
+            app.spinnerType = 'page';
+
             $.getScript('libs/js/actions/' + currModule + '.js')
-            .done(function() {
-            })
+            .done(function() {})
             .fail(function(){
                 console.warn('LOG: No actions needed');
             });
@@ -155,6 +179,9 @@ $(function () {
         });
 
     });
+
+
+    
 
 });
 
@@ -188,7 +215,7 @@ $(function () {
 
 
 
-
+/*
 
 
 var interval;   // Variable para almacenar intervalos generados en el JavaScript de distintos módulos
@@ -415,3 +442,5 @@ window.prepareToModel = function(model, channel, states){
     }
 
 }
+
+*/

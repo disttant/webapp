@@ -74,8 +74,7 @@
 
     $(function () {
 
-        // Show module spinner when loading the groups
-        app.moduleSpinner('show');
+        app.spinnerType = 'module';
 
         // Show groups and channels inside
         group.getFullGroups(function( response ){
@@ -88,7 +87,6 @@
             // Check if there are not groups
             if( response.groups.length == 0 )
             {
-                app.moduleSpinner('hide');
                 return;
             }
 
@@ -174,8 +172,6 @@
                 );
 
             });
-
-            app.moduleSpinner('hide');
         });
         
         // Detecting actionbar toggle
@@ -186,13 +182,17 @@
         // Detecting channel removal
         $('body').on('click', 'a[x-btn-function="free-channel"]', function(){
 
+            // Changing the spinner mode to infinite bar
+            app.spinnerType = 'bar';
+
             channel.ejectChannel( $(this).attr('x-hiden-value'), function( response ) {
 
                 if( response === true )
                 {
-                    app.moduleLoad('homeMaker')
+                    app.sendToast('Device is now free');
+                    app.moduleLoad('homeMaker');
                 }else{
-                    app.sendToast('Device was not removed');
+                    app.sendToast('Oops! Device is still in a room');
                 }
             });
         });
@@ -202,6 +202,9 @@
 
             let groupName = $(this).attr('x-hiden-value');
 
+            // Changing the spinner mode to infinite bar
+            app.spinnerType = 'bar';
+
             //app.moduleSpinner('show');
             channel.getFreeChannels(function( result ){
 
@@ -210,7 +213,7 @@
 
                 // Check if there is results
                 if( result === false ){
-                    app.sendToast('Oops! could not get available devices');
+                    app.sendToast('Oops! Could not get available devices');
                     return;
                 }
 

@@ -26,6 +26,11 @@ setInterval(function(){
 
 $(function () {
 
+    // Default module to load for first time
+    app.moduleLoad('home');
+
+
+
     // Detecting network status
     window.addEventListener('online', function(e) {
         
@@ -39,14 +44,16 @@ $(function () {
 
 
 
-    // Show the sync icon when AJAX is calling
+    // Actions to do when AJAX is called
     $( document ).ajaxStart(function() {
 
+        // 
         $('#infobar-sync').removeClass('d-none');
     });
 
     $( document ).ajaxStop(function() {
 
+        //
         $('#infobar-sync').addClass('d-none');
     });
 
@@ -62,16 +69,6 @@ $(function () {
 
         $('#infobar-sync-error').addClass('d-none');
     });
-
-
-
-    // Hide the global spinner
-    setTimeout(() => {
-        app
-            .spinner('hide')
-            .moduleLoad('home');
-            
-    }, 2000);
 
 
     // LABORATORY: Hide bottom bar when scrolling

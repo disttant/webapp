@@ -13,28 +13,35 @@
  *  -> creategroup: The URL to the endpoint of the API to create a group of the user.
  *  -> deletegroup: The URL to the endpoint of the API to delete a group of the user.
  *  -> getmessages: The URL to the endpoint of the API to get the last messages of a group.
- *  -> getrelatedgroups: The URL to the endpoint of the API to get the list of groups with channels inside.
+ *  -> getrelatedgroups: The URL to the endpoint of the API to get the list of groups with devices inside.
  *  -> getfullgroups: The URL to the endpoint of the API to get the list of all groups, empties or not.
+ *  -> getfullgroupwithinfo: The URL to the endpoint of the API to get the list of devices of a group with all their profile data.
  * 
  *  METHODS:
  * 
- *  --> getRelatedGroups: Returns a list with all groups with channels inside.
+ *  --> getRelatedGroups: Returns a list with all groups with devices inside.
  *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the group list/false -- RETURNS: true/false.
  * 
- *  --> getFullGroups: Returns a list with all groups with or wihtout channles inside.
+ *  --> getFullGroups: Returns a list with all groups with or wihtout devices inside.
  *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the full group list/false -- RETURNS: true/false.
  * 
  *  --> getGroupList: Returns a list with all groups empties
  *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the group list/false -- RETURNS: true/false.
  * 
  *  --> createGroup: Create a group in the system
- *      NEEDS: name of the group to create, function to be execute when complete -- GIVEN TO CALLBACK: an array with the channels/false -- RETURNS: true/false.
+ *      NEEDS: name of the group to create, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
  * 
  *  --> deleteGroup: Deletes a group from the system
- *      NEEDS: name of the group to delete, function to be execute when complete -- GIVEN TO CALLBACK: an array with the channels/false -- RETURNS: true/false.
+ *      NEEDS: name of the group to delete, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
  * 
  *  --> getGroupMessages: Ask for the last messages of a group
  *      NEEDS: name of the group to get the messages, function to be execute when complete -- GIVEN TO CALLBACK: an array with the messages/false -- RETURNS: true/false.
+ * 
+ *  --> getGroupsListWithDevices: Returns the complete list of groups with their devices associated.
+ *      NNEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the list/false -- RETURNS: true/false.
+ * 
+ *  --> getFullGroupWithInfo: Returns the list of all devices included into a group with all their profile data.
+ *      NEEDS: name of the group to get the list, function to be execute when complete -- GIVEN TO CALLBACK: an array with the devices and cata/false -- RETURNS: true/false.
  * 
  */
 
@@ -94,6 +101,12 @@ export class groupController {
         if(data.getfullgroups.match(URL_pattern) === null)
             return {error: 'getfullgroups URL does not seem to be a real URL'};
 
+        if(typeof data.getfullgroupwithinfo !== 'string')
+            return {error: 'getfullgroupwithinfo URL is not a string'};
+
+        if(data.getfullgroupwithinfo.match(URL_pattern) === null)
+            return {error: 'getfullgroupwithinfo URL does not seem to be a real URL'};
+
         this.numberofmessagestoget = data.numberofmessagestoget;
         this.URL_getgrouplist = data.getgrouplist;
         this.URL_creategroup = data.creategroup;
@@ -101,6 +114,63 @@ export class groupController {
         this.URL_getmessages = data.getmessages;
         this.URL_getrelatedgroups = data.getrelatedgroups;
         this.URL_getfullgroups = data.getfullgroups;
+        this.URL_getfullgroupwithinfo = data.getfullgroupwithinfo;
+
+    }
+
+
+
+    /*
+     *
+     *  Method to get the list of all devices in a group with all their info
+     *
+     */
+
+    getFullGroupWithInfo = function ( group, callback ) {
+
+        if(typeof callback !== 'function')
+            return false;
+
+        if(typeof group !== 'string')
+            return false;
+
+        if(group.match(/^[a-z0-9]+$/gi) === null)
+            return false;
+
+        let url = this.URL_getfullgroupwithinfo + group;
+
+        $.ajax({
+
+            url: url,
+            type: 'get',
+            headers: {
+
+                "Authorization": "Bearer "+ localStorage.access_token,
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+
+            },
+            beforeSend: function(){
+
+                console.log("======> Pidiendo todos los grupos con información de dispositivos");
+
+            },
+            success: function(response){
+
+                console.log("===> Grupos obtenidos");
+                callback(response);
+
+            },
+            error: function (response){
+
+                console.warn("===> [Error]");
+                callback(false);
+
+            }
+    
+        });
+
+        return true;
 
     }
 
@@ -130,7 +200,7 @@ export class groupController {
             },
             beforeSend: function(){
 
-                console.log("======> Pidiendo todos los grupos con canales");
+                console.log("======> Pidiendo todos los grupos con dispositivos");
 
             },
             success: function(response){
@@ -260,11 +330,11 @@ export class groupController {
 
     /*
      *
-     *  Method to get a full list of all the groups with thier channels
+     *  Method to get a full list of all the groups with their devices
      *
      */
 
-    getGroupsListWithChannels = function ( callback ) {
+    getGroupsListWithDevices = function ( callback ) {
 
         if(typeof callback !== 'function')
             return false;

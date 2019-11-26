@@ -7,7 +7,7 @@ import * as oauth2_md from './modules/oauth2.js';
 import * as login_md from './modules/login.js';
 import * as app_md from './modules/app.js';
 import * as group_md from './modules/groups.js';
-import * as channel_md from './modules/channels.js';
+import * as device_md from './modules/devices.js';
 
 
 
@@ -67,7 +67,6 @@ window.app = new app_md.appController();
  * Initialize this module
  * 
  * */
-
 let groupConfig = {
    
     numberofmessagestoget: 3,
@@ -76,7 +75,8 @@ let groupConfig = {
     deletegroup: "http://broker.dalher.net/v1/groups/",
     getmessages: "http://broker.dalher.net/v1/groups/messages/",
     getrelatedgroups: "http://broker.dalher.net/v1/groups/list/related",
-    getfullgroups: "http://broker.dalher.net/v1/groups/list/full"
+    getfullgroups: "http://broker.dalher.net/v1/groups/list/full",
+    getfullgroupwithinfo: "http://broker.dalher.net/v1/group/list/related/"
 
 };
 
@@ -90,21 +90,23 @@ window.group = new group_md.groupController(groupConfig);
  * Initialize this module
  * 
  * */
-let channelConfig = {
+let deviceConfig = {
 
     numberofmessagestoget: 3,
-    getfreechannels: "http://broker.dalher.net/v1/channels/list/free",
-    sendmessage: "http://broker.dalher.net/v1/channels/message/",
-    getmessages: "http://broker.dalher.net/v1/channels/messages/",
-    getchannels: "http://broker.dalher.net/v1/channels/list",
-    createchannel: "http://broker.dalher.net/v1/channels/",
-    deletechannel: "http://broker.dalher.net/v1/channels/",
-    addchanneltogroup: "http://broker.dalher.net/v1/channels/link/",
-    deletechannelfromgroup:  "http://broker.dalher.net/v1/channels/link/"
+    getfreedevices: "http://broker.dalher.net/v1/devices/list/free",
+    sendmessage: "http://broker.dalher.net/v1/devices/message/",
+    getmessages: "http://broker.dalher.net/v1/devices/messages/",
+    getdevices: "http://broker.dalher.net/v1/devices/list",
+    createdevice: "http://broker.dalher.net/v1/devices/",
+    deletedevice: "http://broker.dalher.net/v1/devices/",
+    adddevicetogroup: "http://broker.dalher.net/v1/devices/relation/",
+    deletedevicefromgroup:  "http://broker.dalher.net/v1/devices/relation/",
+    changeprofile: "http://broker.dalher.net/v1/devices/profile/",
+    savemapcoords: "http://broker.dalher.net/v1/devices/relation/coordinates/"
 
 }
 
-window.channel = new channel_md.channelController(channelConfig);
+window.device = new device_md.deviceController(deviceConfig);
 
 
 
@@ -229,8 +231,8 @@ var URL_deletegroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
 var URL_creategroup = "https://broker.dalher.net/"+ brokerVersion +"/groups/";
 var URL_getgrouplist = "https://broker.dalher.net/"+ brokerVersion +"/groups/list";
 var URL_getfullgroups = "https://broker.dalher.net/"+ brokerVersion +"/groups/lists";
-var URL_getfreechannels = "https://broker.dalher.net/"+ brokerVersion +"/channels/list/free";
-var URL_sendmessage = "https://broker.dalher.net/"+ brokerVersion +"/channels/message/";
+var URL_getfreedevices = "https://broker.dalher.net/"+ brokerVersion +"/devices/list/free";
+var URL_sendmessage = "https://broker.dalher.net/"+ brokerVersion +"/devices/message/";
 
 window.showToast = function (msg){      // Esta función global genera y muestra un Toast
 
@@ -258,7 +260,7 @@ window.showToast = function (msg){      // Esta función global genera y muestra
 
 window.getResponse = function (reciever){
 
-    var url = "https://broker.dalher.net/v5/channels/messages/" + reciever + "/5";
+    var url = "https://broker.dalher.net/v5/devices/messages/" + reciever + "/5";
     var result = "no result";
 
     return $.ajax({
@@ -344,7 +346,7 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
 
     if(message != ""){
 
-        var url = "https://broker.dalher.net/"+ brokerVersion +"/channels/message/" + reciever;
+        var url = "https://broker.dalher.net/"+ brokerVersion +"/devices/message/" + reciever;
         message = "{\"message\":\""+ message +"\"}";
 
         return $.ajax({
@@ -372,71 +374,71 @@ window.sendCommand = function (command, reciever, data="none"){     // Esta func
 
 }
 
-window.prepareToModel = function(model, channel, states){
+window.prepareToModel = function(model, device, states){
 
     if(model == "bombilla"){
 
-        $('#bombillaIcon').attr('id', channel +"output1");
-        $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
+        $('#bombillaIcon').attr('id', device +"output1");
+        $('#'+ device +"output1").parent().attr('onclick', "change(\""+ device +"\", \"output1\");");
 
 
         if(states[3] == "0"){
-            $('#'+ channel +"output1").empty();
-            $('#'+ channel +"output1").append("star_border");
+            $('#'+ device +"output1").empty();
+            $('#'+ device +"output1").append("star_border");
         }
         if(states[3] == "1"){
-            $('#'+ channel +'output1').empty();
-            $('#'+ channel +'output1').append("star");
+            $('#'+ device +'output1').empty();
+            $('#'+ device +'output1').append("star");
         }
 
     }
 
     if(model == "multiple4"){
 
-        $('#multiple1Icon').attr('id', channel +"output1");
-        $('#multiple2Icon').attr('id', channel +"output2");
-        $('#multiple3Icon').attr('id', channel +"output3");
-        $('#multiple4Icon').attr('id', channel +"output4");
-        $('#'+ channel +"output1").parent().attr('onclick', "change(\""+ channel +"\", \"output1\");");
-        $('#'+ channel +"output2").parent().attr('onclick', "change(\""+ channel +"\", \"output2\");");
-        $('#'+ channel +"output3").parent().attr('onclick', "change(\""+ channel +"\", \"output3\");");
-        $('#'+ channel +"output4").parent().attr('onclick', "change(\""+ channel +"\", \"output4\");");
+        $('#multiple1Icon').attr('id', device +"output1");
+        $('#multiple2Icon').attr('id', device +"output2");
+        $('#multiple3Icon').attr('id', device +"output3");
+        $('#multiple4Icon').attr('id', device +"output4");
+        $('#'+ device +"output1").parent().attr('onclick', "change(\""+ device +"\", \"output1\");");
+        $('#'+ device +"output2").parent().attr('onclick', "change(\""+ device +"\", \"output2\");");
+        $('#'+ device +"output3").parent().attr('onclick', "change(\""+ device +"\", \"output3\");");
+        $('#'+ device +"output4").parent().attr('onclick', "change(\""+ device +"\", \"output4\");");
 
 
         if(states[3] == "0"){
-            $('#'+ channel +"output1").empty();
-            $('#'+ channel +"output1").append("star_border");
+            $('#'+ device +"output1").empty();
+            $('#'+ device +"output1").append("star_border");
         }
         if(states[3] == "1"){
-            $('#'+ channel +'output1').empty();
-            $('#'+ channel +'output1').append("star");
+            $('#'+ device +'output1').empty();
+            $('#'+ device +'output1').append("star");
         }
 
         if(states[5] == "0"){
-            $('#'+ channel +"output2").empty();
-            $('#'+ channel +"output2").append("star_border");
+            $('#'+ device +"output2").empty();
+            $('#'+ device +"output2").append("star_border");
         }
         if(states[5] == "1"){
-            $('#'+ channel +'output2').empty();
-            $('#'+ channel +'output2').append("star");
+            $('#'+ device +'output2').empty();
+            $('#'+ device +'output2').append("star");
         }
 
         if(states[7] == "0"){
-            $('#'+ channel +"output3").empty();
-            $('#'+ channel +"output3").append("star_border");
+            $('#'+ device +"output3").empty();
+            $('#'+ device +"output3").append("star_border");
         }
         if(states[7] == "1"){
-            $('#'+ channel +'output3').empty();
-            $('#'+ channel +'output3').append("star");
+            $('#'+ device +'output3').empty();
+            $('#'+ device +'output3').append("star");
         }
 
         if(states[9] == "0"){
-            $('#'+ channel +"output4").empty();
-            $('#'+ channel +"output4").append("star_border");
+            $('#'+ device +"output4").empty();
+            $('#'+ device +"output4").append("star_border");
         }
         if(states[9] == "1"){
-            $('#'+ channel +'output4').empty();
-            $('#'+ channel +'output4').append("star");
+            $('#'+ device +'output4').empty();
+            $('#'+ device +'output4').append("star");
         }
 
     }

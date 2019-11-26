@@ -1,70 +1,21 @@
 <!-- Module HTML goes here -->
-
-
-
-<!-- Example of ActionBar -->
-<div id="actionbar" class="d-flex align-items-center mb-4 mt-2">
-    <div id="actionbar-toggler" class="d-flex align-items-center pr-2 ">
-        <button type="button" class="btn btn-primary bg-yellow text-black">
-            <i class="material-icons md-dark md-24 align-middle d-inline">tune</i>
-        </button>
-    </div>
-    <div id="actionbar-wrapper" class="d-none overflow-auto bg-light">
-        <div class="d-flex align-items-stretch ">
-            <div class="d-flex align-items-center pr-2">
-                <i class="material-icons md-dark md-18 align-middle d-inline">arrow_left</i>
-            </div>
-            <div id="actionbar-menu" class="d-flex mx-auto overflow-auto">
-                <a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true">
-                    <i class="material-icons md-dark md-18 align-middle">add</i>
-                    <span class="align-middle">Room</span>
-                </a>
-                <a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true">
-                    <i class="material-icons md-dark md-18 align-middle">delete</i>
-                    <span class="align-middle">Room</span>
-                </a>
-            </div>
-            <div class="d-flex align-items-center pl-2">
-                <i class="material-icons md-dark md-18 align-middle d-inline">arrow_right</i>
-            </div>
-        </div>
-    </div>
+<div class="d-flex justify-content-start mb-4 my-2">
+    <a href="#" class="btn btn-light bg-yellow" role="button" aria-pressed="true" x-btn-function="add-group">
+        <i class="material-icons md-dark md-18 align-middle">add</i>
+        <span class="align-middle">Group</span>
+    </a>
 </div>
 
 
-<!-- Example of group loaded with some channels -->
+
+
+
+
+
+
+<!-- Groups wrapper loaded with devices inside -->
 <div class="accordion" id="groups-accordion">
-
     <!-- New group -->
-    <!--
-    <div class="card">
-        <div class="card-header" id="headingOne">
-
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-auto p-2">
-                    Example Title
-                </div>
-                <div>
-                    <a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <i class="material-icons md-dark md-24 align-middle">arrow_drop_down</i>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true">
-                        <i class="material-icons md-dark md-24 align-middle">blur_on</i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#groups-accordion">
-            <div class="card-body">
-                Example Content
-            </div>
-        </div>
-    </div>
-    -->
-
-
 </div>
 
 
@@ -76,7 +27,7 @@
 
         app.spinnerType = 'module';
 
-        // Show groups and channels inside
+        // Show groups and devices inside
         group.getFullGroups(function( response ){
 
             $('#groups-accordion').empty();
@@ -99,12 +50,16 @@
                 // Build new element into the accordion
                 newGroup = 
                 '<!-- New group -->' +
-                '<div class="card">' +
-                    '<div class="card-header" id="heading'+ newId +'">' +
-
+                '<div class="card border">' +
+                    '<div class="card-header " id="heading'+ newId +'">' +
                         '<div class="d-flex justify-content-between align-items-center">' +
                             '<div class="mr-auto p-2 text-capitalize">'+
                                 item.name +
+                            '</div>'+
+                            '<div>'+
+                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-hiden-value="'+item.name.toLowerCase()+'" x-btn-function="remove-group">'+
+                                    '<i class="material-icons md-dark md-24 align-middle">close</i>'+
+                                '</a>'+
                             '</div>'+
                             '<div>'+
                                 '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
@@ -120,7 +75,7 @@
                     '</div>'+
                     '<div id="collapse'+newId+'" class="collapse" aria-labelledby="heading'+ newId +'" data-parent="#groups-accordion">'+
                         '<div class="card-body">'+
-                            'No channels added yet' +
+                            'No devices added yet' +
                         '</div>'+
                     '</div>'+
                 '</div>';
@@ -128,32 +83,34 @@
                 // Append the element to the accordion flow
                 $('#groups-accordion').append(newGroup);
 
-                // Check if there are channels
-                if( item.channels.length !== 0 )
+                // Check if there are devices
+                if( item.devices.length !== 0 )
                 {
-                    // Put the channels into the group
+                    // Put the devices into the group
                     $('#collapse' + newId + ' > .card-body').html('');
                     $('#collapse' + newId + ' > .card-body').html('<ul class="list-group list-group-flush"></ul>');
                 }
 
-                // Put found channels into each group
-                item.channels.forEach( function( channel ) {
+                // Put found devices into each group
+                item.devices.forEach( function( device ) {
+
+                    if ( device.description == null ) { device.description = 'No description' }
 
                     $('#collapse' + newId + ' > .card-body > .list-group').append( 
                         '<li class="list-group-item p-0">' +
                             '<div class="d-flex">' +
                                 '<div class="py-3 w-100">'+
                                     '<div class="d-flex flex-column">' +
-                                        '<div class="py-1">' + channel + '</div>' +
+                                        '<div class="py-1">' + device.name + '</div>' +
                                         '<div class="py-1">' +
                                             '<small class="text-muted">' +
-                                                'aksjdhsadhasd' +
+                                                device.description +
                                             '</small>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>'+
                                 '<div class="d-flex align-items-center flex-shrink-1">'+
-                                    '<a href="#" x-btn-function="free-channel" role="button" x-hiden-value="' + channel + '" class="btn btn-light" >'+
+                                    '<a href="#" x-btn-function="free-device" role="button" x-hiden-value="' + device.name.toLowerCase() + '" class="btn btn-light" >'+
                                         '<i class="material-icons align-middle">close</i>'+
                                     '</a>'+
                                 '</div>'+
@@ -162,10 +119,10 @@
                     );
                 });
 
-                // Button for adding channels
+                // Button for adding devices
                 $('#collapse' + newId + ' > .card-body').append(
                     '<div class="d-flex mt-3">'+
-                        '<a href="#" role="button" x-btn-function="relate-channel" x-hiden-value="'+ item.name +'" class="btn btn-light">'+
+                        '<a href="#" role="button" x-btn-function="relate-device" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
                             '<i class="material-icons align-middle">add</i>'+
                         '</a>' +
                     '</div>'
@@ -174,18 +131,26 @@
             });
         });
         
+
+
         // Detecting actionbar toggle
         $('body').on('click', '#actionbar-toggler', function(){
             $('#actionbar-wrapper').toggleClass('d-none');
         });
 
-        // Detecting channel removal
-        $('body').on('click', 'a[x-btn-function="free-channel"]', function(){
+
+
+        // Detecting device removal
+        $('body').on('click', 'a[x-btn-function="free-device"]', function(){
+
+            // Check if user really wanted to click
+            if( confirm('Are you sure?') === false ) 
+                return;
 
             // Changing the spinner mode to infinite bar
             app.spinnerType = 'bar';
 
-            channel.ejectChannel( $(this).attr('x-hiden-value'), function( response ) {
+            device.ejectDevice( $(this).attr('x-hiden-value'), function( response ) {
 
                 if( response === true )
                 {
@@ -197,8 +162,10 @@
             });
         });
 
-        // Detecting agregation tries
-        $('body').on('click', 'a[x-btn-function="relate-channel"]', function(){
+
+
+        // Detecting agregation try
+        $('body').on('click', 'a[x-btn-function="relate-device"]', function(){
 
             let groupName = $(this).attr('x-hiden-value');
 
@@ -206,7 +173,7 @@
             app.spinnerType = 'bar';
 
             //app.moduleSpinner('show');
-            channel.getFreeChannels(function( result ){
+            device.getFreeDevices(function( result ){
 
                 //app.moduleSpinner('hide');
                 let modalBody = null;
@@ -223,16 +190,16 @@
                 }
 
                 // Building the selectable
-                modalBody = '<select id="channel-name" class="custom-select custom-select-lg rounded-0">';
+                modalBody = '<select id="device-name" class="custom-select custom-select-lg rounded-0">';
 
                 result.forEach( function( item ){
-                    modalBody += '<option value="'+item.channel+'">'+item.channel +'</option>';
+                    modalBody += '<option value="'+item.name+'">'+item.name +'</option>';
                 });     
 
                 modalBody += '</select>';
                 modalBody += '<small class="d-block py-2 text-muted">Only free devices are listed</small>';
 
-                // Building the modal and relating the channel
+                // Building the modal and relating the device
                 app.sendModal(
                     'Add to ' + groupName, 
 
@@ -240,11 +207,11 @@
 
                     function(){
 
-                        // Getting the channel from modal
-                        let channelName = $('#modal-body > #channel-name').val();
+                        // Getting the device from modal
+                        let deviceName = $('#modal-body > #device-name').val();
 
                         // Trying to ask for the request
-                        let addingRequest = channel.addChannelToGroup(channelName, groupName, function( response ){
+                        let addingRequest = device.addDeviceToGroup(deviceName, groupName, function( response ){
                             if ( response === false ){
                                 app.sendToast('Device could not be related to a room');
                                 return;
@@ -255,12 +222,86 @@
                         });
                     }
                 );
+            });
+        });
+
+
+
+        // Detecting group removal
+        $('body').on('click', 'a[x-btn-function="remove-group"]', function(){
+
+            let groupName = $(this).attr('x-hiden-value');
+
+            // Check if user really wanted to click
+            if( confirm('Deleting '+ groupName +'. Are you sure?') === false ) 
+                return;
+
+            // Changing the spinner mode to infinite bar
+            app.spinnerType = 'bar';
+
+            group.deleteGroup(groupName, function( result ){
+                if(result === false ){
+                    app.sendToast('Oops! Could delete that group');
+                    return;
+                }
+
+                app.moduleLoad('homeMaker');
+                app.sendToast('Group was deleted successfully');
 
             });
-
-            
-
         });
+
+
+
+        // Detecting agregation try
+        $('body').on('click', 'a[x-btn-function="add-group"]', function(){
+
+            // Changing the spinner mode to infinite bar
+            app.spinnerType = 'bar';
+
+            // Building the selectable
+            modalBody  = '<input type="text" class="form-control form-control-lg" id="group-name" placeholder="Write a cool name">';
+            modalBody += '<small class="d-block py-2 text-muted">Just lower case characters allowed</small>';
+
+            // Building the modal and relating the device
+            app.sendModal(
+                'Add a group', 
+
+                modalBody,
+
+                function(){
+
+                    // Getting the device from modal
+                    let newGroupName = $('#modal-body > #group-name').val();
+
+                    // Check if the field is empty
+                    if( newGroupName === '' ){
+                        app.sendToast('Oops! Group name not allowed');
+                        return;
+                    }
+
+                    // Changing the spinner mode to infinite bar
+                    app.spinnerType = 'bar';
+
+                    // Trying to add asked group
+                    group.createGroup(newGroupName, function( response ){
+
+                        if ( response === false ){
+                            app.sendToast('Oops! New group could not be added. Try again');
+                            return;
+                        }
+                        app.moduleLoad('homeMaker');
+                        app.sendToast('Group was added successfully');
+                    });
+                }
+            );
+        });
+
+
+
+        // Another function
+
+
 
     });
 

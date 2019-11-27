@@ -35,7 +35,12 @@ export class appController {
 
     /* *
     *
-    * This function must ...
+    * This function shows or hides the spinner
+    * of the app. It has three modes can be set
+    * defining the class variable
+    * app.spinnerType = 'mode' 
+    * before calling an AJAX. The spinner will show
+    * and hide automatically
     * 
     * */
     spinner = function ( mode ){
@@ -84,14 +89,42 @@ export class appController {
 
     /* *
     *
-    * This function must ...
+    * This function must check and write the headers 
+    * (when passed) for the asked module into sessionStorage. 
+    * After that, the asked module will be loaded
     * 
     * */
-    moduleLoad = function ( moduleName = null ){
+    moduleLoad = function ( moduleName, headersData){
 
-        // Turn off all body-related click event handlers 
+        let headers = null;
+
+        // TASK: Check the input
+        if ( typeof moduleName !== 'string' ){
+            console.error('DEBUG: module name malformed (not an object). Aborting');
+        }
+
+        try {
+            if ( typeof headersData !== 'object' ){
+                throw 'DEBUG: module headers malformed (not an object). Omiting';
+            }
+        } catch (e) {
+            headersData = null;
+        }
+
+        //console.warn(headersData);
+
+        // Build and save the module headers
+        headers = {
+            'module' : moduleName,
+            'data'   : headersData
+        };
+
+        window.sessionStorage['app.module.headers'] = JSON.stringify(headers);
+
+        // TASK: Turn off all body-related click event handlers 
         $('body').off('click');
 
+        // Set the spinner in 'module' mode
         app.spinnerType = 'module';
 
         // Load the module
@@ -105,7 +138,9 @@ export class appController {
         .fail(function() {
             $("#module-wrapper").load('404.m');
         })
-        .always(function(){});
+        .always(function(){
+            //window.sessionStorage.removeItem('app.module.headers');
+        });
     }
 
 

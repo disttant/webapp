@@ -143,7 +143,7 @@ $(function () {
 
 
 
-    // Highlighting selected menu icon
+    // Highlighting selected menu icon when clicked
     $('button[name="botMenu"]').on('click', function(){
 
         // Shadow every icon

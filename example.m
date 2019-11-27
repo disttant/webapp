@@ -47,5 +47,11 @@ $(function () {
 
     console.log('Executing module actions');
 
+
+    // Toggling the action bar
+    $('body').on('click', '#actionbar-toggler', function(){
+        $('#actionbar-wrapper').toggleClass('d-none');
+    });
+
 });
 </script>

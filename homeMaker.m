@@ -57,7 +57,7 @@
                                 item.name +
                             '</div>'+
                             '<div>'+
-                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-hiden-value="'+item.name.toLowerCase()+'" x-btn-function="remove-group">'+
+                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="remove-group" x-hiden-value="'+item.name.toLowerCase()+'" >'+
                                     '<i class="material-icons md-dark md-24 align-middle">close</i>'+
                                 '</a>'+
                             '</div>'+
@@ -67,7 +67,7 @@
                                 '</a>'+
                             '</div>'+
                             '<div>'+
-                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true">'+
+                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="'+item.name.toLowerCase()+'">'+
                                     '<i class="material-icons md-dark md-24 align-middle">blur_on</i>'+
                                 '</a>'+
                             '</div>'+
@@ -129,13 +129,6 @@
                 );
 
             });
-        });
-        
-
-
-        // Detecting actionbar toggle
-        $('body').on('click', '#actionbar-toggler', function(){
-            $('#actionbar-wrapper').toggleClass('d-none');
         });
 
 
@@ -253,7 +246,7 @@
 
 
 
-        // Detecting agregation try
+        // Detecting group agregation
         $('body').on('click', 'a[x-btn-function="add-group"]', function(){
 
             // Changing the spinner mode to infinite bar
@@ -299,7 +292,13 @@
 
 
 
-        // Another function
+        // Detecting enter-to-map click
+        $('body').on('click', 'a[x-btn-function="enter-group"]', function(){
+
+            let groupName = $(this).attr('x-hiden-value');
+
+            app.moduleLoad('homeMap', {'group' : groupName});
+        });
 
 
 

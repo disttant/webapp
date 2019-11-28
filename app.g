@@ -1,5 +1,5 @@
 <!-- Spinner -->
-<div id="spinner-wrapper">
+<div id="app-spinner-wrapper">
     <div class="d-flex align-items-center justify-content-center min-vh-100" >
         <div class="d-flex flex-column flex-grow-1 mb-3">
             <div class="d-flex justify-content-center p-2">
@@ -21,9 +21,10 @@
     <div id="sidebar-menu" class="shadow overflow-auto">
 
         <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
+
+            <!-- Sidebar header -->
             <div id="sidebar-header" class="p-2 bg-yellow">
                 <div class="d-flex flex-column">
-                    <!--<div class="p-2 text-dark">Infobar</div>-->
                     <!-- The Infobar -->
                     <div class="p-2 text-dark">
                         <i id="infobar-placeholder" class="material-icons md-24 md-dark text-black align-middle pr-2">label</i>
@@ -35,6 +36,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sidebar body -->
+            <div class="p-3">
+                <i class="material-icons md-24 md-light align-middle pr-2">ballot</i>
+                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('homeMaker')">My home</a>
+            </div>
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
                 <a href="#" class="text-light align-middle" onclick="app.moduleLoad('example')">Example module</a>
@@ -43,15 +50,42 @@
                 <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>
                 <a id="logout" href="#" class="text-light align-middle">Close session</a>
             </div>
+
         </div>
 
     </div>
 </div>
 
 
+        
+<!-- Modal -->
+<div id="modal-wrapper" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-0 border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="modal-title">...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div id="modal-footer" class="modal-footer border-0">
+                <button type="button" class="btn btn-light bg-black text-light" x-modal-key="default">
+                    <i class="material-icons md-24 md-light align-middle">done</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<div id="module-wrapper" class="d-none">
+
+<!-- Thw wonderfull app -->
+<div id="app-wrapper" class="d-none">
 
     <!-- Top bar -->
     <nav class="navbar navbar-dark bg-black shadow-sm">
@@ -60,38 +94,43 @@
             <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
         </div>
         <!-- Menu button -->
-        <button id="sidebarOpener" class="btn">
-            <i class="material-icons md-24 md-light align-middle">menu</i>
-        </button>
+        <div>
+            <button id="sidebarOpener" class="btn">
+                <i class="material-icons md-24 md-light align-middle">menu</i>
+            </button>
+        </div>
     </nav>
-    
+
+    <!-- Preloader infinite bar -->
+    <div id="top-preloader" class="linear-activity invisible">
+        <div class="indeterminate"></div>
+    </div>
     
 
-    <!-- Toasts container-->
-    <div id="toastWrapper" class="fixed-middle w-100"></div>
+
+    <!-- Module Spinner -->
+    <div id="module-spinner-wrapper" class="d-none">
+        <div class="d-flex align-items-center justify-content-center py-5" >
+            <div class="d-flex flex-column flex-grow-1 mb-3">
+                <div class="d-flex justify-content-center p-2">
+                    <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
     <!-- Content -->
-    <div id="content" class="p-3"></div>
+    <div id="module-wrapper" class="mb-7 p-3"></div>
 
 
 
-    <!-- Bottom bar -->
-    <div id="footer" class="d-flex fixed-bottom p-2 justify-content-around text-light bg-black" style="z-index: 2 !important;">
+    <!-- Toast bar-->
+    <div id="toastWrapper" class="fixed-bottom w-100"></div>
 
-        <button id="homeMaker" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle" style="opacity: 0.3;">ballot</i>
-        </button>
 
-        <button id="home" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle">home</i>
-        </button>
-
-        <button id="homeMap" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle" style="opacity: 0.3;">explore</i>
-        </button>
-
-    </div>
 
 </div>

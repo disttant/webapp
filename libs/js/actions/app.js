@@ -26,6 +26,11 @@ setInterval(function(){
 
 $(function () {
 
+    // Default module to load for first time
+    app.moduleLoad('homeMaker');
+
+
+
     // Detecting network status
     window.addEventListener('online', function(e) {
         
@@ -39,14 +44,16 @@ $(function () {
 
 
 
-    // Show the sync icon when AJAX is calling
+    // Actions to do when AJAX is called
     $( document ).ajaxStart(function() {
 
+        // 
         $('#infobar-sync').removeClass('d-none');
     });
 
     $( document ).ajaxStop(function() {
 
+        //
         $('#infobar-sync').addClass('d-none');
     });
 
@@ -62,16 +69,6 @@ $(function () {
 
         $('#infobar-sync-error').addClass('d-none');
     });
-
-
-
-    // Hide the spinner
-    setTimeout(() => {
-        app
-            .spinner('hide')
-            .moduleLoad('home');
-
-    }, 2000);
 
 
 
@@ -116,22 +113,6 @@ $(function () {
             $('#sidebar-wrapper').toggleClass('d-none');
 
         });
-
-    });
-
-
-
-    // Highlighting selected menu icon
-    $('button[name="botMenu"]').on('click', function(){
-
-        // Shadow every icon
-        $('button[name="botMenu"] > i').attr('style', 'opacity: 0.1;');
-
-        // Highlight selected one
-        $(this).find('i').attr('style', 'opacity: 1;');
-
-        // Load the asked global module
-        app.moduleLoad( $(this).attr('id') );
 
     });
     

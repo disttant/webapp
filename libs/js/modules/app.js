@@ -121,6 +121,9 @@ export class appController {
 
         window.sessionStorage['app.module.headers'] = JSON.stringify(headers);
 
+        // TASK: Turn off window storage event handlers
+        $(window).off('storage');
+
         // TASK: Turn off all body-related click event handlers 
         $('body').off('click');
 

@@ -68,7 +68,7 @@
                             '</div>'+
                             '<div>'+
                                 '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="'+item.name.toLowerCase()+'">'+
-                                    '<i class="material-icons md-dark md-24 align-middle">blur_on</i>'+
+                                    '<i class="material-icons md-dark md-24 align-middle">map</i>'+
                                 '</a>'+
                             '</div>'+
                         '</div>'+

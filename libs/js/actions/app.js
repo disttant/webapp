@@ -27,7 +27,7 @@ setInterval(function(){
 $(function () {
 
     // Default module to load for first time
-    app.moduleLoad('home');
+    app.moduleLoad('homeMaker');
 
 
 
@@ -69,31 +69,6 @@ $(function () {
 
         $('#infobar-sync-error').addClass('d-none');
     });
-
-
-    // LABORATORY: Hide bottom bar when scrolling
-    /*$(window).on('mousewheel DOMMouseScroll', function (e) {
-
-        var direction = (function () {
-    
-            var delta = (e.type === 'DOMMouseScroll' ?
-                         e.originalEvent.detail * -40 :
-                         e.originalEvent.wheelDelta);
-    
-            return delta > 0 ? 0 : 1;
-        }());
-    
-        if(direction === 1) {
-           // scroll down
-           console.log ('down');
-           $('#footer').removeClass('d-flex').addClass('d-none');
-        }
-        if(direction === 0) {
-           // scroll up
-           console.log ('up' , $('#footer') );
-           $('#footer').removeClass('d-none').addClass('d-flex');
-        }
-    });*/
 
 
 
@@ -138,22 +113,6 @@ $(function () {
             $('#sidebar-wrapper').toggleClass('d-none');
 
         });
-
-    });
-
-
-
-    // Highlighting selected menu icon when clicked
-    $('button[name="botMenu"]').on('click', function(){
-
-        // Shadow every icon
-        $('button[name="botMenu"] > i').attr('style', 'opacity: 0.1;');
-
-        // Highlight selected one
-        $(this).find('i').attr('style', 'opacity: 1;');
-
-        // Load the asked module
-        app.moduleLoad( $(this).attr('id') );
 
     });
     

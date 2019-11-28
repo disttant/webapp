@@ -39,6 +39,10 @@
 
             <!-- Sidebar body -->
             <div class="p-3">
+                <i class="material-icons md-24 md-light align-middle pr-2">ballot</i>
+                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('homeMaker')">My home</a>
+            </div>
+            <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
                 <a href="#" class="text-light align-middle" onclick="app.moduleLoad('example')">Example module</a>
             </div>
@@ -124,27 +128,8 @@
 
 
 
-    <!-- Bottom bar -->
-    <div id="footer" class="d-flex fixed-bottom p-2 justify-content-around text-light bg-black" style="z-index: 2 !important;">
-
-        <button id="homeMaker" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle" style="opacity: 0.1;">ballot</i>
-        </button>
-
-        <button id="home" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle">home</i>
-        </button>
-
-        <button id="homeMap" class="btn flex-fill" name="botMenu">
-            <i class="material-icons md-36 md-light align-middle" style="opacity: 0.1;">explore</i>
-        </button>
-
-    </div>
-
-
-
     <!-- Toast bar-->
-    <div id="toastWrapper" class="fixed-bottom w-100 mb-7"></div>
+    <div id="toastWrapper" class="fixed-bottom w-100"></div>
 
 
 

@@ -1,57 +1,129 @@
-<div class="d-flex flex-column justify-content-center mx-auto mt-2 mb-2 border-black" id="grid" style="border-style:solid; border-width:thick;"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div id="grid-wrapper" class="col-md-7">
+            <div class="d-flex flex-column justify-content-center mx-auto mt-2 mb-2 border border-1 border-black rounded shadow-sm" id="grid" style="filter: opacity(1);"></div>
+        </div>
+        <div id="gridmod-wrapper" class="col-md-5">
+            <div id="panel-wrapper" class="d-flex rounded-0 p-2">
+                <div class="alert alert-secondary mx-auto" role="alert">
+                    <span class="d-block">Touch a device to control it!</span>
+                    <small>Or a free square to join another</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div id="panel-wrapper" class="d-flex border"></div>
+
 
 <script>
 
     $(function () {
 
-        let groupOpenned = JSON.parse(sessionStorage.getItem('app.module.headers')).data;
+        let groupOpenned = null;
 
-        if(groupOpenned === null){
+        // Defining the needed spinner
+        app.spinnerType = 'module';
 
-            app.moduleLoad('homeMaker');
 
+
+        /*
+         *
+         * FUNCTION TO CHECK SOME HEADERS 
+         * BEFORE LOADING THE MODULE
+         * 
+         */ 
+        function antiTamper(){
+
+            app.spinnerType = 'module';
+            let moduleHeaders;
+
+            if (sessionStorage.getItem("app.module.headers") === null) {
+                app.moduleLoad('homeMaker');
+            }
+
+            moduleHeaders = JSON.parse(sessionStorage.getItem('app.module.headers'));
+            
+            if(moduleHeaders.hasOwnProperty('data') == false){
+                app.moduleLoad('homeMaker');
+            };
+
+            if(moduleHeaders.data.hasOwnProperty('group') == false){
+                app.moduleLoad('homeMaker');
+            };
         }
 
-        else
-            groupOpenned = groupOpenned.group;
 
-        window.addEventListener('storage', function(){
 
-            if(groupOpenned === null){
-
-                app.moduleLoad('homeMaker');
-
-            }   
-
-        });
-
-        // FUNCTION TO ADAPT THE GRID TO THE WINDOW SIZE
-        // 
+        /*
+         *
+         * FUNCTION TO ADAPT THE GRID 
+         * TO THE WINDOW SIZE
+         * 
+         */ 
         function adapt(max){
 
+            // For taking the viewport as reference
+            //let width = $(window).outerWidth(true);
+            //let height = $(window).outerHeight(true);
+            //let cellwidth = $('[x-coord-y]').outerWidth();
+
+            let width = $('#grid-wrapper').width();
+            let height = $('#grid-wrapper').height();
             let cellwidth = $('[x-coord-y]').outerWidth();
-            let width = $(window).outerWidth(true);
-            let height = $(window).outerHeight(true);
             let reference = 0;
 
-            if(width < height)
+
+            /*
+             * OLD: For setting the sizes
+             * of the grid according to the viewport
+             * 
+             * if(width < height)
+             *     reference = width - 0.1 * width;
+             * 
+             * if(width > height)
+             *     reference = height - 0.1 * height;
+             * 
+             */
+
+            /*if(width < height)
                 reference = width - 0.1 * width;
 
             if(width > height)
-                reference = height - 0.1 * height;
+                 reference = height - 0.1 * height;*/
 
+            // Setting the size for the grid
+            reference = width - 0.1 * width;
+
+            // Setting a max size for the grid
             if(reference > max)
                 reference = max;
 
+            // Setting the parameters to the grid
             $('#grid').css('height' , reference);
             $('#grid').css('width' , reference);
             $('[x-coord-y]').css('height', cellwidth);
 
             return cellwidth;
-
         }
+
+
+
+        /*
+         *
+         * MAIN CODE
+         * 
+         */ 
+
+        // Check the headers
+        antiTamper();
+
+        // Spy for storage header changes
+        window.addEventListener('storage', function(){
+            antiTamper();
+        });
+
+        groupOpenned = JSON.parse(sessionStorage.getItem('app.module.headers')).data.group;
 
         // PREPARE TO CONSTRUCT THE GRID
         grid = $('#grid');
@@ -63,44 +135,41 @@
         
         // DEFINE THE CENTRAL CELLS (DOOR)
         if(y_length % 2 !== 0){
-
             door[0] = Math.floor(y_length / 2);
             door[1] = door[0] + 1;
             door[2] = door[1] + 1;
-
-        }
-
-        else{
-
+        }else{
             door[0] = y_length / 2;
             door[1] = door[0] + 1;
             door[2] = 0;
-
         }
 
         // CONSTRUCTION OF THE GRID
+        // Building each column
         for(let i = 1 ; i < x_length + 1 ; i++){
 
             let row = '<div x-coord-x="'+ i +'" class="d-flex"></div>';
             grid.append(row);
 
+            // Filling each column with rows
             for(let j = 1 ; j < y_length + 1 ; j++){
 
                 let col = '';
 
+                // Defining the style for cells
                 if((i === x_length) && ((j === door[0]) || (j === door[1]) || (j === door[2])))
-                    col = '<div class="flex-fill border border-black bg-black"></div>';
-
+                    // Door cells different styled
+                    col = '<div class="flex-fill border border-black bg-black rounded-top"></div>';
                 else
-                    col = '<div x-coord-y="'+ j +'" class="flex-fill border"></div>';
+                    // normal cells
+                    col = '<div x-coord-y="'+ j +'" class="flex-fill border border-oldgrey rounded"></div>';
 
+                // Add the cell to the grid
                 $('[x-coord-x="'+ i +'"]').append(col);
-
             }
-
         }
 
-        app.spinnerType = 'module';
+        
         let nocoords = new Array();
 
         group.getFullGroupWithInfo(groupOpenned, function(result){
@@ -144,16 +213,11 @@
 
                         let color = '';
 
+                        // Defining the color of the cell according to the device type
                         if(config.model.hasOwnProperty(type)){
-
                             color = config.model[type];
-
-                        }
-                        
-                        else{
-
-                            color = 'gray';
-
+                        }else{
+                            color = config.model.undefined;
                         }
 
                         $('[x-coord-x="'+ coords[0] +'"] > [x-coord-y="'+ coords[1] +'"]').css('background-color', color);
@@ -164,17 +228,24 @@
                 }
 
                 app.spinner('hide');
-                adapt(700);     // BUG FIX  --  TWICE AJUST CORRECTLY THE GRID ON FIRST LOAD
-                adapt(700);     // BUG FIX
+                adapt(700);
+                adapt(700);
 
             }
 
         });
 
+        //adapt(700);
+
+        
+
         $( window ).resize(function() {
             adapt(700);
         });
 
+
+
+        // Cell click detector
         $('[x-coord-y]').on('click', function(){
 
             if($(this).children().length === 0){
@@ -237,35 +308,41 @@
 
                     });
 
-                }
-
-                else{
+                }else{
 
                     // NO HAY CANALES LIBRES EN EL GRUPO
-                    app.sendToast('There are no more unrelated devices in this group');
+                    app.sendToast('Oops! You have no more devices into the group');
 
                 }
 
-            }
-
-            else{
+            }else{
 
                 // ABRIR PANEL DEL CANAL
                 let deviceName = $(this).children()[0].id;
                 let model = $(this).children().attr('x-model');
-                console.log(deviceName, model);
+                //console.log(deviceName, model);
 
-                $('#panel-wrapper').empty();
-                $('#panel-wrapper').load('./libs/models/' + model + '.html', function(){
+                //$('#panel-wrapper').empty();
 
-                    // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
+                if(config.model.hasOwnProperty(model)){
 
-                });
+                    $('#panel-wrapper').load('./libs/models/' + model + '.html', function(){
+
+                        // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
+                    });
+
+                }else{
+
+                    $('#panel-wrapper').load('./libs/models/undefined.html', function(){
+                        // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
+                    });
+                }
 
             }
 
         });
 
     });
+
 
 </script>

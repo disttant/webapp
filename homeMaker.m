@@ -15,6 +15,13 @@
 
 <!-- Groups wrapper loaded with devices inside -->
 <div class="accordion" id="groups-accordion">
+    <div id="homemaker-nogroup-alert" class="alert alert-secondary" role="alert">
+        <i class="material-icons md-dark md-24 align-middle">arrow_upward</i>
+        <span class="align-middle pl-3">
+            Add wonderful rooms here! :D
+        </span>
+    </div>
+    
     <!-- New group -->
 </div>
 
@@ -30,8 +37,6 @@
         // Show groups and devices inside
         group.getFullGroups(function( response ){
 
-            $('#groups-accordion').empty();
-
             let newGroup = null;
             let newId = null;
 
@@ -40,6 +45,8 @@
             {
                 return;
             }
+
+            $('#groups-accordion').empty();
 
             // List all available groups
             response.groups.forEach( function( item ) {

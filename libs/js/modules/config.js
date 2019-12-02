@@ -54,7 +54,8 @@ export class configController {
                 getmessages             : URL_broker + URL_broker_version +"/groups/messages/",
                 getrelatedgroups        : URL_broker + URL_broker_version +"/groups/list/related",
                 getfullgroups           : URL_broker + URL_broker_version +"/groups/list/full",
-                getfullgroupwithinfo    : URL_broker + URL_broker_version +"/group/list/related/"
+                getfullgroupwithinfo    : URL_broker + URL_broker_version +"/group/list/related/",
+                debug: true
             
             },
 
@@ -71,7 +72,8 @@ export class configController {
                 deletedevicefromgroup      : URL_broker + URL_broker_version +"/devices/relation/",
                 changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
                 savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
-                numberofcyclesuntilgetout  : 5
+                numberofcyclesuntilgetout  : 5,
+                debug: true
             
             },
 

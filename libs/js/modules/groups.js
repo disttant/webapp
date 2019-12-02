@@ -8,40 +8,64 @@
  * 
  *  Must be an array with the following data:
  * 
- *  -> numberofmessagestoget: Number of messages to get of a group.
- *  -> getgrouplist: The URL to the endpoint of the API to get the list of groups of a user.
- *  -> creategroup: The URL to the endpoint of the API to create a group of the user.
- *  -> deletegroup: The URL to the endpoint of the API to delete a group of the user.
- *  -> getmessages: The URL to the endpoint of the API to get the last messages of a group.
- *  -> getrelatedgroups: The URL to the endpoint of the API to get the list of groups with devices inside.
- *  -> getfullgroups: The URL to the endpoint of the API to get the list of all groups, empties or not.
- *  -> getfullgroupwithinfo: The URL to the endpoint of the API to get the list of devices of a group with all their profile data.
+ *  -> numberofmessagestoget:       Number of messages to get of a group.
+ *  -> getgrouplist:                The URL to the endpoint of the API to get the list of groups of a user.
+ *  -> creategroup:                 The URL to the endpoint of the API to create a group of the user.
+ *  -> deletegroup:                 The URL to the endpoint of the API to delete a group of the user.
+ *  -> getmessages:                 The URL to the endpoint of the API to get the last messages of a group.
+ *  -> getrelatedgroups:            The URL to the endpoint of the API to get the list of groups with devices inside.
+ *  -> getfullgroups:               The URL to the endpoint of the API to get the list of all groups, empties or not.
+ *  -> getfullgroupwithinfo:        The URL to the endpoint of the API to get the list of devices of a group with all their profile data.
  * 
  *  METHODS:
  * 
- *  --> getRelatedGroups: Returns a list with all groups with devices inside.
- *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the group list/false -- RETURNS: true/false.
+ *  --> getRelatedGroups:   Returns a list with all groups with devices inside.
  * 
- *  --> getFullGroups: Returns a list with all groups with or wihtout devices inside.
- *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the full group list/false -- RETURNS: true/false.
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the group list / False
+ *      RETURNS:            True/False
  * 
- *  --> getGroupList: Returns a list with all groups empties
- *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the group list/false -- RETURNS: true/false.
+ *  --> getFullGroups:      Returns a list with all groups with or wihtout devices inside.
  * 
- *  --> createGroup: Create a group in the system
- *      NEEDS: name of the group to create, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the full group list / False
+ *      RETURNS:            True / False
  * 
- *  --> deleteGroup: Deletes a group from the system
- *      NEEDS: name of the group to delete, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *  --> getGroupList:       Returns a list with all groups empties.
  * 
- *  --> getGroupMessages: Ask for the last messages of a group
- *      NEEDS: name of the group to get the messages, function to be execute when complete -- GIVEN TO CALLBACK: an array with the messages/false -- RETURNS: true/false.
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the group list / False
+ *      RETURNS:            True / False
+ * 
+ *  --> createGroup:        Create a group in the system.
+ * 
+ *      NEEDS:              Name of the group to create, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> deleteGroup:        Deletes a group from the system.
+ * 
+ *      NEEDS:              Name of the group to delete, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> getGroupMessages:   Ask for the last messages of a group.
+ * 
+ *      NEEDS:              Name of the group to get the messages, function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the messages / False
+ *      RETURNS:            True / False
  * 
  *  --> getGroupsListWithDevices: Returns the complete list of groups with their devices associated.
- *      NNEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the list/false -- RETURNS: true/false.
+ * 
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the list / False
+ *      RETURNS:            True / False
  * 
  *  --> getFullGroupWithInfo: Returns the list of all devices included into a group with all their profile data.
- *      NEEDS: name of the group to get the list, function to be execute when complete -- GIVEN TO CALLBACK: an array with the devices and cata/false -- RETURNS: true/false.
+ * 
+ *      NEEDS:              Name of the group to get the list, function to be execute when complete
+ *      GIVEN TO CALLBACK:  An array with the devices and thier data / False
+ *      RETURNS:            True / False
  * 
  */
 
@@ -55,66 +79,70 @@ export class groupController {
      *
      */
 
-    constructor(data) {
+    constructor( data ) {
 
-        if(typeof data !== 'object')
-            return {error: 'Trying to construct wihtout a config array'};
+        if( typeof data !== 'object' )
+            return { error: 'Trying to construct wihtout a config array' };
 
-        if(typeof data.numberofmessagestoget !== 'number')
-            return {error: 'numberofmessagestoget is not a number'};
+        if( typeof data.numberofmessagestoget !== 'number' )
+            return { error: 'numberofmessagestoget is not a number' };
 
-        if(typeof data.getgrouplist !== 'string')
-            return {error: 'getgrouplist URL is not a string'};
+        if( typeof data.getgrouplist !== 'string' )
+            return { error: 'getgrouplist URL is not a string' };
 
         let URL_pattern = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi;
 
-        if(data.getgrouplist.match(URL_pattern) === null)
-            return {error: 'getgrouplist URL does not seem to be a real URL'};
+        if( data.getgrouplist.match( URL_pattern ) === null )
+            return { error: 'getgrouplist URL does not seem to be a real URL' };
 
-        if(typeof data.creategroup !== 'string')
-            return {error: 'creategroup URL is not a string'};
+        if( typeof data.creategroup !== 'string' )
+            return { error: 'creategroup URL is not a string' };
 
-        if(data.creategroup.match(URL_pattern) === null)
-            return {error: 'creategroup URL does not seem to be a real URL'};
+        if( data.creategroup.match( URL_pattern ) === null )
+            return { error: 'creategroup URL does not seem to be a real URL' };
 
-        if(typeof data.deletegroup !== 'string')
-            return {error: 'deletegroup URL is not a string'};
+        if( typeof data.deletegroup !== 'string' )
+            return { error: 'deletegroup URL is not a string' };
 
-        if(data.deletegroup.match(URL_pattern) === null)
-            return {error: 'deletegroup URL does not seem to be a real URL'};
+        if( data.deletegroup.match( URL_pattern ) === null )
+            return { error: 'deletegroup URL does not seem to be a real URL' };
 
-        if(typeof data.getmessages !== 'string')
-            return {error: 'getmessages URL is not a string'};
+        if( typeof data.getmessages !== 'string' )
+            return { error: 'getmessages URL is not a string' };
 
-        if(data.getmessages.match(URL_pattern) === null)
-            return {error: 'getmessages URL does not seem to be a real URL'};
+        if( data.getmessages.match( URL_pattern ) === null )
+            return { error: 'getmessages URL does not seem to be a real URL' };
 
-        if(typeof data.getrelatedgroups !== 'string')
-            return {error: 'getrelatedgroups URL is not a string'};
+        if( typeof data.getrelatedgroups !== 'string' )
+            return { error: 'getrelatedgroups URL is not a string' };
 
-        if(data.getrelatedgroups.match(URL_pattern) === null)
-            return {error: 'getrelatedgroups URL does not seem to be a real URL'};
+        if( data.getrelatedgroups.match( URL_pattern ) === null )
+            return { error: 'getrelatedgroups URL does not seem to be a real URL' };
 
-        if(typeof data.getfullgroups !== 'string')
-            return {error: 'getfullgroups URL is not a string'};
+        if( typeof data.getfullgroups !== 'string' )
+            return { error: 'getfullgroups URL is not a string' };
 
-        if(data.getfullgroups.match(URL_pattern) === null)
-            return {error: 'getfullgroups URL does not seem to be a real URL'};
+        if( data.getfullgroups.match( URL_pattern ) === null )
+            return { error: 'getfullgroups URL does not seem to be a real URL' };
 
-        if(typeof data.getfullgroupwithinfo !== 'string')
-            return {error: 'getfullgroupwithinfo URL is not a string'};
+        if( typeof data.getfullgroupwithinfo !== 'string' )
+            return { error: 'getfullgroupwithinfo URL is not a string' };
 
-        if(data.getfullgroupwithinfo.match(URL_pattern) === null)
-            return {error: 'getfullgroupwithinfo URL does not seem to be a real URL'};
+        if( data.getfullgroupwithinfo.match( URL_pattern ) === null )
+            return { error: 'getfullgroupwithinfo URL does not seem to be a real URL' };
 
-        this.numberofmessagestoget = data.numberofmessagestoget;
-        this.URL_getgrouplist = data.getgrouplist;
-        this.URL_creategroup = data.creategroup;
-        this.URL_deletegroup = data.deletegroup;
-        this.URL_getmessages = data.getmessages;
-        this.URL_getrelatedgroups = data.getrelatedgroups;
-        this.URL_getfullgroups = data.getfullgroups;
-        this.URL_getfullgroupwithinfo = data.getfullgroupwithinfo;
+        if( typeof data.debug !== 'boolean' )
+            return { error: 'debug is not a boolean' };
+
+        this.numberofmessagestoget      = data.numberofmessagestoget;
+        this.URL_getgrouplist           = data.getgrouplist;
+        this.URL_creategroup            = data.creategroup;
+        this.URL_deletegroup            = data.deletegroup;
+        this.URL_getmessages            = data.getmessages;
+        this.URL_getrelatedgroups       = data.getrelatedgroups;
+        this.URL_getfullgroups          = data.getfullgroups;
+        this.URL_getfullgroupwithinfo   = data.getfullgroupwithinfo;
+        this.debug                      = data.debug;
 
     }
 
@@ -128,16 +156,17 @@ export class groupController {
 
     getFullGroupWithInfo = function ( group, callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
-        if(typeof group !== 'string')
+        if( typeof group !== 'string' )
             return false;
 
-        if(group.match(/^[a-z0-9]+$/gi) === null)
+        if( group.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
         let url = this.URL_getfullgroupwithinfo + group;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -145,26 +174,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo todos los grupos con información de dispositivos");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo todos los grupos con información de dispositivos" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupos obtenidos" );
+
+                callback( response );
+
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -184,8 +218,10 @@ export class groupController {
 
     getRelatedGroups = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -193,26 +229,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo todos los grupos con dispositivos");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo todos los grupos con dispositivos" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupos obtenidos" );
+
+                callback( response );
+
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -232,8 +273,10 @@ export class groupController {
 
     getFullGroups = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -241,26 +284,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo todos los grupos");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo todos los grupos" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupos obtenidos" );
+
+                callback( response );
+
+            },
+            error: function ( response ){
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -280,16 +328,17 @@ export class groupController {
 
     getGroupMessages = function ( group, callback ) {
 
-        if(typeof group !== 'string')
+        if( typeof group !== 'string' )
             return false;
 
-        if(group.match(/^[a-z0-9]+$/gi) === null)
+        if( group.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         let url = this.URL_getmessages + group + "/" + this.numberofmessagestoget;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -297,26 +346,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo mensajes del grupo "+ group);
-
-            },
-            success: function(response){
-
-                console.log("===> Mensajes obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo mensajes del grupo "+ group );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Mensajes obtenidos" );
+
+                callback( response );
+
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -336,8 +390,10 @@ export class groupController {
 
     getGroupsListWithDevices = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -345,26 +401,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo grupos completos");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo grupos completos" );
 
             },
-            error: function (response){
+            success: function(response) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupos obtenidos" );
+
+                callback( response );
+
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -383,8 +444,10 @@ export class groupController {
 
     getGroupList = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -392,26 +455,31 @@ export class groupController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo grupos");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "======> Pidiendo grupos" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupos obtenidos" );
+
+                callback( response );
+
+            },
+            error: function (response) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
 
@@ -431,16 +499,17 @@ export class groupController {
 
     createGroup = function ( group, callback ) {
 
-        if(typeof group !== 'string')
+        if( typeof group !== 'string' )
             return false;
 
-        if(group.match(/^[a-z0-9]+$/gi) === null)
+        if( group.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         var url = this.URL_creategroup + group;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -448,26 +517,31 @@ export class groupController {
             type: 'post',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Creando Grupo");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupo creado");
-                callback(true);
+                if( debug === true )
+                    console.log( "======> Creando Grupo" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupo creado" );
+
+                callback( true );
+
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
 
@@ -487,16 +561,17 @@ export class groupController {
 
     deleteGroup = function ( group, callback ) {
 
-        if(typeof group !== 'string')
+        if( typeof group !== 'string' )
             return false;
 
-        if(group.match(/^[a-z0-9]+$/gi) === null)
+        if( group.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         var url = this.URL_deletegroup + group;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -504,26 +579,31 @@ export class groupController {
             type: 'delete',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Borrando grupo");
-
-            },
-            success: function(response){
-
-                console.log("===> Grupo borrado");
-                callback(true);
+                if( debug === true )
+                    console.log( "======> Borrando grupo" );
 
             },
-            error: function (response){
+            success: function( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Grupo borrado" );
+
+                callback( true );
+
+            },
+            error: function ( response ){
+
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
 

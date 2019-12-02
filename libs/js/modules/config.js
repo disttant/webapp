@@ -59,17 +59,18 @@ export class configController {
 
             "device" : {
 
-                numberofmessagestoget   : 3,
-                getfreedevices          : URL_broker + URL_broker_version +"/devices/list/free",
-                sendmessage             : URL_broker + URL_broker_version +"/devices/message/",
-                getmessages             : URL_broker + URL_broker_version +"/devices/messages/",
-                getdevices              : URL_broker + URL_broker_version +"/devices/list",
-                createdevice            : URL_broker + URL_broker_version +"/devices/",
-                deletedevice            : URL_broker + URL_broker_version +"/devices/",
-                adddevicetogroup        : URL_broker + URL_broker_version +"/devices/relation/",
-                deletedevicefromgroup   : URL_broker + URL_broker_version +"/devices/relation/",
-                changeprofile           : URL_broker + URL_broker_version +"/devices/profile/",
-                savemapcoords           : URL_broker + URL_broker_version +"/devices/relation/coordinates/"
+                numberofmessagestoget      : 3,
+                getfreedevices             : URL_broker + URL_broker_version +"/devices/list/free",
+                sendmessage                : URL_broker + URL_broker_version +"/devices/message/",
+                getmessages                : URL_broker + URL_broker_version +"/devices/messages/",
+                getdevices                 : URL_broker + URL_broker_version +"/devices/list",
+                createdevice               : URL_broker + URL_broker_version +"/devices/",
+                deletedevice               : URL_broker + URL_broker_version +"/devices/",
+                adddevicetogroup           : URL_broker + URL_broker_version +"/devices/relation/",
+                deletedevicefromgroup      : URL_broker + URL_broker_version +"/devices/relation/",
+                changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
+                savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
+                numberofcyclesuntilgetout  : 5
             
             },
 

@@ -17,6 +17,7 @@
  *  -> deletedevice: The URL to the endpoint of the API to delete a device.
  *  -> changeprofile: The URL to the endpoint of the API to change profile data.linear-activity
  *  -> savemapcoords: The URL to the endpoint of the API to save the coords of the map position of a device into database
+ *  -> numberofcyclesuntilgetout: The number of times to look for a response into the channel messages.
  * 
  *  METHODS:
  * 
@@ -39,7 +40,7 @@
  *      NEEDS: device to eject, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
  * 
  *  --> sendCommand: Send an order to a client with the require data.
- *      NEEDS: order to send, device to send the order, extra-data with some orders, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *      NEEDS: order to send, device to send the order, function to be execute when complete, extra-data with some orders(DEFAULT => 'NONE') -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
  * 
  *  --> getResponse: Ask for the last device messages.
  *      NEEDS: device where the last order was sent, function to be execute when complete -- GIVEN TO CALLBACK:: an array with the last messages of the device/false -- RETURNS: true/false.
@@ -143,6 +144,116 @@ export class deviceController {
         this.URL_deletedevice = data.deletedevice;
         this.URL_changeprofile = data.changeprofile;
         this.URL_savemapcoords = data.savemapcoords;
+        this.cycleout = data.numberofcyclesuntilgetout;
+
+    }
+
+
+
+    /*
+     *
+     *  Method to send a command to a device and get his response
+     *
+     */
+
+    sendAndGet = function ( device, order, callback, data='none' ) {
+
+        let recieve = false;
+        let cyclenow = 0;
+
+        let classDevice = this;
+        let send = classDevice.sendCommand(order, device, function(sendResult) {
+
+            if(sendResult !== false){
+
+                classDevice.check(device, order, recieve, cyclenow, function(message) {
+
+                    callback(message);
+
+                });
+
+            }
+
+        }, data);
+
+        if(send === false)
+            return false;
+
+    }
+
+
+    check = function( device, order, recieve, cyclenow, callback ) {
+
+        if(cyclenow === this.cycleout){
+
+            callback(false);
+            return;
+
+        }
+
+        if(recieve === true)
+            return;
+
+        cyclenow++;
+
+        let deviceClass = this;
+
+        this.getResponse(device, function(result) {
+
+            if(result !== false){
+
+                for(let i = result.length - 1 ; i >= 0 ; i--){
+                    
+                    let message = deviceClass.parseMessage(result[i].message);
+                    
+                    if(message.type !== 'from')
+                        continue;
+
+                    if(message.device !== device)
+                        continue;
+
+                    if(message.order !== order)
+                        continue;
+
+                    recieve = true;
+                    callback(message);
+                    break;
+
+                }
+
+                deviceClass.check(device, order, recieve, cyclenow, callback);
+
+            }
+
+            else{
+
+                deviceClass.check(device, order, recieve, cyclenow, callback);
+
+            }
+
+        });
+
+    }
+
+    parseMessage = function( message ) {
+
+        let parsed = new Object();
+
+        let messageSplit = message.split('|');
+
+        parsed["type"] = messageSplit[0];
+        parsed["device"] = messageSplit[1];
+        parsed["order"] = messageSplit[2];
+        parsed["data"] = new Object();
+
+        for(let i = messageSplit.length - 3 ; i < messageSplit.length ; i++){
+
+            let messageDataSplit = messageSplit[i].split('#');
+            parsed["data"][messageDataSplit[0]] = messageDataSplit[1];
+
+        }
+
+        return parsed;
 
     }
 
@@ -693,147 +804,51 @@ export class deviceController {
         if(typeof callback !== 'function')
             return false;
 
-        var message = "";
+        if(typeof data !== 'string')
+            return false;
 
-        switch(order){
+        var message = 'for|' + device + '|' + order;
 
-            case "getinfo":
+        if(data !== 'none')
+            message = message + '|' + data;
 
-                message = device +"|"+ order;
-                break;
+        var url = this.URL_sendmessage + device;
+        message = "{\"message\":\""+ message +"\"}";
 
-            case "getstate":
+        $.ajax({
 
-                message = device +"|"+ order;
-                break;
+            url: url,
+            type: 'post',
+            headers: {
 
-            case "getrels":
+                "Authorization": "Bearer "+ localStorage.access_token,
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
 
-                message = device +"|"+ order;
-                break;
+            },
+            data: message,
+            beforeSend: function(){
 
-            case "newdesc":
+                console.log("======> Enviando mensaje");
 
-                if(typeof data !== 'string')
-                    return false;
+            },
+            success: function(response){
 
-                if(data !== 'none')
-                    return false;
+                console.log("===> Mensaje enviado");
+                callback(true);
 
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
+            },
+            error: function (response){
 
-                message = device +"|"+ order +"|"+ data;
-                break;
+                console.warn("===> [Error]");
+                callback(false);
 
-            case "subgroup":
+            }
 
-                if(typeof data !== 'string')
-                    return false;
+        });
 
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "ungroup":
-
-                message = device +"|"+ order;
-                break;
-
-            case "relpins":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "unrelpins":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "changepinstate":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            default:
-
-                return false;
-
-        }
-
-        if(message != ""){
-
-            var url = this.URL_sendmessage + device;
-            message = "{\"message\":\""+ message +"\"}";
+        return true;
     
-            $.ajax({
-    
-                url: url,
-                type: 'post',
-                headers: {
-
-                    "Authorization": "Bearer "+ localStorage.access_token,
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-
-                },
-                data: message,
-                beforeSend: function(){
-
-                    console.log("======> Enviando mensaje");
-
-                },
-                success: function(response){
-
-                    console.log("===> Mensaje enviado");
-                    callback(true);
-
-                },
-                error: function (response){
-
-                    console.warn("===> [Error]");
-                    callback(false);
-
-                }
-    
-            });
-
-            return true;
-    
-        }
-
     }
 
 }

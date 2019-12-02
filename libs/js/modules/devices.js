@@ -8,47 +8,95 @@
  * 
  *  Must be an array with the following data:
  * 
- *  -> numberofmessagestoget: The number of messages to get with the method getResponse (recommend 2-5).
- *  -> getfreedevices: The URL to the endpoint of the API to get the free devices of the user.
- *  -> sendmessage: The URL to the endpoint of the API to send a message to a device.
- *  -> getmessages: The URL to the endpoint of the API to get the last messages of a device.
- *  -> getdevices: The URL to the endpoint of the API to get the list of devices.
- *  -> createdevice: The URL to the endpoint of the API to create a device.
- *  -> deletedevice: The URL to the endpoint of the API to delete a device.
- *  -> changeprofile: The URL to the endpoint of the API to change profile data.linear-activity
- *  -> savemapcoords: The URL to the endpoint of the API to save the coords of the map position of a device into database
+ *  -> numberofmessagestoget:       The number of messages to get with the method getResponse (recommend 2-5).
+ *  -> getfreedevices:              The URL to the endpoint of the API to get the free devices of the user.
+ *  -> sendmessage:                 The URL to the endpoint of the API to send a message to a device.
+ *  -> getmessages:                 The URL to the endpoint of the API to get the last messages of a device.
+ *  -> getdevices:                  The URL to the endpoint of the API to get the list of devices.
+ *  -> createdevice:                The URL to the endpoint of the API to create a device.
+ *  -> deletedevice:                The URL to the endpoint of the API to delete a device.
+ *  -> changeprofile:               The URL to the endpoint of the API to change profile data.linear-activity
+ *  -> savemapcoords:               The URL to the endpoint of the API to save the coords of the map position of a device into database
+ *  -> numberofcyclesuntilgetout:   The number of times to look for a response into the channel messages.
  * 
  *  METHODS:
  * 
- *  --> getDevices: Returns a list with all devices.
- *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK: an array with the devices/false -- RETURNS: true/false.
+ *  --> sendAndGet:         Returns the message needed like response of an order sended to a device.
  * 
- *  --> createDevice: Create a new device in the system.
- *      NEEDS: name of the new device, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *      NEEDS:              Name of the device to send the order, order to be send, function to be execute when complete, extra data for the order
+ *      GIVEN TO CALLBACK:  The message looked for / False
+ *      RETURNS:            True / False
  * 
- *  --> deleteDevice: Delete a device from the system.
- *      NEEDS: name of the device to delete, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *  --> checkMessages:      Ask for the messages repetively until he gets the max repetitions or found the message looked for.
  * 
- *  --> getFreeDevices: Returns a list with all FREE devices.
- *      NEEDS: function to be execute when complete -- GIVEN TO CALLBACK:: an array with the free devices/false -- RETURNS: true/false.
+ *      NEEDS:              Name of the device where the order was sent, the order that was sent, aux vairable to know when the message is recieved, aux variable to know the number of cycles that this function have been executed, function to be execute when complete (USUALLY ITSELF)
+ *      GIVEN TO CALLBACK:  The message looked for / False
+ *      RETURNS:            VOID
  * 
- *  --> addDeviceToGroup: Order a client to suscribe to a group.
- *      NEEDS: device to include, group where include, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *  --> parseMessage:       Parse a message and returns an array with all info extracted from that message.
  * 
- *  --> ejectDevice: Order a device to delete the suscription to his group.
- *      NEEDS: device to eject, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *      NEEDS:              Message to be parsed
+ *      RETURNS:            an array with all the info extrated / False.
  * 
- *  --> sendCommand: Send an order to a client with the require data.
- *      NEEDS: order to send, device to send the order, extra-data with some orders, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *  --> getDevices:         Returns a list with all devices.
  * 
- *  --> getResponse: Ask for the last device messages.
- *      NEEDS: device where the last order was sent, function to be execute when complete -- GIVEN TO CALLBACK:: an array with the last messages of the device/false -- RETURNS: true/false.
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  an array with the devices / False
+ *      RETURNS:            True / False
+ * 
+ *  --> createDevice:       Create a new device in the system.
+ * 
+ *      NEEDS:              Name of the new device, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> deleteDevice:       Delete a device from the system.
+ * 
+ *      NEEDS:              Name of the device to delete, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> getFreeDevices:     Returns a list with all FREE devices.
+ * 
+ *      NEEDS:              Function to be execute when complete
+ *      GIVEN TO CALLBACK:  an array with the free devices / False
+ *      RETURNS:            True / False
+ * 
+ *  --> addDeviceToGroup:   Order a client to suscribe to a group.
+ * 
+ *      NEEDS:              Device to include, group where include, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> ejectDevice:        Order a device to delete the suscription to his group.
+ * 
+ *      NEEDS:              Device to eject, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> sendCommand:        Send an order to a client with the require data.
+ * 
+ *      NEEDS:              Order to send, device to send the order, function to be execute when complete, extra-data with some orders ( DEFAULT => 'NONE' )
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> getResponse:        Ask for the last device messages.
+ * 
+ *      NEEDS:              Device where the last order was sent, function to be execute when complete
+ *      GIVEN TO CALLBACK:  an array with the last messages of the device / False
+ *      RETURNS:            True / False
  *
- *  --> changeProfile: Change the information of the profile of a Device.
- *      NEEDS: device to change the profile info, function to be execute when complete, description to put into the profile, type of device to put into the profile -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *  --> changeProfile:      Change the information of the profile of a Device.
  * 
- *  --> saveMapCoords: Save into device profile the coords of his position into the map.
- *      NEEDS: device to save the map coords, coord "x" of the map, coord "y" of the map, function to be execute when complete -- GIVEN TO CALLBACK: true/false -- RETURNS: true/false.
+ *      NEEDS:              Device to change the profile info, function to be execute when complete, description to put into the profile, type of device to put into the profile
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
+ * 
+ *  --> saveMapCoords:      Save into device profile the coords of his position into the map.
+ * 
+ *      NEEDS:              Device to save the map coords, coord "x" of the map, coord "y" of the map, function to be execute when complete
+ *      GIVEN TO CALLBACK:  True / False
+ *      RETURNS:            True / False
  * 
  */
 
@@ -62,87 +110,236 @@ export class deviceController {
      *
      */
 
-    constructor(data) {
+    constructor( data ) {
 
-        if(typeof data !== 'object')
-            return {error: 'Trying to construct wihtout a config array'};
+        if( typeof data !== 'object' )
+            return { error: 'Trying to construct wihtout a config array' };
 
-        if(typeof data.numberofmessagestoget !== 'number')
-            return {error: 'numberofmessagestoget is not a number'};
+        if( typeof data.numberofmessagestoget !== 'number' )
+            return { error: 'numberofmessagestoget is not a number' };
 
-        if(typeof data.getfreedevices !== 'string')
-            return {error: 'getfreedevices URL is not a string'};
+        if( typeof data.getfreedevices !== 'string' )
+            return { error: 'getfreedevices URL is not a string' };
 
         let URL_pattern = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/gi;
 
-        if(data.getfreedevices.match(URL_pattern) === null)
-            return {error: 'getfreedevices URL does not seem to be a real URL'};
+        if( data.getfreedevices.match( URL_pattern ) === null )
+            return { error: 'getfreedevices URL does not seem to be a real URL' };
 
-        if(typeof data.sendmessage !== 'string')
-            return {error: 'sendmessage URL is not a string'};
+        if( typeof data.sendmessage !== 'string' )
+            return { error: 'sendmessage URL is not a string' };
 
-        if(data.sendmessage.match(URL_pattern) === null)
-            return {error: 'sendmessage URL does not seem to be a real URL'};
+        if( data.sendmessage.match( URL_pattern ) === null )
+            return { error: 'sendmessage URL does not seem to be a real URL' };
 
-        if(typeof data.getmessages !== 'string')
-            return {error: 'getmessages URL is not a string'};
+        if( typeof data.getmessages !== 'string' )
+            return { error: 'getmessages URL is not a string' };
 
-        if(data.getmessages.match(URL_pattern) === null)
-            return {error: 'getmessages URL does not seem to be a real URL'};
+        if( data.getmessages.match( URL_pattern ) === null )
+            return { error: 'getmessages URL does not seem to be a real URL' };
 
-        if(typeof data.adddevicetogroup !== 'string')
-            return {error: 'adddevicetogroup URL is not a string'};
+        if( typeof data.adddevicetogroup !== 'string' )
+            return { error: 'adddevicetogroup URL is not a string' };
 
-        if(data.adddevicetogroup.match(URL_pattern) === null)
-            return {error: 'adddevicetogroup URL does not seem to be a real URL'};
+        if( data.adddevicetogroup.match( URL_pattern ) === null )
+            return { error: 'adddevicetogroup URL does not seem to be a real URL' };
 
-        if(typeof data.deletedevicefromgroup !== 'string')
-            return {error: 'deletedevicetogroup URL is not a string'};
+        if( typeof data.deletedevicefromgroup !== 'string' )
+            return { error: 'deletedevicetogroup URL is not a string' };
 
-        if(data.deletedevicefromgroup.match(URL_pattern) === null)
-            return {error: 'deletedevicetogroup URL does not seem to be a real URL'};
+        if( data.deletedevicefromgroup.match( URL_pattern ) === null )
+            return { error: 'deletedevicetogroup URL does not seem to be a real URL' };
 
-        if(typeof data.getdevices !== 'string')
-            return {error: 'getdevices URL is not a string'};
+        if( typeof data.getdevices !== 'string' )
+            return { error: 'getdevices URL is not a string' };
 
-        if(data.getdevices.match(URL_pattern) === null)
-            return {error: 'getdevices URL does not seem to be a real URL'};
+        if( data.getdevices.match( URL_pattern ) === null )
+            return { error: 'getdevices URL does not seem to be a real URL' };
 
-        if(typeof data.createdevice !== 'string')
-            return {error: 'createdevice URL is not a string'};
+        if( typeof data.createdevice !== 'string' )
+            return { error: 'createdevice URL is not a string' };
 
-        if(data.createdevice.match(URL_pattern) === null)
-            return {error: 'createdevice URL does not seem to be a real URL'};
+        if( data.createdevice.match( URL_pattern ) === null )
+            return { error: 'createdevice URL does not seem to be a real URL' };
 
-        if(typeof data.deletedevice !== 'string')
-            return {error: 'deletedevice URL is not a string'};
+        if( typeof data.deletedevice !== 'string' )
+            return { error: 'deletedevice URL is not a string' };
 
-        if(data.deletedevice.match(URL_pattern) === null)
-            return {error: 'deletedevice URL does not seem to be a real URL'};
+        if( data.deletedevice.match( URL_pattern ) === null )
+            return { error: 'deletedevice URL does not seem to be a real URL' };
 
-        if(typeof data.changeprofile !== 'string')
-            return {error: 'changeprofile URL is not a string'};
+        if( typeof data.changeprofile !== 'string' )
+            return { error: 'changeprofile URL is not a string' };
 
-        if(data.changeprofile.match(URL_pattern) === null)
-            return {error: 'changeprofile URL does not seem to be a real URL'};
+        if( data.changeprofile.match( URL_pattern ) === null )
+            return { error: 'changeprofile URL does not seem to be a real URL' };
 
-        if(typeof data.savemapcoords !== 'string')
-            return {error: 'savemapcoords URL is not a string'};
+        if( typeof data.savemapcoords !== 'string' )
+            return { error: 'savemapcoords URL is not a string' };
 
-        if(data.savemapcoords.match(URL_pattern) === null)
-            return {error: 'savemapcoords URL does not seem to be a real URL'};
+        if( data.savemapcoords.match( URL_pattern ) === null )
+            return { error: 'savemapcoords URL does not seem to be a real URL' };
 
-        this.nummessages = data.numberofmessagestoget;
-        this.URL_getfreedevices = data.getfreedevices;
-        this.URL_sendmessage = data.sendmessage;
-        this.URL_getmessages = data.getmessages;
-        this.URL_adddevicetogroup = data.adddevicetogroup;
-        this.URL_deletedevicefromgroup = data.deletedevicefromgroup;
-        this.URL_getdevices = data.getdevices;
-        this.URL_createdevice = data.createdevice;
-        this.URL_deletedevice = data.deletedevice;
-        this.URL_changeprofile = data.changeprofile;
-        this.URL_savemapcoords = data.savemapcoords;
+        if( typeof data.numberofcyclesuntilgetout !== 'number' )
+            return { error: 'numberofcyclesuntilgetout URL is not a number' };
+
+        if( typeof data.debug !== 'boolean' )
+            return { error: 'debug is not a boolean' };
+
+        this.nummessages                = data.numberofmessagestoget;
+        this.URL_getfreedevices         = data.getfreedevices;
+        this.URL_sendmessage            = data.sendmessage;
+        this.URL_getmessages            = data.getmessages;
+        this.URL_adddevicetogroup       = data.adddevicetogroup;
+        this.URL_deletedevicefromgroup  = data.deletedevicefromgroup;
+        this.URL_getdevices             = data.getdevices;
+        this.URL_createdevice           = data.createdevice;
+        this.URL_deletedevice           = data.deletedevice;
+        this.URL_changeprofile          = data.changeprofile;
+        this.URL_savemapcoords          = data.savemapcoords;
+        this.cycleout                   = data.numberofcyclesuntilgetout;
+        this.debug                      = data.debug;
+
+    }
+
+
+
+    /*
+     *
+     *  Method to send a command to a device and get his response
+     *
+     */
+
+    sendAndGet = function ( device, order, callback, data='none' ) {
+
+        let recieve     = false;
+        let cyclenow    = 0;
+
+        let classDevice = this;
+        let send = classDevice.sendCommand( order, device, function( sendResult ) {
+
+            if( sendResult !== false ){
+
+                classDevice.check( device, order, recieve, cyclenow, function( message ) {
+
+                    callback( message );
+
+                });
+
+            }
+
+        }, data );
+
+        if( send === false )
+            return false;
+
+    }
+
+
+
+    /*
+     *
+     *  Method look for the response of a device into his channel repetively
+     *
+     */
+
+    checkMessages = function ( device, order, recieve, cyclenow, callback ) {
+
+        if( cyclenow === this.cycleout ) {
+
+            callback( false );
+            return;
+
+        }
+
+        if( recieve === true )
+            return;
+
+        cyclenow++;
+        let deviceClass = this;
+
+        this.getResponse( device, function( result ) {
+
+            if( result !== false ) {
+
+                for( let i = result.length - 1 ; i >= 0 ; i-- ) {
+                    
+                    let message = deviceClass.parseMessage( result[i].message );
+                    
+                    if( message.type !== 'from' )
+                        continue;
+
+                    if( message.device !== device )
+                        continue;
+
+                    if( message.order !== order )
+                        continue;
+
+                    recieve = true;
+                    callback( message );
+                    break;
+
+                }
+
+                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
+
+            }
+
+            else {
+
+                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
+
+            }
+
+        });
+
+    }
+
+
+
+    /*
+     *
+     *  Method to parse a message and extract all the info into an array
+     *
+     */
+
+    parseMessage = function( message ) {
+
+        if( typeof message !== 'string' )
+            return false;
+
+        let parsed = new Object();
+
+        let messageSplit = message.split( '|' );
+
+        if( messageSplit[0] === message )
+            return false;
+
+        if( messageSplit.length < 3 )
+            return false;
+
+        parsed["type"]      = messageSplit[0];
+        parsed["device"]    = messageSplit[1];
+        parsed["order"]     = messageSplit[2];
+
+        if( messageSplit.length > 3 ) {
+
+            parsed["data"] = new Object();
+
+            for( let i = messageSplit.length - 3 ; i < messageSplit.length ; i++ ) {
+
+                let messageDataSplit = messageSplit[i].split( '#' );
+
+                if( messageDataSplit[0] === messageSplit[i] )
+                    return false;
+
+                parsed["data"][messageDataSplit[0]] = messageDataSplit[1];
+
+            }
+
+        }
+
+        return parsed;
 
     }
 
@@ -156,13 +353,13 @@ export class deviceController {
 
     saveMapCoords = function ( device, x, y, callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
-        if(typeof x !== 'number')
+        if( typeof x !== 'number' )
             return false;
 
-        if(typeof y !== 'number')
+        if( typeof y !== 'number' )
             return false;
 
         let body = new Object();
@@ -171,6 +368,7 @@ export class deviceController {
         body['map_y'] = y;
 
         let url = this.URL_savemapcoords + device;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -179,26 +377,31 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            data: JSON.stringify(body),
-            beforeSend: function(){
+            data: JSON.stringify( body ),
+            beforeSend: function() {
 
-                console.log("======> Actualizando coordenadas del dispositivo");
+                if( debug === true )
+                    console.log( "======> Actualizando coordenadas del dispositivo" );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Coordenadas actualizadas");
-                callback(true);
+                if( debug === true )
+                    console.log( "===> Coordenadas actualizadas" );
+
+                callback( true );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -217,45 +420,46 @@ export class deviceController {
 
     changeProfile = function ( device, callback, description='', type='' ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
         let body = new Object();
 
-        if(description !== ''){
+        if( description !== '' ) {
 
-            if(typeof description !== 'string')
+            if( typeof description !== 'string' )
                 return false;
 
-            if(description.match(/^[a-zA-Z0-9 ]+$/gi) === null)
+            if( description.match(/^[a-zA-Z0-9 ]+$/gi) === null )
                 return false;
 
             body['description'] = description;
 
         }
 
-        if(type !== ''){
+        if( type !== '' ) {
 
-            if(typeof type !== 'string')
+            if( typeof type !== 'string' )
                 return false;
 
-            if(type.match(/^[a-zA-Z0-9]+$/gi) === null)
+            if( type.match(/^[a-zA-Z0-9]+$/gi) === null )
                 return false;
 
             body['type'] = type;
 
         }
 
-        if((body.description === '') && (body.type === ''))
+        if( ( body.description === '' ) && ( body.type === '' ) )
             return false;
 
         let url = this.URL_changeprofile + device;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -264,26 +468,31 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            data: JSON.stringify(body),
-            beforeSend: function(){
+            data: JSON.stringify( body ),
+            beforeSend: function() {
 
-                console.log("======> Cambiando perfil del dispositivo");
+                if( debug === true )
+                    console.log( "======> Cambiando perfil del dispositivo" );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Perfil actualizado");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> Perfil actualizado" );
+
+                callback( false );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -302,8 +511,10 @@ export class deviceController {
 
     getDevices = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -312,25 +523,30 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo dispositivos");
+                if( debug === true )
+                    console.log( "======> Pidiendo dispositivos" );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "===> Dispositivos obtenidos" );
+
+                callback( response );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -349,16 +565,17 @@ export class deviceController {
 
     createDevice = function ( device, callback ) {
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         let url = this.URL_createdevice + device;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -367,25 +584,30 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Creando dispositivo "+ device);
+                if( debug === true )
+                    console.log( "======> Creando dispositivo "+ device );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivo creado");
-                callback(true);
+                if( debug === true )
+                    console.log( "===> Dispositivo creado" );
+
+                callback( true );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -404,16 +626,17 @@ export class deviceController {
 
     deleteDevice = function ( device, callback ) {
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         let url = this.URL_deletedevice + device;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -422,25 +645,30 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Borrando dispositivo "+ device);
+                if( debug === true )
+                    console.log( "======> Borrando dispositivo "+ device );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivo borrado");
-                callback(true);
+                if( debug === true )
+                    console.log( "===> Dispositivo borrado" );
+
+                callback( true );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -459,8 +687,10 @@ export class deviceController {
 
     getFreeDevices = function ( callback ) {
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         $.ajax({
 
@@ -469,25 +699,30 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo dispositivos libres");
+                if( debug === true )
+                    console.log( "======> Pidiendo dispositivos libres" );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivos obtenidos");
-                callback(response);
+                if( debug === true )
+                    console.log( "===> Dispositivos obtenidos" );
+
+                callback( response );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -506,20 +741,22 @@ export class deviceController {
 
     addDeviceToGroup = function ( device, group, callback ) {
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof group !== 'string')
+        if( typeof group !== 'string' )
             return false;
 
-        if(group.match(/^[a-z0-9]+$/gi) === null)
+        if( group.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         var url = this.URL_adddevicetogroup + device + "/" + group;
 
@@ -530,25 +767,30 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo a "+ device +" que se suscriba a "+ group);
+                if( debug === true )
+                    console.log( "======> Pidiendo a "+ device +" que se suscriba a "+ group );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivo suscrito");
-                callback(true);
+                if( debug === true )
+                    console.log( "===> Dispositivo suscrito" );
+
+                callback( true );
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.log("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
             }
 
         });
@@ -567,16 +809,17 @@ export class deviceController {
 
     ejectDevice = function ( device, callback ) {
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
         var url = this.URL_deletedevicefromgroup + device;
+        let debug = this.debug;
 
         $.ajax({
 
@@ -585,25 +828,29 @@ export class deviceController {
 
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo a "+ device +" que se desuscriba");
+                if( debug === true )
+                    console.log( "======> Pidiendo a "+ device +" que se desuscriba" );
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Dispositivo desuscrito");
-                callback(true);
+                if( debug === true )
+                    console.log( "===> Dispositivo desuscrito" );
+
+                callback( true );
             },
-            error: function (response){
+            error: function ( response ) {
+                if( debug === true )
+                    console.log( "===> [Error]" );
 
-                console.log("===> [Error]");
-                callback(false);
+                callback( false );
             }
 
         });
@@ -622,14 +869,16 @@ export class deviceController {
 
     getResponse = function ( device, callback ){
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
+
+        let debug = this.debug;
 
         var url = this.URL_getmessages + device + "/" + this.nummessages;
     
@@ -639,26 +888,31 @@ export class deviceController {
             type: 'get',
             headers: {
 
-                "Authorization": "Bearer "+ localStorage.access_token,
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
             },
-            beforeSend: function(){
+            beforeSend: function() {
 
-                console.log("======> Pidiendo mensajes")
+                if( debug === true )
+                    console.log( "======> Pidiendo mensajes" )
 
             },
-            success: function(response){
+            success: function( response ) {
 
-                console.log("===> Mensajes obtenidos");
+                if( debug === true )
+                    console.log( "===> Mensajes obtenidos" );
+
                 callback(response);
 
             },
-            error: function (response){
+            error: function ( response ) {
 
-                console.warn("===> [Error]");
-                callback(false);
+                if( debug === true )
+                    console.warn( "===> [Error]" );
+
+                callback( false );
 
             }
     
@@ -678,162 +932,72 @@ export class deviceController {
 
     sendCommand = function ( order, device, callback, data='none' ) {
 
-        if(typeof device !== 'string')
+        if( typeof device !== 'string' )
             return false;
 
-        if(device.match(/^[a-z0-9]+$/gi) === null)
+        if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        if(typeof order !== 'string')
+        if( typeof order !== 'string' )
             return false;
 
-        if(order.match(/^[a-z]+$/gi) === null)
+        if( order.match(/^[a-z]+$/gi) === null )
             return false;
 
-        if(typeof callback !== 'function')
+        if( typeof callback !== 'function' )
             return false;
 
-        var message = "";
+        if( typeof data !== 'string' )
+            return false;
 
-        switch(order){
+        var message = 'for|' + device + '|' + order;
 
-            case "getinfo":
+        if( data !== 'none' )
+            message = message + '|' + data;
 
-                message = device +"|"+ order;
-                break;
+        var url = this.URL_sendmessage + device;
+        let debug = this.debug;
+        message = "{\"message\":\""+ message +"\"}";
 
-            case "getstate":
+        $.ajax({
 
-                message = device +"|"+ order;
-                break;
+            url: url,
+            type: 'post',
+            headers: {
 
-            case "getrels":
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
 
-                message = device +"|"+ order;
-                break;
+            },
+            data: message,
+            beforeSend: function() {
 
-            case "newdesc":
+                if( debug === true )
+                    console.log(    "======> Enviando mensaje" );
 
-                if(typeof data !== 'string')
-                    return false;
+            },
+            success: function( response ) {
 
-                if(data !== 'none')
-                    return false;
+                if( debug === true )
+                    console.log( "===> Mensaje enviado" );
 
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
+                callback( true );
 
-                message = device +"|"+ order +"|"+ data;
-                break;
+            },
+            error: function ( response ) {
 
-            case "subgroup":
+                if( debug === true )
+                    console.warn( "===> [Error]" );
 
-                if(typeof data !== 'string')
-                    return false;
+                callback( false );
 
-                if(data !== 'none')
-                    return false;
+            }
 
-                if(data.match(/^[a-z0-9]+$/gi) === null)
-                    return false;
+        });
 
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "ungroup":
-
-                message = device +"|"+ order;
-                break;
-
-            case "relpins":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "unrelpins":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            case "changepinstate":
-
-                if(typeof data !== 'string')
-                    return false;
-
-                if(data !== 'none')
-                    return false;
-
-                if(data.match(/^[a-z0-9 ]+$/gi) === null)
-                    return false;
-
-                message = device +"|"+ order +"|"+ data;
-                break;
-
-            default:
-
-                return false;
-
-        }
-
-        if(message != ""){
-
-            var url = this.URL_sendmessage + device;
-            message = "{\"message\":\""+ message +"\"}";
+        return true;
     
-            $.ajax({
-    
-                url: url,
-                type: 'post',
-                headers: {
-
-                    "Authorization": "Bearer "+ localStorage.access_token,
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-
-                },
-                data: message,
-                beforeSend: function(){
-
-                    console.log("======> Enviando mensaje");
-
-                },
-                success: function(response){
-
-                    console.log("===> Mensaje enviado");
-                    callback(true);
-
-                },
-                error: function (response){
-
-                    console.warn("===> [Error]");
-                    callback(false);
-
-                }
-    
-            });
-
-            return true;
-    
-        }
-
     }
 
 }

@@ -127,6 +127,11 @@ export class appController {
         // TASK: Turn off all body-related click event handlers 
         $('body').off('click');
 
+        // TASK: Clean module timers
+        config.app.timers.forEach(function callback(currentValue, index, array) {
+            clearInterval(currentValue);
+        });
+
         // Set the spinner in 'module' mode
         app.spinnerType = 'module';
 

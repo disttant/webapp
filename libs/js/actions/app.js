@@ -33,12 +33,10 @@ $(function () {
 
     // Detecting network status
     window.addEventListener('online', function(e) {
-        
         $('#infobar-conn-error').addClass('d-none');
     });
 
     window.addEventListener('offline', function(e) {
-
         $('#infobar-conn-error').removeClass('d-none');
     });
 
@@ -46,14 +44,10 @@ $(function () {
 
     // Actions to do when AJAX is called
     $( document ).ajaxStart(function() {
-
-        // 
         $('#infobar-sync').removeClass('d-none');
     });
 
     $( document ).ajaxStop(function() {
-
-        //
         $('#infobar-sync').addClass('d-none');
     });
 
@@ -61,12 +55,10 @@ $(function () {
 
     // Detecting AJAX errors
     $( document ).ajaxError(function() {
-
         $('#infobar-sync-error').removeClass('d-none');
     });
 
     $( document ).ajaxSuccess(function() {
-
         $('#infobar-sync-error').addClass('d-none');
     });
 
@@ -74,7 +66,6 @@ $(function () {
 
     // Close session button
     $('a[id="logout"]').on('click', function(){
-
         login.removeSession();
     });
 
@@ -115,8 +106,14 @@ $(function () {
         });
 
     });
+
+
+    
+
+    
     
 });
+
 
 
 

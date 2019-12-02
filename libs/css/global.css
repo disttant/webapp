@@ -28,6 +28,35 @@ a:link {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
+/*
+ * BOOTSTRAP BUGFIXES
+ *
+ */
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      -webkit-appearance: none;
+      background-color: transparent;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      cursor: ew-resize;
+      background: #EDD75D;
+      box-shadow: transparent;
+    }
+
+}
+
+/*.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-retroorange,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-retroorange {
+  color: #fff;
+  background: #ff9933;
+}*/
+
+
+
 /* Custom Bootstrap-like styles */
 .no-border{
     border: none !important;

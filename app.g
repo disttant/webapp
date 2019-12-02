@@ -38,10 +38,6 @@
             </div>
 
             <!-- Sidebar body -->
-            <div class="p-3">
-                <i class="material-icons md-24 md-light align-middle pr-2">ballot</i>
-                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('homeMaker')">Groups</a>
-            </div>
             <!--
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
@@ -87,10 +83,10 @@
 
 
 <!-- Thw wonderfull app -->
-<div id="app-wrapper" class="d-none">
+<div id="app-wrapper" class="d-none min-vh-100">
 
     <!-- Top bar -->
-    <nav class="navbar navbar-dark bg-black shadow-sm">
+    <nav id="app-navbar" class="navbar navbar-dark bg-black">
         <div class="navbar-brand text-light">
             <h4 class="font-weight-bold d-inline-block">ALKE</h4>
             <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
@@ -126,7 +122,8 @@
 
 
     <!-- Content -->
-    <div id="module-wrapper" class="mb-7 p-3"></div>
+    <div id="module-wrapper" class="p-3"></div>
+    
 
 
 

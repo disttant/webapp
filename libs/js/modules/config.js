@@ -13,7 +13,7 @@ export class configController {
 
             "global" : {
 
-                "default" : "login",
+                "default"  : "login",
                 "excluded" : [
 
                     "index"
@@ -24,7 +24,8 @@ export class configController {
 
             "app" : {
 
-                "default" : "homeMaker"
+                "default" : "homeMaker",
+                "timers"  : []
 
             },
 

@@ -9,6 +9,7 @@ import * as login_md from './modules/login.js';
 import * as app_md from './modules/app.js';
 import * as group_md from './modules/groups.js';
 import * as device_md from './modules/devices.js';
+import * as color_md from './modules/color.js';
 
 
 
@@ -78,6 +79,15 @@ window.group = new group_md.groupController(config.group);
  * 
  * */
 window.device = new device_md.deviceController(config.device);
+
+
+/* *
+ *
+ * Colors Library
+ * Initialize this module
+ * 
+ * */
+window.color = new color_md.colorController();
 
 
 /* *

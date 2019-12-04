@@ -1,4 +1,4 @@
-<div id="homemap-header" class="d-flex flex-row align-items-center m-2 text-muted h5 font-weight-light alert alert-secondary" role="alert">
+<div id="homemap-header" class="d-flex flex-row align-items-center m-2 text-muted h5 font-weight-light alert alert-secondary border rounded" role="alert">
     <div class="px-2">
         <a href="#" onclick="app.moduleLoad('homeMaker')">
             <i class="material-icons md-dark md-24 align-middle">home</i>
@@ -13,10 +13,10 @@
 
 
 <div id="homemap-content" class="row">
-    <div id="grid-wrapper" class="d-flex col-sm-7 align-items-start">
+    <div id="grid-wrapper" class="d-flex col-md-7 align-items-start">
         <div class="d-flex flex-column justify-content-center mx-auto mt-2 mb-2 border border-3 border-black rounded shadow-sm" id="grid"></div>
     </div>
-    <div id="gridmod-wrapper" class="d-flex col-sm-5 align-items-start">
+    <div id="gridmod-wrapper" class="d-flex col-md-5 align-items-start">
         <div id="panel-wrapper" class="d-flex rounded-0 p-2 flex-fill">
             <div class="alert alert-secondary mx-auto" role="alert">
                 <span class="d-block">Touch a device to control it!</span>

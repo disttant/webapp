@@ -1,12 +1,28 @@
+<!-- Model Form -->
 <div class="d-flex flex-column w-100 border h-100 alert alert-light" role="alert">
+
+    <div class="d-flex flex-column">
+        <div class="p-2">
+            <div class="font-weight-bold">Undefined</div>
+            <div><small>Nombre</small></div>
+        </div>
+        <div class="p-2">
+            Usually a description to locate the device
+        </div>
+    </div>
+    <div>
+        <hr />
+    </div>
 
     <div class="d-flex justify-content-between p-2 py-4">
         <div>
             Power
         </div>
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="powerSwitch">
-            <label class="custom-control-label" for="powerSwitch"></label>
+        <div >
+            <label class="switch">
+                <input type="checkbox" id="powerSwitch">
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
 
@@ -15,12 +31,13 @@
             Brightness
         </div>
         <div>
-            <input type="range" id="powerRange" class="custom-range" min="0" max="255" step="1" >
+            <input type="range" id="brightnessRange" min="0" max="255" step="1" >
+            <div id="brightnessSquare" class="border mt-4 rounded p-3"></div>
         </div>
     </div>
 
     <div>
-        <hr class="bg-yellow" />
+        <hr />
     </div>
     
 
@@ -29,23 +46,138 @@
             Color
         </div>
         <div>
-            <input type="range" id="powerRange" class="custom-range" min="0" max="255" step="1" >
+            <input type="range" id="colorRange" min="0" max="255" step="1" >
+            <div id="colorSquare" class="border mt-4 rounded p-3"></div>
         </div>
     </div>
-    <div class="d-flex justify-content-between p-2">
-        <div>
-        </div>
-        <div>
-            <input type="range" id="powerRange" class="custom-range" min="0" max="255" step="1" >
-        </div>
-    </div>
-    <div class="d-flex justify-content-between p-2 pb-4">
-        <div>
-        </div>
-        <div>
-            <input type="range" id="powerRange" class="custom-range" min="0" max="255" step="1" >
-        </div>
-    </div>
-
+    
 
 </div>
+
+
+
+<!-- Module Logic -->
+<script>
+$(function() {
+
+    /*
+     *
+     * FUTURE MESSAGE DEFINITION
+     * 
+     */
+    let order = {
+        power : true,
+        brightness : {
+            step : 130,
+        },
+        color: {
+            step: 80,
+        }
+    }
+
+
+    /*
+     *
+     * SETTING FUNCTION DEFINITIONS
+     * 
+     */
+
+     function setPower( state ){
+
+        // Setting the state of power switch
+        $('#powerSwitch').attr('checked', state);
+
+        // Changing the cache var
+        order.power = state;
+    }
+
+
+
+    function setBrightness( step ){
+
+        // Calculate the RGB Value from HSL
+        let brightness = color.hslToRgb( 0.155, 1, step/255);
+
+        brightness[0] = Math.round(brightness[0]);
+        brightness[1] = Math.round(brightness[1]);
+        brightness[2] = Math.round(brightness[2]);
+
+        // Setting the brightness square color
+        $('#brightnessSquare').css('background-color', 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')');
+
+        // Resetting the slider
+        $('#brightnessRange').val(step);
+        //brightnessSquare
+
+        // Changing the cache var
+        order.brightness.step = step;
+    }
+
+
+
+    function setColor( step ){
+
+        // Calculate the RGB Value from HSL
+        let colorRGB = color.hslToRgb( step/255, 0.8, 0.8);
+
+        colorRGB[0] = Math.round(colorRGB[0]);
+        colorRGB[1] = Math.round(colorRGB[1]);
+        colorRGB[2] = Math.round(colorRGB[2]);
+
+        // Setting the square color
+        $('#colorSquare').css('background-color', 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')');
+
+        // Resetting the slider
+        $('#colorRange').val(step);
+
+        // Changing the cache var
+        order.color.step = step;
+    }
+    
+
+
+    /*
+     *
+     * SETTING INITIAL VALUES
+     * 
+     */
+    setPower( order.power );
+    setBrightness( order.brightness.step );
+    setColor( order.color.step );
+
+
+
+    /*
+     *
+     * DETECTING COMPONENTS
+     * 
+     */
+
+    // Detecting power change
+    $('#powerSwitch').on('change', function(){
+        
+        setPower( $(this).attr('checked') );
+
+    });
+
+    // Detecting color change
+    $('#brightnessRange').on('change', function(){
+        
+        setBrightness( $(this).val() );
+
+    });
+
+    // Detecting color change
+    $('#colorRange').on('change', function(){
+        
+        setColor( $(this).val() );
+
+    });
+
+
+
+
+    
+
+});
+</script>

@@ -154,21 +154,21 @@ $(function() {
      */
 
     // Detecting power change
-    $('#powerSwitch').on('change', function(){
+    $(document).on('change', '#powerSwitch', function(){
         
         setPower( $(this).attr('checked') );
 
     });
 
     // Detecting color change
-    $('#brightnessRange').on('change', function(){
+    $(document).on('input', '#brightnessRange', function(){
         
         setBrightness( $(this).val() );
 
     });
 
     // Detecting color change
-    $('#colorRange').on('change', function(){
+    $(document).on('input', '#colorRange', function(){
         
         setColor( $(this).val() );
 

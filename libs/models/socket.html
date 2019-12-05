@@ -1,7 +1,86 @@
-<div class="d-flex justify-content-center align-items-center p-2">
+<!-- Model Form -->
+<div class="d-flex flex-column w-100 border h-100 alert alert-light" role="alert">
 
-    SOY UN PUTO ENCHUFE
-    <button class="btn btn-danger">PINCHAME MAMACITA</button>
-    <div id="name"></div>
+    <div class="d-flex flex-row justify-content-between p-2 pt-4">
+        <h5 id="device"></h5>
+        <h5 id="model">Socket</h5>
+    </div>
+    <div class="d-flex justify-content-between p-2 py-4">
+        <div>
+            Power
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="powerSwitch">
+            <label class="custom-control-label" for="powerSwitch"></label>
+        </div>
+    </div>
 
 </div>
+
+<script>
+
+    $(function() {
+
+        config.models.timers.forEach(function(timer) {
+
+            clearInterval(timer);
+
+        });
+
+        let actualValue; // = VALOR DEL CACHARRO
+
+        $('#powerSwitch').on('change', function() {
+            
+            clearInterval(config.models.timers[0]);
+
+            config.models.timers[0] = setInterval(function() {
+
+                let newValue = $('#powerSwitch').prop('checked');
+
+                if(newValue !== actualValue){
+
+                    $('#powerSwitch').attr('disabled', true);
+
+                    // ENVIO COMANDO AL CLIENTE
+                    app.spinnerType = 'bar';
+
+                    device.sendAndGet( $('#device').text(), 'changepinstate', function( result ) {
+
+                        if(result !== false){
+
+                            actualValue = newValue;
+                            app.sendToast('Changed');
+
+                        }else{
+
+                            app.sendToast('Dont found response');
+
+                            if(newValue === true){
+
+                                actualValue = false;
+                                $('#powerSwitch').prop('checked', false);
+
+                            }else{
+
+                                actualValue = true;
+                                $('#powerSwitch').prop('checked', true);
+
+                            }
+
+                        }
+
+                        $('#powerSwitch').attr('disabled', false);
+
+                    }, 'output#' + newValue);
+
+                }
+
+                clearInterval(config.models.timers[0]);
+
+            }, 1000);
+
+        });
+
+    });
+
+</script>

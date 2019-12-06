@@ -1,25 +1,179 @@
 <!-- Model Form -->
 <div class="d-flex flex-column w-100 border h-100 alert alert-light" role="alert">
 
-    <div class="d-flex flex-row justify-content-between p-2 pt-4">
-        <h5 id="device"></h5>
-        <h5 id="model">Socket</h5>
+    <!-- Header -->
+    <div class="d-flex flex-column">
+        <div class="p-2">
+            <div id="modelType" class="font-weight-bold text-capitalize">{{modelType}}</div>
+            <div id="modelName" class="small">{{modelName}}</div>
+        </div>
+        <div id="modelDescription" class="p-2 text-capitalize">
+            {{modelDescription}}
+        </div>
     </div>
+
+
+
+    <div>
+        <hr />
+    </div>
+
+    <!-- Power -->
     <div class="d-flex justify-content-between p-2 py-4">
-        <div>
-            Power
+        <div class="my-auto">
+            <i class="material-icons md-36">power_settings_new</i>
         </div>
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="powerSwitch">
-            <label class="custom-control-label" for="powerSwitch"></label>
+        <div class="my-auto">
+            <label class="switch">
+                <input type="checkbox" id="powerSwitch">
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
+
+
+
+    <div>
+        <hr />
+    </div>
+
+    <!-- Pomodoro -->
+    <div class="d-flex justify-content-between p-2 pt-4">
+        <div class="my-auto">
+            Pomodoro
+            <div class="d-block text-muted small">Routine</div>
+        </div>
+
+        <div class="my-auto">
+            <div class="py-3">
+                <div id="pomodoroSquare" class="d-flex justify-content-center border mb-4 rounded p-2">
+                    1h
+                </div>
+                <input type="range" id="pomodoroRange" min="0" max="255" step="1" >
+            </div>
+        </div>
+    </div>
+
+
+    
 
 </div>
 
 <script>
 
     $(function() {
+
+        /*
+        *
+        * FUTURE MESSAGE DEFINITION
+        * 
+        */
+        let order = {
+            power : true,
+            routines : {
+                pomodoro    : {
+                    step : 0,
+                },
+            }
+        }
+
+
+
+        /*
+        *
+        * SETTING FUNCTION DEFINITIONS
+        * 
+        */
+        function setPower( state ){
+
+            // Setting the state of power switch
+            $('#powerSwitch').attr('checked', state);
+
+            // Changing the cache var
+            order.power = state;
+        }
+
+        function setPomodoro( step ){
+
+            // First part of the slider
+            let divider = 3;
+            let squareInfo = Math.round( step / divider) + 'm';
+
+            // Second part of the slider
+            if ( step > 179 ){
+                divider = 15;
+                squareInfo = Math.round( (step-180) / divider);
+
+                // Bugfix
+                if ( squareInfo == 0 ){ squareInfo = 1 }
+
+                squareInfo += 'h';
+            }
+
+            // Setting the brightness square color
+            $('#pomodoroSquare').html(squareInfo);
+
+            // Resetting the slider
+            $('#pomodoroRange').val(step);
+
+            // Changing the cache var
+            order.routines.pomodoro.step = step;
+
+        }
+
+
+
+        /*
+        *
+        * SETTING INITIAL VALUES
+        * 
+        */
+        setPower( order.power );
+        setPomodoro( order.routines.pomodoro.step );
+
+
+
+        /*
+        *
+        * DETECTING COMPONENTS
+        * 
+        */
+
+        // Clean some events
+        $('body').off();
+
+        // Detecting pomodoro routine
+        $('body').on('input', '#pomodoroRange', function(){
+            setPomodoro( $(this).val() );
+        });
+
+        $('body').on('change', '#pomodoroRange', function(){
+            $( '#pomodoroSquare' ).fadeOut( 400 ).fadeIn( 100 );
+        })
+
+        //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
 
         config.models.timers.forEach(function(timer) {
 
@@ -80,6 +234,8 @@
             }, 1000);
 
         });
+        
+        */
 
     });
 

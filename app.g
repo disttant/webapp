@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-center min-vh-100" >
         <div class="d-flex flex-column flex-grow-1 mb-3">
             <div class="d-flex justify-content-center p-2">
-                <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
+                <div class="spinner-grow text-black" style="width: 5rem; height: 5rem;" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
@@ -111,7 +111,7 @@
         <div class="d-flex align-items-center justify-content-center py-5" >
             <div class="d-flex flex-column flex-grow-1 mb-3">
                 <div class="d-flex justify-content-center p-2">
-                    <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
+                    <div class="spinner-grow text-black" style="width: 5rem; height: 5rem;" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>

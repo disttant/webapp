@@ -416,7 +416,7 @@ input:checked + .slider:before {
 
 /*
  *
- *  CUSTOM SLIDERS
+ *  CUSTOM SIMPLE SLIDERS
  *
  */
 
@@ -492,3 +492,11 @@ input[type=range]::-ms-track {
 input[type=range]::-ms-fill-upper {
     background-color: black;
 } */
+
+
+
+/*
+ *
+ *  CUSTOM DOUBLE SLIDERS
+ *
+ */

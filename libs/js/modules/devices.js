@@ -220,7 +220,7 @@ export class deviceController {
 
             if( sendResult !== false ){
 
-                classDevice.check( device, order, recieve, cyclenow, function( message ) {
+                classDevice.checkMessages( device, order, recieve, cyclenow, function( message ) {
 
                     callback( message );
 
@@ -265,7 +265,7 @@ export class deviceController {
                 for( let i = result.length - 1 ; i >= 0 ; i-- ) {
                     
                     let message = deviceClass.parseMessage( result[i].message );
-                    
+
                     if( message.type !== 'from' )
                         continue;
 
@@ -325,12 +325,13 @@ export class deviceController {
         if( messageSplit.length > 3 ) {
 
             parsed["data"] = new Object();
+            let data = messageSplit.splice( 3 );
 
-            for( let i = messageSplit.length - 3 ; i < messageSplit.length ; i++ ) {
+            for( let i = 0 ; i < data.length ; i++ ) {
 
-                let messageDataSplit = messageSplit[i].split( '#' );
+                let messageDataSplit = data[i].split( '#' );
 
-                if( messageDataSplit[0] === messageSplit[i] )
+                if( messageDataSplit[0] === data[i] )
                     return false;
 
                 parsed["data"][messageDataSplit[0]] = messageDataSplit[1];

@@ -35,6 +35,12 @@ export class configController {
                 "height"       : 12
 
             },
+            
+            "models" : {
+
+                "timers" : []
+
+            },
 
             "oauth" : {
 

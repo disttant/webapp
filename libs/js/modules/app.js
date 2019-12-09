@@ -124,8 +124,9 @@ export class appController {
         // TASK: Turn off window storage event handlers
         $(window).off('storage');
 
-        // TASK: Turn off all body-related click event handlers 
-        $('body').off('click');
+        // TASK: Turn off all body-related event handlers 
+        //$('body').off('click');
+        $('body').off();
 
         // TASK: Clean module timers
         config.app.timers.forEach(function callback(currentValue, index, array) {

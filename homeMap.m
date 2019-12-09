@@ -1,29 +1,51 @@
-<div id="homemap-header" class="d-flex flex-row align-items-center m-2 text-muted h5 font-weight-light alert alert-secondary border rounded" role="alert">
-    <div class="px-2">
-        <a href="#" onclick="app.moduleLoad('homeMaker')">
-            <i class="material-icons md-dark md-24 align-middle">home</i>
-        </a>
-    </div>
-    <div class="px-2">
-        <i class="material-icons md-dark md-24 align-middle">arrow_right</i>
-    </div>
-    <div id="module-title" class="px-2 text-capitalize"></div>
-</div>
+<div id="homemap-content" class="row mx-auto container p-0">
 
+    
+    <div id="grid-wrapper" class="d-flex col-md-7 align-items-start p-0">
+        <div class="d-flex flex-column flex-grow-1">
 
-
-<div id="homemap-content" class="row">
-    <div id="grid-wrapper" class="d-flex col-md-7 align-items-start">
-        <div class="d-flex flex-column justify-content-center mx-auto mt-2 mb-2 border border-3 border-black rounded shadow-sm" id="grid"></div>
-    </div>
-    <div id="gridmod-wrapper" class="d-flex col-md-5 align-items-start">
-        <div id="panel-wrapper" class="d-flex rounded-0 p-2 flex-fill">
-            <div class="alert alert-secondary mx-auto" role="alert">
-                <span class="d-block">Touch a device to control it!</span>
-                <small>Or a free square to join another</small>
+            <!-- Location bar -->
+            <div id="homemap-header" class="d-flex flex-row align-items-center mx-auto text-muted h5 font-weight-light alert alert-light border rounded" role="alert">
+                <div class="px-2">
+                    <a href="#" onclick="app.moduleLoad('homeMaker')">
+                        <i class="material-icons md-dark md-24 align-middle">home</i>
+                    </a>
+                </div>
+                <div class="px-2">
+                    <i class="material-icons md-dark md-24 align-middle">arrow_right</i>
+                </div>
+                <div id="module-title" class="px-2 text-capitalize"></div>
             </div>
+
+            <!-- Map -->
+            <div id="grid" class="d-flex flex-column justify-content-center mx-auto mt-2 mb-2 border border-3 border-black rounded shadow-sm bg-white"></div>
+
         </div>
     </div>
+
+    <div id="gridmod-wrapper" class="d-flex col-md-5 align-items-start p-0" >
+
+        <div id="panel-wrapper" class="d-flex flex-grow-1 rounded-0 " >
+            <!-- Model here -->
+            <div class="alert alert-light w-100 border" role="alert">
+                <div class="d-flex flex-column">
+                    <div>
+                        <div class="font-weight-bold text-capitalize">Lets play!</div>
+                    </div>
+                    <div>
+                        <hr />
+                    </div>
+                    <div>
+                        <span class="d-block">Touch a device to control it!</span>
+                        <small>Or a free square to join another</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>
 
 
@@ -63,6 +85,21 @@
             if(moduleHeaders.data.hasOwnProperty('group') == false){
                 app.moduleLoad('homeMaker');
             };
+        }
+
+        
+
+        /*
+         *
+         * FUNCTION TO ADAPT THE LOCATION BAR 
+         * TO THE GRID SIZE
+         * 
+         */ 
+        function adjustLocationBar(){
+
+            let gridWidth      = $('#grid').outerWidth();
+            $('#homemap-header').css('width', gridWidth);
+
         }
 
 
@@ -135,6 +172,7 @@
         // ADAPTING THE MAP SIZES
         config.app.timers[0] = setInterval(() => {
             adjustGridSize(700);
+            adjustLocationBar()
         }, 100);
 
         // PREPARE TO CONSTRUCT THE GRID
@@ -233,7 +271,8 @@
                         }
 
                         $('[x-coord-x="'+ coords[0] +'"] > [x-coord-y="'+ coords[1] +'"]').css('background-color', color);
-                        $('[x-coord-x="'+ coords[0] +'"] > [x-coord-y="'+ coords[1] +'"]').append('<div id="'+ result.group[0].devices[i].name +'" x-model="'+ result.group[0].devices[i].type +'"></div>');
+                        $('[x-coord-x="'+ coords[0] +'"] > [x-coord-y="'+ coords[1] +'"]')
+                            .append('<div id="'+ result.group[0].devices[i].name +'" x-model="'+ result.group[0].devices[i].type +'" x-description="'+ result.group[0].devices[i].description +'"></div>');
 
                     }
 
@@ -252,7 +291,7 @@
             if($(this).children().length === 0){
 
                 
-
+                // Empty cell clicked
                 if(nocoords.length > 0){
 
                     // AÑADIR CANAL AL MAPA
@@ -315,19 +354,25 @@
                 
 
                 // ABRIR PANEL DEL CANAL
-                let deviceName = $(this).children()[0].id;
-                let model = $(this).children().attr('x-model');
+                let modelName = $(this).children()[0].id;
+                let modelType = $(this).children().attr('x-model');
+                let modelDescription = $(this).children().attr('x-description');
                 let offsetToPanel = $('#panel-wrapper').offset().top;
 
                 $('#panel-wrapper').empty();
-
                 
                 // We have defined model
-                if(config.model.hasOwnProperty(model)){
+                if(config.model.hasOwnProperty(modelType)){
 
-                    $('#panel-wrapper').load('./libs/models/' + model + '.html', function(){
+                    $('#panel-wrapper').load('./libs/models/' + modelType + '.html', function(){
 
                         // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
+                        $('#modelName').empty().append(modelName);
+                        $('#modelType').empty().append(modelType);
+                        $('#modelDescription').empty();
+                        if ( modelDescription !== null && modelDescription.toLowerCase() !== 'null' ){
+                            $('#modelDescription').append(modelDescription);
+                        }
                         
                     });
 
@@ -338,6 +383,7 @@
                     $('#panel-wrapper').load('./libs/models/undefined.html', function( ){
 
                         // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
+                        $('#modelName').empty().append(modelName);
 
                     });
                 }

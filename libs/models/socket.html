@@ -25,7 +25,7 @@
         </div>
         <div class="my-auto">
             <label class="switch">
-                <input type="checkbox" id="powerSwitch">
+                <input type="checkbox" x-command="power">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -46,10 +46,10 @@
 
         <div class="my-auto">
             <div class="py-3">
-                <div id="pomodoroSquare" class="d-flex justify-content-center border mb-4 rounded p-2">
-                    1h
+                <div class="d-flex justify-content-center border mb-4 rounded p-2" x-label-for="pomodoro">
+                    -
                 </div>
-                <input type="range" id="pomodoroRange" min="0" max="255" step="1" >
+                <input type="range" min="0" max="255" step="1" x-command="routine" x-routine="pomodoro">
             </div>
         </div>
     </div>
@@ -68,9 +68,11 @@
         * FUTURE MESSAGE DEFINITION
         * 
         */
-        let order = {
-            power : true,
-            routines : {
+        let status = {
+            power : { 
+                state : false,
+            },
+            routine : {
                 pomodoro    : {
                     step : 0,
                 },
@@ -84,16 +86,64 @@
         * SETTING FUNCTION DEFINITIONS
         * 
         */
-        function setPower( state ){
 
-            // Setting the state of power switch
-            $('#powerSwitch').attr('checked', state);
+        // Take from server and set starting values for statusCache
+        function initStatusCache () {
 
-            // Changing the cache var
-            order.power = state;
         }
 
+        // Update statusCache with another status by entering a JSON object
+        function updateState ( statusHolder = {}, status = {} ){
+
+            let statusCache = status;
+
+            // Check statusHolder
+            if ( typeof statusHolder !== 'object' )
+                return;
+
+            if ( statusHolder.hasOwnProperty('command') !== true )
+                return;
+
+            if ( statusHolder.hasOwnProperty('routine') !== true )
+                return;
+
+            if ( statusHolder.hasOwnProperty('field') !== true )
+                return;
+            
+            if ( statusHolder.hasOwnProperty('value') !== true )
+                return;
+
+            // Check status
+            if ( typeof status !== 'object' )
+                return;
+
+            if ( statusHolder.routine === true ){
+                statusCache['routine'][statusHolder.command][statusHolder.field] = statusHolder.value;
+            }else{
+                statusCache[statusHolder.command][statusHolder.field] = statusHolder.value;
+            }
+
+            return statusCache;
+        }
+
+        // Move selected switch left or right by code
+        function setSwitch( name, state ){
+
+            if (typeof state !== 'boolean' ){
+                state = $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked');
+            }
+
+            // Setting the state of power switch
+            $('body').find('input[type="checkbox"][x-command="'+name+'"]').attr('checked', state);
+
+        }
+
+        // Move pomodoro slider to a position by code
         function setPomodoro( step ){
+
+            if (typeof step !== 'number' ){
+                step = $('body').find('input[type="range"][x-command="routine"][x-routine="pomodoro"]').val();
+            }
 
             // First part of the slider
             let divider = 3;
@@ -111,13 +161,20 @@
             }
 
             // Setting the brightness square color
-            $('#pomodoroSquare').html(squareInfo);
+            $('body').find('div[x-label-for="pomodoro"]').html(squareInfo).fadeOut( 400 ).fadeIn( 100 );
+            
 
             // Resetting the slider
-            $('#pomodoroRange').val(step);
+            $('body').find('input[type="range"][x-command="routine"][x-routine="pomodoro"]').val(step);
 
-            // Changing the cache var
-            order.routines.pomodoro.step = step;
+        }
+
+        // Set initial GUI conditions
+        // taking the status from statusCache
+        function initComponents(){
+
+            setSwitch( 'power', status.power.state );
+            setPomodoro( status.routine.pomodoro.step );
 
         }
 
@@ -128,30 +185,126 @@
         * SETTING INITIAL VALUES
         * 
         */
-        setPower( order.power );
-        setPomodoro( order.routines.pomodoro.step );
+        initStatusCache ();
+        initComponents();
 
 
 
         /*
         *
         * DETECTING COMPONENTS
+        * FOR INTERNAL PURPOSE
         * 
         */
 
         // Clean some events
         $('body').off();
 
-        // Detecting pomodoro routine
-        $('body').on('input', '#pomodoroRange', function(){
-            setPomodoro( $(this).val() );
+        $('body').on('input', 'input', function(){
+
+            // Update the GUI
+            setSwitch( 'power' ); // <----------------------------------------------
+            setPomodoro(  );      // <----------------------------------------------   AUNAR EN UNA FUNCION
+    
         });
 
-        $('body').on('change', '#pomodoroRange', function(){
-            $( '#pomodoroSquare' ).fadeOut( 400 ).fadeIn( 100 );
-        })
 
-        //
+
+        /*
+        *
+        * DETECTING COMPONENTS
+        * FOR SENDING COMMANDS
+        * 
+        */
+
+        // Detecting status change
+        $('body').on('change', 'input', function(){
+
+            // Save current state
+            let currentStatus = status;
+
+            // Save future status
+            let statusHolder   = {
+                command : null,
+                routine : false,
+                field   : null,
+                value   : null
+            };
+
+            // Save sendable fields
+            let device         = $('#modelName').html();
+            let command        = $(this).attr('x-command');
+            let routine        = $(this).attr('x-routine');
+
+            // Save cache vars for building final string
+            let order          = '';
+            let data           = '';
+
+            // Build the basic part of the order
+            order = 'for|' + device + '|' + command;
+            statusHolder['command'] = command;
+
+            // Add the name of routine if present
+            if ( typeof routine !== 'undefined' ) {
+                data += 'name#' + routine + '|';
+                statusHolder['command'] = routine;
+                statusHolder['routine'] = true;
+            }
+
+            // Add other information fields
+            // For switches
+            if( $(this).attr('type') === 'checkbox' ){
+                data += 'state#' + $(this).prop('checked') + '|';
+                statusHolder['field'] = 'state';
+                statusHolder['value'] = $(this).prop('checked');
+            }
+
+            // For sliders
+            if( $(this).attr('type') === 'range' ){
+                data += 'step#' + $(this).prop('value') + '|';
+                statusHolder['field'] = 'step';
+                statusHolder['value'] = $(this).prop('value');
+            }
+
+            // Build the entire order
+            order += '|' + data;
+
+            // Sending the order to the device
+            app.spinnerType = 'bar';
+
+            //setPomodoro( 250 ); aquí sí funciona <------------------------------------- aqui si
+            
+            window.device.sendAndGet( device, command, function( result ) {
+
+                if( result !== false ){
+
+                    // Update values
+                    status = updateState ( statusHolder, status );
+
+                    // Inform the user
+                    app.sendToast('Task done');
+
+                }else{
+
+                    // Update values
+                    status = currentStatus;
+
+                    // Inform the user
+                    app.sendToast('Task failed');
+                    
+                }
+
+                // Update GUI to memory status
+                //initComponents();  <---------------------------------------------------------- aqui no
+
+                console.warn(status);
+                
+            }, data);
+
+            
+
+        });
+
 
 
 

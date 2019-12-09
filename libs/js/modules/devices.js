@@ -325,7 +325,7 @@ export class deviceController {
         if( messageSplit.length > 3 ) {
 
             parsed["data"] = new Object();
-            let data = messageSplit.splice(messageSplit.length - 1);
+            let data = messageSplit.splice( 3 );
 
             for( let i = 0 ; i < data.length ; i++ ) {
 

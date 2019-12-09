@@ -370,7 +370,7 @@
                         $('#modelName').empty().append(modelName);
                         $('#modelType').empty().append(modelType);
                         $('#modelDescription').empty();
-                        if ( modelDescription !== null ){
+                        if ( modelDescription !== null && modelDescription.toLowerCase() !== 'null' ){
                             $('#modelDescription').append(modelDescription);
                         }
                         

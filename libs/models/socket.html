@@ -68,7 +68,7 @@
         * FUTURE MESSAGE DEFINITION
         * 
         */
-        let status = {
+        var status = {
             power : { 
                 state : false,
             },
@@ -93,7 +93,7 @@
         }
 
         // Update statusCache with another status by entering a JSON object
-        function updateState ( statusHolder = {}, status = {} ){
+        window.updateState = function ( statusHolder = {}, status = {} ){
 
             let statusCache = status;
 
@@ -127,7 +127,7 @@
         }
 
         // Move selected switch left or right by code
-        function setSwitch( name, state ){
+        window.setSwitch = function ( name, state ){
 
             if (typeof state !== 'boolean' ){
                 state = $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked');
@@ -139,7 +139,7 @@
         }
 
         // Move pomodoro slider to a position by code
-        function setPomodoro( step ){
+        window.setPomodoro = function ( step ){
 
             if (typeof step !== 'number' ){
                 step = $('body').find('input[type="range"][x-command="routine"][x-routine="pomodoro"]').val();
@@ -171,7 +171,7 @@
 
         // Set initial GUI conditions
         // taking the status from statusCache
-        function initComponents(){
+        window.initComponents = function (){
 
             setSwitch( 'power', status.power.state );
             setPomodoro( status.routine.pomodoro.step );
@@ -186,7 +186,7 @@
         * 
         */
         initStatusCache ();
-        initComponents();
+        initComponents ();
 
 
 
@@ -271,15 +271,13 @@
 
             // Sending the order to the device
             app.spinnerType = 'bar';
-
-            //setPomodoro( 250 ); aquí sí funciona <------------------------------------- aqui si
             
             window.device.sendAndGet( device, command, function( result ) {
 
                 if( result !== false ){
 
                     // Update values
-                    status = updateState ( statusHolder, status );
+                    window.status = updateState ( statusHolder, status );
 
                     // Inform the user
                     app.sendToast('Task done');
@@ -287,7 +285,7 @@
                 }else{
 
                     // Update values
-                    status = currentStatus;
+                    window.status = currentStatus;
 
                     // Inform the user
                     app.sendToast('Task failed');
@@ -295,9 +293,7 @@
                 }
 
                 // Update GUI to memory status
-                //initComponents();  <---------------------------------------------------------- aqui no
-
-                console.warn(status);
+                window.initComponents();
                 
             }, data);
 

@@ -11,6 +11,12 @@ export class configController {
 
         config = {
 
+            "api" : {
+
+                
+
+            },
+
             "global" : {
 
                 "default"  : "login",
@@ -29,6 +35,12 @@ export class configController {
 
             },
 
+            "modules" : {
+
+                "cached" : false,
+
+            },
+
             "map" : {
 
                 "width"        : 12,
@@ -38,7 +50,8 @@ export class configController {
             
             "models" : {
 
-                "timers" : []
+                "timers" : [],
+                "cached" : false,
 
             },
 

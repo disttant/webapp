@@ -16,9 +16,9 @@
 <!-- Sidebar menu -->
 <div id="sidebar-wrapper" class="d-none">
 
-    <div id="sidebar-bg"></div>
+    <div id="sidebar-bg" style="z-index: 1040 !important;"></div>
 
-    <div id="sidebar-menu" class="shadow overflow-auto">
+    <div id="sidebar-menu" class="shadow overflow-auto" style="z-index: 1050 !important;">
 
         <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
 
@@ -37,13 +37,6 @@
                 </div>
             </div>
 
-            <!-- Sidebar body -->
-            <!--
-            <div class="p-3">
-                <i class="material-icons md-24 md-light align-middle pr-2">tune</i>
-                <a href="#" class="text-light align-middle" onclick="app.moduleLoad('example')">Example module</a>
-            </div>
-            -->
             <div class="p-3">
                 <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>
                 <a id="logout" href="#" class="text-light align-middle">Logout</a>
@@ -86,23 +79,29 @@
 <div id="app-wrapper" class="d-none min-vh-100">
 
     <!-- Top bar -->
-    <nav id="app-navbar" class="navbar navbar-dark bg-black">
-        <div class="navbar-brand text-light">
-            <h4 class="font-weight-bold d-inline-block">ALKE</h4>
-            <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
-        </div>
-        <!-- Menu button -->
-        <div>
-            <button id="sidebarOpener" class="btn">
-                <i class="material-icons md-24 md-light align-middle">menu</i>
-            </button>
-        </div>
-    </nav>
+    <nav id="app-navbar" class="navbar sticky-top navbar-dark bg-black p-0">
 
-    <!-- Preloader infinite bar -->
-    <div id="top-preloader" class="linear-activity invisible">
-        <div class="indeterminate"></div>
-    </div>
+        <div class="d-flex align-items-center justify-content-between w-100 py-2 px-3">
+            <!-- Brand -->
+            <div class="d-inline-block text-light">
+                <h4 class="font-weight-bold d-inline-block">ALKE</h4>
+                <h4 class="font-weight-light d-inline-block text-yellow">Adaptative</h4>
+            </div>
+    
+            <!-- Menu button -->
+            <div class="d-inline-block">
+                <button id="sidebarOpener" class="btn">
+                    <i class="material-icons md-24 md-light align-middle">menu</i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Preloader infinite bar -->
+        <div id="top-preloader" class="linear-activity" style="opacity: 0;">
+            <div class="indeterminate"></div>
+        </div>
+        
+    </nav>
     
 
 

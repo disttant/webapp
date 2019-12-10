@@ -52,22 +52,23 @@ export class appController {
                 if ( this.spinnerType === 'page' ){
                     $('#app-wrapper').addClass('d-none');
                     $('#app-spinner-wrapper').removeClass('d-none');
+
                 }
 
                 if ( this.spinnerType === 'module' ){
                     $('#module-wrapper').addClass('d-none');
                     $('#module-spinner-wrapper').removeClass('d-none');
+
                 }
 
                 if ( this.spinnerType === 'bar' ){
-                    $('#top-preloader').removeClass('invisible');
+                    $('#top-preloader').fadeTo( 200, 1 );
                 }
 
                 break;
 
             case 'hide':
-
-                $('#top-preloader').addClass('invisible');
+                $('#top-preloader').fadeTo( 200, 0 );
 
                 $('#module-spinner-wrapper').addClass('d-none');
                 $('#module-wrapper').removeClass('d-none');
@@ -139,7 +140,7 @@ export class appController {
         // Load the module
         $.get({
             url: moduleName + '.m', 
-            cache: false
+            cache: config.modules.cached
         })
         .done(function( data ) {
             $('body').find("#module-wrapper").empty().html(data);

@@ -364,7 +364,11 @@
                 // We have defined model
                 if(config.model.hasOwnProperty(modelType)){
 
-                    $('#panel-wrapper').load('./libs/models/' + modelType + '.html', function(){
+                    $.get({
+                        url: './libs/models/' + modelType + '.html', 
+                        cache: config.models.cached
+                    }).then(function( response ){
+                        $('#panel-wrapper').html(response);
 
                         // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
                         $('#modelName').empty().append(modelName);
@@ -373,19 +377,21 @@
                         if ( modelDescription !== null && modelDescription.toLowerCase() !== 'null' ){
                             $('#modelDescription').append(modelDescription);
                         }
-                        
                     });
-
                     
                 // We have UNdefined model
                 }else{
 
-                    $('#panel-wrapper').load('./libs/models/undefined.html', function( ){
+                    $.get({
+                        url: './libs/models/undefined.html', 
+                        cache: config.models.cached
+                    }).then(function( response ){
+                        $('#panel-wrapper').html(response);
 
                         // PASAR DATOS NECESARIOS EN EL PANEL(SI HACE FALTA)
                         $('#modelName').empty().append(modelName);
-
                     });
+
                 }
 
                 // Scroll to the panel

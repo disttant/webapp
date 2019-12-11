@@ -10,6 +10,7 @@ import * as app_md from './modules/app.js';
 import * as group_md from './modules/groups.js';
 import * as device_md from './modules/devices.js';
 import * as color_md from './modules/color.js';
+import * as ModelComponents_md from './modules/ModelComponentsController.js';
 
 
 
@@ -88,6 +89,17 @@ window.device = new device_md.deviceController(config.device);
  * 
  * */
 window.color = new color_md.colorController();
+
+
+
+/* *
+ *
+ * ModelComponents Library
+ * Initialize this module
+ * 
+ * */
+window.ModelComponents = new ModelComponents_md.ModelComponentsController();
+
 
 
 /* *

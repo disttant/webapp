@@ -1,6 +1,8 @@
+
 <!-- Model Form -->
 <div class="d-flex flex-column w-100 border h-100 alert alert-light" role="alert" >
 
+    <!-- Header -->
     <div class="d-flex flex-column">
         <div class="p-2">
             <div id="modelType" class="font-weight-bold text-capitalize">{{modelType}}</div>
@@ -11,86 +13,113 @@
         </div>
     </div>
 
-
-
     <div>
         <hr />
     </div>
 
-    <div class="d-flex justify-content-between p-2 py-4">
-        <div class="my-auto">
-            <i class="material-icons md-36">power_settings_new</i>
-        </div>
-        <div class="my-auto">
-            <label class="switch">
-                <input type="checkbox" id="powerSwitch">
-                <span class="slider round"></span>
-            </label>
+    <!-- Panel -->
+    <div loader>
+        <div class="d-flex justify-content-center my-3">
+            <div class="d-block my-auto">Comunicating with device</div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-between p-2 py-4">
-        <div class="my-auto">
-            <i class="material-icons md-36">brightness_high</i>
+    <div error>
+        <div class="d-flex justify-content-center my-3">
+            Oops! Device is not answering
         </div>
-        <div class="my-auto">
-            <div id="brightnessSquare" class="border mb-4 rounded p-3"></div>
-            <input type="range" id="brightnessRange" min="0" max="255" step="1" >
+    </div>
+
+    <!-- Power -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 py-4">
+            <div class="my-auto">
+                <i class="material-icons md-36">power_settings_new</i>
+            </div>
+            <div class="my-auto">
+                <label class="switch">
+                    <input type="checkbox" x-command="power">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brightness -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 py-4">
+            <div class="my-auto">
+                <i class="material-icons md-36">brightness_high</i>
+            </div>
+            <div class="my-auto">
+                <div class="border mb-4 rounded p-3" x-label-for="brightness"></div>
+                <input type="range" min="0" max="255" step="1" x-command="brightness">
+            </div>
         </div>
     </div>
     
-    <div class="d-flex justify-content-between p-2 pt-4 mb-4">
-        <div class="my-auto">
-            <i class="material-icons md-36">color_lens</i>
-        </div>
-        <div class="my-auto">
-            <div id="colorSquare" class="border mb-4 rounded p-3"></div>
-            <input type="range" id="colorRange" min="0" max="255" step="1" >
+    <!-- Color -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 pt-4 mb-4">
+            <div class="my-auto">
+                <i class="material-icons md-36">color_lens</i>
+            </div>
+            <div class="my-auto">
+                <div class="border mb-4 rounded p-3" x-label-for="color"></div>
+                <input type="range" min="0" max="255" step="1" x-command="color">
+            </div>
         </div>
     </div>
 
-
-
-    <div>
+    <div component>
         <hr />
     </div>
     
-    <div class="d-flex justify-content-between p-2 pt-4">
-        <div class="my-auto">
-            Presence
-            <div class="d-block text-muted small">Routine</div>
-        </div>
-        <div class="my-auto">
-            <label class="switch">
-                <input type="checkbox" id="presenceSwitch">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-between p-2 pt-4">
-        <div class="my-auto">
-            Nightmares
-            <div class="d-block text-muted small">Routine</div>
-        </div>
-        <div class="my-auto">
-            <label class="switch">
-                <input type="checkbox" id="nightmaresSwitch">
-                <span class="slider round"></span>
-            </label>
+    <!-- Presence -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 pt-4">
+            <div class="my-auto">
+                Presence
+                <div class="d-block text-muted small">Routine</div>
+            </div>
+            <div class="my-auto">
+                <label class="switch">
+                    <input type="checkbox" x-command="routine" x-routine="presence">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-between p-2 pt-4">
-        <div class="my-auto">
-            Party
-            <div class="d-block text-muted small">Routine</div>
+    <!-- Nightmares -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 pt-4">
+            <div class="my-auto">
+                Nightmares
+                <div class="d-block text-muted small">Routine</div>
+            </div>
+            <div class="my-auto">
+                <label class="switch">
+                    <input type="checkbox" x-command="routine" x-routine="nightmares">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
-        <div class="my-auto">
-            <label class="switch">
-                <input type="checkbox" id="partySwitch">
-                <span class="slider round"></span>
-            </label>
+    </div>
+
+    <!-- Party -->
+    <div component>
+        <div class="d-flex justify-content-between p-2 pt-4">
+            <div class="my-auto">
+                Party
+                <div class="d-block text-muted small">Routine</div>
+            </div>
+            <div class="my-auto">
+                <label class="switch">
+                    <input type="checkbox" x-command="routine" x-routine="party">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -98,19 +127,40 @@
 
 
 
-
-
 <!-- Module Logic -->
 <script>
 $(function() {
 
+    function initComponents () {
+        $('body').on('input', 'input', function(){
+            ModelComponents.setGuiBrightness( );
+            ModelComponents.setGuiColor( );
+        });
+    }
+
+    function updateGuiFromCache () {
+        ModelComponents.setGuiSwitch('power', false, ModelComponents.statusCache.power.state );
+        ModelComponents.setGuiBrightness(ModelComponents.statusCache.brightness.step );
+        ModelComponents.setGuiColor(ModelComponents.statusCache.color.step );
+
+        ModelComponents.setGuiSwitch('presence', true, ModelComponents.statusCache.routines.presence.state );
+        ModelComponents.setGuiSwitch('nightmares', true, ModelComponents.statusCache.routines.nightmares.state );
+        ModelComponents.setGuiSwitch('party', true, ModelComponents.statusCache.routines.party.state );
+    }
+
+
     /*
-     *
-     * FUTURE MESSAGE DEFINITION
-     * 
-     */
-    let order = {
-        power : true,
+    *
+    * GLOBAL VARS
+    * 
+    */
+    var device = $('#modelName').html();
+    
+    ModelComponents.statusCache = {
+
+        power : {
+            state : false,
+        },
         brightness : {
             step : 130,
         },
@@ -118,12 +168,75 @@ $(function() {
             step: 80,
         },
         routines : {
-            presence    : false,
-            nightmares  : false,
-            party       : false,
-
+            presence    : {
+                state : false,
+            },
+            nightmares  : {
+                state : false,
+            },
+            party       : {
+                state : false,
+            },
         }
+
     }
+
+    // Init components
+    initComponents();
+
+    // Init Status Cache
+
+    // Initial conditions of components
+    updateGuiFromCache ();
+
+    // Set the event handler
+    ModelComponents.detectAndSync( device, function() {
+
+        updateGuiFromCache ();
+
+        //updateGuiFromCache();
+        //console.log( ModelComponents.statusCache );
+
+    });
+
+
+
+    /*
+    function updateGuiFromCache(){
+
+        for (var command in status) {
+
+            console.log('Busca el comando [' + command + ']')
+            
+            if( status[command].hasOwnProperty('state') )
+                console.warn('es un interruptor');
+
+            if( status[command].hasOwnProperty('step') )
+                console.error('es un slider');
+
+
+
+            if ( command === 'routines'){
+                for (var routine in status['routines']) {
+
+                    console.log( 'esto es una rutina: ' + routine );
+
+                    if( status['routines'][routine].hasOwnProperty('state') )
+                        console.warn('es un interruptor de rutina');
+
+                    if( status['routines'][routine].hasOwnProperty('step') )
+                        console.error('es un slider de rutina');
+
+                    
+                }
+                
+            }
+        }
+
+    }*/
+    
+
+    
 
 
     /*
@@ -132,18 +245,58 @@ $(function() {
      * 
      */
 
-    function setPower( state ){
+     // Update statusCache with another status by entering a JSON object
+     /*window.updateState = function ( statusHolder = {}, status = {} ){
 
-        // Setting the state of power switch
-        $('#powerSwitch').attr('checked', state);
+        let statusCache = status;
 
-        // Changing the cache var
-        order.power = state;
+        // Check statusHolder
+        if ( typeof statusHolder !== 'object' )
+            return;
+
+        if ( statusHolder.hasOwnProperty('command') !== true )
+            return;
+
+        if ( statusHolder.hasOwnProperty('routine') !== true )
+            return;
+
+        if ( statusHolder.hasOwnProperty('field') !== true )
+            return;
+
+        if ( statusHolder.hasOwnProperty('value') !== true )
+            return;
+
+        // Check status
+        if ( typeof status !== 'object' )
+            return;
+
+        if ( statusHolder.routine === true ){
+            statusCache['routine'][statusHolder.command][statusHolder.field] = statusHolder.value;
+        }else{
+            statusCache[statusHolder.command][statusHolder.field] = statusHolder.value;
+        }
+
+        return statusCache;
     }
 
+    //
+    window.setGuiSwitch = function ( name, state ){
 
+        if (typeof state !== 'boolean' ){
+            state = $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked');
+        }
 
-    function setBrightness( step ){
+        // Setting the state of power switch
+        $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked', state);
+
+    }
+
+    //
+    window.setGuiBrightness = function ( step ){
+
+        if (typeof step !== 'number' ){
+            step = $('body').find('input[type="range"][x-command="brightness"]').val();
+        }
 
         // Calculate the RGB Value from HSL
         let brightness = color.hslToRgb( 0.155, 1, step/255);
@@ -153,19 +306,22 @@ $(function() {
         brightness[2] = Math.round(brightness[2]);
 
         // Setting the brightness square color
-        $('#brightnessSquare').css('background-color', 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')');
-
+        $('body').find('div[x-label-for="brightness"]')
+            .css('background-color', 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')')
+            .fadeOut( 400 )
+            .fadeIn( 100 );
+            
         // Resetting the slider
-        $('#brightnessRange').val(step);
-        //brightnessSquare
+        $('body').find('input[type="range"][x-command="brightness"]').val(step);
 
-        // Changing the cache var
-        order.brightness.step = step;
     }
 
+    //
+    window.setGuiColor = function ( step ){
 
-
-    function setColor( step ){
+        if (typeof step !== 'number' ){
+            step = $('body').find('input[type="range"][x-command="color"]').val();
+        }
 
         // Calculate the RGB Value from HSL
         let colorRGB = color.hslToRgb( step/255, 0.8, 0.8);
@@ -174,121 +330,197 @@ $(function() {
         colorRGB[1] = Math.round(colorRGB[1]);
         colorRGB[2] = Math.round(colorRGB[2]);
 
-        // Setting the square color
-        $('#colorSquare').css('background-color', 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')');
-
+        // Setting the brightness square color
+        $('body').find('div[x-label-for="color"]')
+            .css('background-color', 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')')
+            .fadeOut( 400 )
+            .fadeIn( 100 );
+            
         // Resetting the slider
-        $('#colorRange').val(step);
+        $('body').find('input[type="range"][x-command="color"]').val(step);
 
-        // Changing the cache var
-        order.color.step = step;
+    }*/
+
+    // Set initial GUI conditions
+    // taking the status from statusCache
+    /*
+    window.setGuiFromCache = function (){
+
+        window.setGuiSwitch( 'power', status.power.state );
+        //window.setGuiBrightness( status.power.state );
+        //window.setGuiColor( status.power.state );
+
+        
+        window.setSwitch( 'power', status.power.state );
+        window.setPomodoro( status.routine.pomodoro.step );
+        window.setPomodoro( status.routine.pomodoro.step );
+        
+
+    }*/
+
+    /*
+    window.detectGuiAndSync = function (){
+        // Detecting status change
+        $('body').on('change', 'input', function(){
+
+            // Save current state
+            let currentStatus = window.status;
+
+            // Save future status
+            let statusHolder   = {
+                command : null,
+                routine : false,
+                field   : null,
+                value   : null
+            };
+
+            // Save sendable fields
+
+            let command        = $(this).attr('x-command');
+            let routine        = $(this).attr('x-routine');
+
+            // Save cache vars for building final string
+            let order          = '';
+            let data           = '';
+
+            // Build the basic part of the order
+            order = 'for|' + device + '|' + command;
+            statusHolder['command'] = command;
+
+            // Add the name of routine if present
+            if ( typeof routine !== 'undefined' ) {
+                data += 'name#' + routine + '|';
+                statusHolder['command'] = routine;
+                statusHolder['routine'] = true;
+            }
+
+            // Add other information fields
+            // For switches
+            if( $(this).attr('type') === 'checkbox' ){
+                data += 'state#' + $(this).prop('checked') + '|';
+                statusHolder['field'] = 'state';
+                statusHolder['value'] = $(this).prop('checked');
+            }
+
+            // For sliders
+            if( $(this).attr('type') === 'range' ){
+                data += 'step#' + $(this).prop('value') + '|';
+                statusHolder['field'] = 'step';
+                statusHolder['value'] = $(this).prop('value');
+            }
+
+            // Build the entire order
+            order += '|' + data;
+
+            // Sending the order to the device
+            app.spinnerType = 'bar';
+
+            window.device.sendAndGet( device, command, function( result ) {
+
+                if( result !== false ){
+
+                    // Check answer
+                    if ( result.data.state === 'error' ) {
+
+                        // Update values
+                        window.status = currentStatus;
+
+                        // Inform the user
+                        app.sendToast('Oops! There was a mistake :( ');
+
+                        return;
+                    }
+
+                    // Update values
+                    window.status = window.updateState ( statusHolder, window.status );
+
+                    // Inform the user
+                    app.sendToast('Task done');
+
+                }else{
+
+                    // Update values
+                    window.status = currentStatus;
+
+                    // Inform the user
+                    app.sendToast('Oops! Device is sleeping. Reboot it please :(');
+                    
+                }
+
+                console.log(result);
+
+                // Update GUI to memory status
+                window.setGuiFromCache();
+                
+            }, data);
+
+        });
     }
+    */
 
 
-    function setOffRoutines( ){
-
-    }
-
-
-
-    function setPresence( state ){
-
-        // Setting the state of power switch
-        $('#presenceSwitch').attr('checked', state);
-
-        // Changing the cache var
-        order.routines.presence = state;
-    }
-
-
-
-    function setNightmares( state ){
-
-        // Setting the state of power switch
-        $('#nightmaresSwitch').attr('checked', state);
-
-        // Changing the cache var
-        order.routines.nightmares = state;
-    }
-
-
-
-    function setParty( state ){
-
-        // Setting the state of power switch
-        $('#partySwitch').attr('checked', state);
-
-        // Changing the cache var
-        order.routines.party = state;
-    }
+    
     
 
+    
 
     /*
      *
      * SETTING INITIAL VALUES
      * 
      */
-    setPower( order.power );
-    setBrightness( order.brightness.step );
-    setColor( order.color.step );
-    setPresence( order.routines.presence );
-    setNightmares( order.routines.nightmares );
-    setParty( order.routines.party );
+    // Show the loader and hide module
+    //$('body').find('[loader]').show();
+    //$('body').find('[error]').hide();
+    //$('body').find('[component]').hide();
 
+    // Ask the server for the status
+    //initStatusCache ();
+    app.spinnerType = 'bar';
+    /*
+    window.device.sendAndGet( device, 'sync', function( result ) {
+        if ( result !== false ){
+
+            // Analyze the response
+
+            // show the GUI
+            initComponents ();
+            $('body').find('[loader]').hide();
+            $('body').find('[component]').show();
+            return;
+        }
+
+        $('body').find('[loader]').hide();
+        $('body').find('[error]').show();
+        $('body').find('[component]').hide();
+        
+
+    });
+    */
+
+    /*
+    *
+    * DETECTING COMPONENTS
+    * FOR INTERNAL PURPOSE
+    * 
+    */
+
+    // Clean some events
+    /*
+    $('body').off();
+*/
+    
 
 
     /*
-     *
-     * DETECTING COMPONENTS
-     * 
-     */
+    *
+    * DETECTING COMPONENTS
+    * FOR SENDING COMMANDS
+    * 
+    */
 
-    // Clean some events
-    $('body').off();
-
-    // Detecting power change
-    $('body').on('change', '#powerSwitch', function(){
-        
-        setPower( $(this).attr('checked') );
-
-    });
-
-    // Detecting color change
-    $('body').on('input', '#brightnessRange', function(){
-        
-        setBrightness( $(this).val() );
-
-    });
-
-    // Detecting color change
-    $('body').on('input', '#colorRange', function(){
-        
-        setColor( $(this).val() );
-
-    });
-
-    // Detecting presence routine
-    $('body').on('input', '#presenceSwitch', function(){
-        
-        setPresence( $(this).val() );
-
-    });
-
-    // Detecting nightmares routine
-    $('body').on('input', '#nightmaresSwitch', function(){
-        
-        setNightmares( $(this).val() );
-
-    });
-
-    // Detecting party routine
-    $('body').on('input', '#partySwitch', function(){
-        
-        setParty( $(this).val() );
-
-    });
-
+    // Start detecting components
+    //window.detectGuiAndSync();
 
 
 

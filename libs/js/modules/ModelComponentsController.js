@@ -68,6 +68,33 @@ export class ModelComponentsController {
 
     /*
      *
+     * Creates an event handler for updating
+     * GUI components on each change
+     * 
+     */
+    initComponents = function (){
+
+        // Bugfix for environment reference
+        let classThis = this;
+
+        // Update GUI elements from cache values
+
+        function _func (){
+
+            // Update representation of value
+            classThis.updateComponent ( event.target );
+        }
+
+        document.removeEventListener("input", _func );
+
+        document.addEventListener("input", _func );
+
+    }
+
+
+
+    /*
+     *
      * Detect input components with the right tags,
      * build the order, send it to the server,
      * update the statusCache and re-set the values 
@@ -178,28 +205,66 @@ export class ModelComponentsController {
 
     /*
      *
+     * Call the appropiate method for each component
+     * injected in domElement
+     * 
+     */
+    updateComponent = function ( domElement ){
+
+        let componentType = domElement.getAttribute("x-component-type");
+
+        switch (componentType) {
+
+            case 'switch':
+
+                this.updateSwitch( domElement );
+                break;
+
+            case 'brightness-slider':
+
+                this.updateBrightnessSlider( domElement );
+                break;
+
+            case 'color-slider':
+            
+                this.updateColorSlider( domElement );
+                break;
+
+            case 'timer-slider':
+        
+                this.updateTimerSlider( domElement );
+                break;
+        
+            default:
+
+                console.log('x-component-type not found in component: ' + domElement );
+                break;
+        }
+
+    }
+
+
+
+    /*
+     *
      * Turn named switch to a value
      * 
      */
-    setGuiSwitch = function ( name, routine, state ){
+    updateSwitch( domElement, state ){
 
-        let selector;
-        
-        if ( routine === true ){
-            // If routine flag is set
-            selector = $('body').find('input[type="checkbox"][x-command="routine"][x-routine="'+name+'"]');
-        }else{
-            // Not a routine
-            selector = $('body').find('input[type="checkbox"][x-command="'+name+'"]');
+        // Check if switch is a checkbox
+        if( domElement.getAttribute("type") !== 'checkbox' ){
+            console.log ( '[GUI]: Switch malformed' )
         }
-            
+
         // Not a forced value?, let it live
         if (typeof state !== 'boolean' ){
-            state = selector.prop('checked');
+            state = domElement.getAttribute('checked');
         }
 
         // Setting the state of power switch
-        selector.prop('checked', state);
+        domElement.setAttribute('checked', state);
+
     }
 
 
@@ -210,9 +275,16 @@ export class ModelComponentsController {
      * defined step
      * 
      */
-    setGuiBrightness = function ( step ){
+    updateBrightnessSlider( domElement, step ){
+
+        // Check if this is a slider
+        if( domElement.getAttribute('type') !== 'range' ){
+            console.log ( '[GUI]: Slider malformed' )
+        }
+    
+        // Check if i have a forced number
         if (typeof step !== 'number' ){
-            step = $('body').find('input[type="range"][x-command="brightness"]').val();
+            step = domElement.value;
         }
 
         // Calculate the RGB Value from HSL
@@ -223,11 +295,11 @@ export class ModelComponentsController {
         brightness[2] = Math.round(brightness[2]);
 
         // Setting the brightness square color
-        $('body').find('div[x-label-for="brightness"]').css('background-color', 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')');
-            //.fadeOut( 400 ).fadeIn( 100 );
-            
+        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')';
+
         // Resetting the slider
-        $('body').find('input[type="range"][x-command="brightness"]').val(step);
+        domElement.setAttribute( 'value', step );
+    
     }
 
 
@@ -238,9 +310,15 @@ export class ModelComponentsController {
      * defined step
      * 
      */
-    setGuiColor = function ( step ){
+    updateColorSlider( domElement, step ){
+
+        // Check if this is a slider
+        if( domElement.getAttribute('type') !== 'range' ){
+            console.log ( '[GUI]: Slider malformed' )
+        }
+
         if (typeof step !== 'number' ){
-            step = $('body').find('input[type="range"][x-command="color"]').val();
+            step = domElement.value;
         }
 
         // Calculate the RGB Value from HSL
@@ -251,11 +329,52 @@ export class ModelComponentsController {
         colorRGB[2] = Math.round(colorRGB[2]);
 
         // Setting the brightness square color
-        $('body').find('div[x-label-for="color"]').css('background-color', 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')');
-            //.fadeOut( 1000 ).fadeIn( 1000 );
+        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')';
             
         // Resetting the slider
-        $('body').find('input[type="range"][x-command="color"]').val(step);
+        domElement.setAttribute( 'value', step );
+    }
+
+
+
+    /*
+     *
+     * Change timer slider value to a 
+     * defined step
+     * 
+     */
+    updateTimerSlider = function ( step ){
+
+        // Check if this is a slider
+        if( domElement.getAttribute('type') !== 'range' ){
+            console.log ( '[GUI]: Slider malformed' )
+        }
+
+        if (typeof step !== 'number' ){
+            step = domElement.value;
+        }
+
+        // First part of the slider
+        let divider = 3;
+        let squareInfo = Math.round( step / divider) + 'm';
+
+        // Second part of the slider
+        if ( step > 179 ){
+            divider = 15;
+            squareInfo = Math.round( (step-180) / divider);
+
+            // Bugfix
+            if ( squareInfo == 0 ){ squareInfo = 1 }
+
+            squareInfo += 'h';
+        }
+
+        // Setting the brightness square color
+        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').innerHTML = squareInfo;
+            
+        // Resetting the slider
+        domElement.setAttribute( 'value', step );
+
     }
 
     

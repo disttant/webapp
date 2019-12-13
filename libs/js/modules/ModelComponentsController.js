@@ -11,21 +11,6 @@ export class ModelComponentsController {
 
     /*
      *
-     * Render GUI components from statusCache values
-     * 
-     * Will be defined in the child instances
-     * 
-     */
-    renderFromCache = function () {
-
-        console.log( 'rendering' );
-
-    }
-
-
-
-    /*
-     *
      * This update the statusCache atribute of this
      * class instance with a new value given by a JSON
      * done like the following
@@ -143,15 +128,15 @@ export class ModelComponentsController {
             // Add other information fields
             // For switches
             if( $(this).attr('type') === 'checkbox' ){
-                data += 'state#' + $(this).prop('checked') + '|';
-                statusHolder['field'] = 'state';
+                data += 'value#' + $(this).prop('checked') + '|';
+                statusHolder['field'] = 'value';
                 statusHolder['value'] = $(this).prop('checked');
             }
 
             // For sliders
             if( $(this).attr('type') === 'range' ){
-                data += 'step#' + $(this).prop('value') + '|';
-                statusHolder['field'] = 'step';
+                data += 'value#' + $(this).prop('value') + '|';
+                statusHolder['field'] = 'value';
                 statusHolder['value'] = $(this).prop('value');
             }
 
@@ -209,7 +194,7 @@ export class ModelComponentsController {
      * injected in domElement
      * 
      */
-    updateComponent = function ( domElement ){
+    updateComponent = function ( domElement, value ){
 
         let componentType = domElement.getAttribute("x-component-type");
 
@@ -217,22 +202,22 @@ export class ModelComponentsController {
 
             case 'switch':
 
-                this.updateSwitch( domElement );
+                this.updateSwitch( domElement, value );
                 break;
 
             case 'brightness-slider':
 
-                this.updateBrightnessSlider( domElement );
+                this.updateBrightnessSlider( domElement, value );
                 break;
 
             case 'color-slider':
             
-                this.updateColorSlider( domElement );
+                this.updateColorSlider( domElement, value );
                 break;
 
             case 'timer-slider':
         
-                this.updateTimerSlider( domElement );
+                this.updateTimerSlider( domElement, value );
                 break;
         
             default:
@@ -247,10 +232,10 @@ export class ModelComponentsController {
 
     /*
      *
-     * Turn named switch to a value
+     * Turn named switch to a bool-value
      * 
      */
-    updateSwitch( domElement, state ){
+    updateSwitch( domElement, value ){
 
         // Check if switch is a checkbox
         if( domElement.getAttribute("type") !== 'checkbox' ){
@@ -258,12 +243,12 @@ export class ModelComponentsController {
         }
 
         // Not a forced value?, let it live
-        if (typeof state !== 'boolean' ){
-            state = domElement.getAttribute('checked');
+        if ( typeof value !== 'boolean' ){
+            value = domElement.checked;
         }
 
         // Setting the state of power switch
-        domElement.setAttribute('checked', state);
+        domElement.checked = value;
 
     }
 
@@ -272,10 +257,10 @@ export class ModelComponentsController {
     /*
      *
      * Change brightness slider value to a 
-     * defined step
+     * defined step-value
      * 
      */
-    updateBrightnessSlider( domElement, step ){
+    updateBrightnessSlider( domElement, value ){
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
@@ -283,12 +268,12 @@ export class ModelComponentsController {
         }
     
         // Check if i have a forced number
-        if (typeof step !== 'number' ){
-            step = domElement.value;
+        if (typeof value !== 'number' ){
+            value = domElement.value;
         }
 
         // Calculate the RGB Value from HSL
-        let brightness = color.hslToRgb( 0.155, 1, step/255);
+        let brightness = color.hslToRgb( 0.155, 1, value/255);
 
         brightness[0] = Math.round(brightness[0]);
         brightness[1] = Math.round(brightness[1]);
@@ -298,7 +283,7 @@ export class ModelComponentsController {
         document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')';
 
         // Resetting the slider
-        domElement.setAttribute( 'value', step );
+        domElement.setAttribute( 'value', value );
     
     }
 
@@ -307,22 +292,22 @@ export class ModelComponentsController {
     /*
      *
      * Change color slider value to a 
-     * defined step
+     * defined step-value
      * 
      */
-    updateColorSlider( domElement, step ){
+    updateColorSlider( domElement, value ){
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
             console.log ( '[GUI]: Slider malformed' )
         }
 
-        if (typeof step !== 'number' ){
-            step = domElement.value;
+        if (typeof value !== 'number' ){
+            value = domElement.value;
         }
 
         // Calculate the RGB Value from HSL
-        let colorRGB = color.hslToRgb( step/255, 0.8, 0.8);
+        let colorRGB = color.hslToRgb( value/255, 0.8, 0.8);
 
         colorRGB[0] = Math.round(colorRGB[0]);
         colorRGB[1] = Math.round(colorRGB[1]);
@@ -332,7 +317,7 @@ export class ModelComponentsController {
         document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')';
             
         // Resetting the slider
-        domElement.setAttribute( 'value', step );
+        domElement.setAttribute( 'value', value );
     }
 
 
@@ -340,28 +325,28 @@ export class ModelComponentsController {
     /*
      *
      * Change timer slider value to a 
-     * defined step
+     * defined step-value
      * 
      */
-    updateTimerSlider = function ( step ){
+    updateTimerSlider = function ( value ){
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
             console.log ( '[GUI]: Slider malformed' )
         }
 
-        if (typeof step !== 'number' ){
-            step = domElement.value;
+        if (typeof value !== 'number' ){
+            value = domElement.value;
         }
 
         // First part of the slider
         let divider = 3;
-        let squareInfo = Math.round( step / divider) + 'm';
+        let squareInfo = Math.round( value / divider) + 'm';
 
         // Second part of the slider
-        if ( step > 179 ){
+        if ( value > 179 ){
             divider = 15;
-            squareInfo = Math.round( (step-180) / divider);
+            squareInfo = Math.round( (value-180) / divider);
 
             // Bugfix
             if ( squareInfo == 0 ){ squareInfo = 1 }
@@ -373,7 +358,52 @@ export class ModelComponentsController {
         document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').innerHTML = squareInfo;
             
         // Resetting the slider
-        domElement.setAttribute( 'value', step );
+        domElement.setAttribute( 'value', value );
+
+    }
+
+
+
+    /*
+     *
+     * This take the commands from statusCache
+     * and update components with those values
+     * 
+     */
+    updateComponentsFromCache = function (){
+
+        for (var command in this.statusCache) {
+
+            // Take the command element
+            let commandDomElement = document.querySelector('[x-command="'+ command +'"]');
+
+            // Dont update the command components that does not exists
+            if ( commandDomElement == null ){
+                continue;
+            }
+
+            // Update component when not calling a routine
+            if ( command !== 'routine'){
+                // Update it
+                this.updateComponent( commandDomElement, this.statusCache[command].value );
+                continue;
+            }
+            
+            // Special procedure to update component when calling a routine
+            for (var routine in this.statusCache['routine']) {
+
+                let routineDomElement = document.querySelector('[x-command="routine"][x-routine="'+ routine +'"]');
+
+                // Dont update routine components that does not exists
+                if ( routineDomElement === null ){
+                    continue;
+                }
+
+                // Update it
+                this.updateComponent( routineDomElement, this.statusCache['routine'][routine].value );
+                
+            }
+        }
 
     }
 

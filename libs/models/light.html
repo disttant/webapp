@@ -137,27 +137,29 @@ $(function() {
     * 
     */
     var device = $('#modelName').html();
-    
+
+    // Retrieve status from device
+
     ModelComponents.statusCache = {
 
         power : {
-            state : false,
+            value : true,
         },
         brightness : {
-            step : 130,
+            value : 130,
         },
         color: {
-            step: 80,
+            value: 80,
         },
-        routines : {
+        routine : {
             presence    : {
-                state : false,
+                value : false,
             },
             nightmares  : {
-                state : false,
+                value : false,
             },
             party       : {
-                state : false,
+                value : false,
             },
         }
 
@@ -166,55 +168,8 @@ $(function() {
     // Init components
     ModelComponents.initComponents();
 
-
-    // Init Status Cache
-
-    // Initial conditions of components
-    //updateGuiFromCache ();
-
-    // Set the event handler
-    /*
-    ModelComponents.detectAndSync( device, function() {
-        updateGuiFromCache ();
-    });
-    */
-
-
-
-    /*
-    function updateGuiFromCache(){
-
-        for (var command in status) {
-
-            console.log('Busca el comando [' + command + ']')
-            
-            if( status[command].hasOwnProperty('state') )
-                console.warn('es un interruptor');
-
-            if( status[command].hasOwnProperty('step') )
-                console.error('es un slider');
-
-
-
-            if ( command === 'routines'){
-                for (var routine in status['routines']) {
-
-                    console.log( 'esto es una rutina: ' + routine );
-
-                    if( status['routines'][routine].hasOwnProperty('state') )
-                        console.warn('es un interruptor de rutina');
-
-                    if( status['routines'][routine].hasOwnProperty('step') )
-                        console.error('es un slider de rutina');
-
-                    
-                }
-                
-            }
-        }
-
-    }*/
-    
+    // Set initial values
+    ModelComponents.updateComponentsFromCache();
 
     
 

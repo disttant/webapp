@@ -37,7 +37,7 @@
             </div>
             <div class="my-auto">
                 <label class="switch">
-                    <input type="checkbox" x-command="power">
+                    <input type="checkbox" x-command="power" x-component-type="switch">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -61,7 +61,7 @@
                     <div class="d-flex justify-content-center border mb-4 rounded p-2" x-label-for="pomodoro">
                         -
                     </div>
-                    <input type="range" min="0" max="255" step="1" x-command="routine" x-routine="pomodoro">
+                    <input type="range" min="0" max="255" step="1" x-command="routine" x-routine="pomodoro" x-component-type="timer-slider">
                 </div>
             </div>
         </div>
@@ -83,273 +83,62 @@
         * 
         */
         var device = $('#modelName').html();
-        var status = {
-            power : { 
-                state : false,
-            },
-            routine : {
-                pomodoro    : {
-                    step : 0,
-                },
-            }
-        }
-
-
-
-        /*
-        *
-        * SETTING FUNCTION DEFINITIONS
-        * 
-        */
-
-        // Take from server and set starting values for statusCache
-        function initStatusCache () {
-
-        }
-
-        // Update statusCache with another status by entering a JSON object
-        window.updateState = function ( statusHolder = {}, status = {} ){
-
-            let statusCache = status;
-
-            // Check statusHolder
-            if ( typeof statusHolder !== 'object' )
-                return;
-
-            if ( statusHolder.hasOwnProperty('command') !== true )
-                return;
-
-            if ( statusHolder.hasOwnProperty('routine') !== true )
-                return;
-
-            if ( statusHolder.hasOwnProperty('field') !== true )
-                return;
-            
-            if ( statusHolder.hasOwnProperty('value') !== true )
-                return;
-
-            // Check status
-            if ( typeof status !== 'object' )
-                return;
-
-            if ( statusHolder.routine === true ){
-                statusCache['routine'][statusHolder.command][statusHolder.field] = statusHolder.value;
-            }else{
-                statusCache[statusHolder.command][statusHolder.field] = statusHolder.value;
-            }
-
-            return statusCache;
-        }
-
-        // Move selected switch left or right by code
-        window.setSwitch = function ( name, state ){
-
-            if (typeof state !== 'boolean' ){
-                state = $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked');
-            }
-
-            // Setting the state of power switch
-            $('body').find('input[type="checkbox"][x-command="'+name+'"]').prop('checked', state);
-
-        }
-
-        // Move pomodoro slider to a position by code
-        window.setPomodoro = function ( step ){
-
-            if (typeof step !== 'number' ){
-                step = $('body').find('input[type="range"][x-command="routine"][x-routine="pomodoro"]').val();
-            }
-
-            // First part of the slider
-            let divider = 3;
-            let squareInfo = Math.round( step / divider) + 'm';
-
-            // Second part of the slider
-            if ( step > 179 ){
-                divider = 15;
-                squareInfo = Math.round( (step-180) / divider);
-
-                // Bugfix
-                if ( squareInfo == 0 ){ squareInfo = 1 }
-
-                squareInfo += 'h';
-            }
-
-            // Setting the square value
-            $('body').find('div[x-label-for="pomodoro"]').html(squareInfo).fadeOut( 400 ).fadeIn( 100 );
-            
-
-            // Resetting the slider
-            $('body').find('input[type="range"][x-command="routine"][x-routine="pomodoro"]').val(step);
-
-        }
-
-        // Set initial GUI conditions
-        // taking the status from statusCache
-        window.initComponents = function (){
-
-            window.setSwitch( 'power', status.power.state );
-            window.setPomodoro( status.routine.pomodoro.step );
-
-        }
-
-
-
-        /*
-        *
-        * SETTING INITIAL VALUES
-        * 
-        */
-        // Show the loader and hide module
         $('body').find('[loader]').show();
         $('body').find('[error]').hide();
         $('body').find('[component]').hide();
 
-        // Ask the server for the status
-        //initStatusCache ();
-        app.spinnerType = 'bar';    
-        window.device.sendAndGet( device, 'sync', function( result ) {
-            if ( result !== false ){
+        console.log('[GUI]: Creating statusCache{}');
 
-                // Analyze the response
+        ModelComponents.statusCache = {
+            power : {
+                value : false,
+            },
+            routine : {
+                pomodoro    : {
+                    value : 0,
+                }
+            }
+        }
 
-                // show the GUI
-                initComponents ();
+
+        // Event: Update GUI components on input change
+        ModelComponents.initComponents();
+
+        // Sync from device, retrieve data and set statusCache
+        ModelComponents.statusCacheSync( device, function( result ){
+
+            // If result can not be achieved
+            if ( result === false ){
                 $('body').find('[loader]').hide();
-                $('body').find('[component]').show();
+                $('body').find('[error]').show();
+                $('body').find('[component]').hide();
                 return;
             }
 
+            // Show the cache
+            console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
+
+            // Set GUI to statusCache values
+            window.ModelComponents.updateComponentsFromCache();
+
+            // Show the components
             $('body').find('[loader]').hide();
-            $('body').find('[error]').show();
-            $('body').find('[component]').hide();
+            $('body').find('[error]').hide();
+            $('body').find('[component]').show();
 
-        });
-        
-
-
-        /*
-        *
-        * DETECTING COMPONENTS
-        * FOR INTERNAL PURPOSE
-        * 
-        */
-
-        // Clean some events
-        $('body').off();
-
-        $('body').on('input', 'input', function(){
-
-            // Update the GUI
-            setSwitch( 'power' ); // <----------------------------------------------
-            setPomodoro(  );      // <----------------------------------------------   AUNAR EN UNA FUNCION
-    
-        });
-
-
-
-        /*
-        *
-        * DETECTING COMPONENTS
-        * FOR SENDING COMMANDS
-        * 
-        */
-
-        // Detecting status change
-        $('body').on('change', 'input', function(){
-
-            // Save current state
-            let currentStatus = status;
-
-            // Save future status
-            let statusHolder   = {
-                command : null,
-                routine : false,
-                field   : null,
-                value   : null
-            };
-
-            // Save sendable fields
-            
-            let command        = $(this).attr('x-command');
-            let routine        = $(this).attr('x-routine');
-
-            // Save cache vars for building final string
-            let order          = '';
-            let data           = '';
-
-            // Build the basic part of the order
-            order = 'for|' + device + '|' + command;
-            statusHolder['command'] = command;
-
-            // Add the name of routine if present
-            if ( typeof routine !== 'undefined' ) {
-                data += 'name#' + routine + '|';
-                statusHolder['command'] = routine;
-                statusHolder['routine'] = true;
-            }
-
-            // Add other information fields
-            // For switches
-            if( $(this).attr('type') === 'checkbox' ){
-                data += 'state#' + $(this).prop('checked') + '|';
-                statusHolder['field'] = 'state';
-                statusHolder['value'] = $(this).prop('checked');
-            }
-
-            // For sliders
-            if( $(this).attr('type') === 'range' ){
-                data += 'step#' + $(this).prop('value') + '|';
-                statusHolder['field'] = 'step';
-                statusHolder['value'] = $(this).prop('value');
-            }
-
-            // Build the entire order
-            order += '|' + data;
-
-            // Sending the order to the device
-            app.spinnerType = 'bar';
-            
-            window.device.sendAndGet( device, command, function( result ) {
-
-                if( result !== false ){
-
-                    // Check answer
-                    if ( result.data.state === 'error' ) {
-
-                        // Update values
-                        window.status = currentStatus;
-
-                        // Inform the user
-                        app.sendToast('Oops! There was a mistake :( ');
-
-                        return;
-                    }
-
-                    // Update values
-                    window.status = window.updateState ( statusHolder, status );
-
-                    // Inform the user
-                    app.sendToast('Task done');
-
-                }else{
-
-                    // Update values
-                    window.status = currentStatus;
-
-                    // Inform the user
-                    app.sendToast('Oops! Device is sleeping. Reboot it please :(');
-                    
-                }
-
-                console.log(result);
-
-                // Update GUI to memory status
-                window.initComponents();
+            // Event: Detect component change and send it to the server
+            ModelComponents.detectAndSync(device, function(){
                 
-            }, data);
+            });
 
         });
+
+
+
+        // Set GUI to statusCache values
+        //ModelComponents.updateComponentsFromCache();
+
+        
 
 
     });

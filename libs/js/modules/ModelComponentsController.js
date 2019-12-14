@@ -59,15 +59,17 @@ export class ModelComponentsController {
      */
     initComponents = function (){
 
+        console.log('[GUI]: Starting initComponents()');
+
         // Bugfix for environment reference
-        let classThis = this;
+        let thisClass = this;
 
         // Update GUI elements from cache values
 
         function _func (){
 
             // Update representation of value
-            classThis.updateComponent ( event.target );
+            thisClass.updateComponent ( event.target );
         }
 
         document.removeEventListener("input", _func );
@@ -77,114 +79,6 @@ export class ModelComponentsController {
     }
 
 
-
-    /*
-     *
-     * Detect input components with the right tags,
-     * build the order, send it to the server,
-     * update the statusCache and re-set the values 
-     * of components
-     * 
-     * once executed, this runs in the backgrounds until refresh or $.off()
-     */
-    detectAndSync = function ( device , callback ){
-
-        $('body').off('change');
-
-        // Detecting status change
-        $('body').on('change', 'input', function(){
-
-            // Save current state
-            let currentStatus = this.statusCache;
-
-            // Save future status
-            let statusHolder   = {
-                command : null,
-                routine : false,
-                field   : null,
-                value   : null
-            };
-
-            // Save sendable fields
-
-            let command        = $(this).attr('x-command');
-            let routine        = $(this).attr('x-routine');
-
-            // Save cache vars for building final string
-            let order          = '';
-            let data           = '';
-
-            // Build the basic part of the order
-            order = 'for|' + device + '|' + command;
-            statusHolder['command'] = command;
-
-            // Add the name of routine if present
-            if ( typeof routine !== 'undefined' ) {
-                data += 'name#' + routine + '|';
-                statusHolder['command'] = routine;
-                statusHolder['routine'] = true;
-            }
-
-            // Add other information fields
-            // For switches
-            if( $(this).attr('type') === 'checkbox' ){
-                data += 'value#' + $(this).prop('checked') + '|';
-                statusHolder['field'] = 'value';
-                statusHolder['value'] = $(this).prop('checked');
-            }
-
-            // For sliders
-            if( $(this).attr('type') === 'range' ){
-                data += 'value#' + $(this).prop('value') + '|';
-                statusHolder['field'] = 'value';
-                statusHolder['value'] = $(this).prop('value');
-            }
-
-            // Build the entire order
-            order += '|' + data;
-
-            // Sending the order to the device
-            app.spinnerType = 'bar';
-
-            window.device.sendAndGet( device, command, (result) => {
-
-                if( result !== false ){
-
-                    // Check answer
-                    if ( result.data.state === 'error' ) {
-
-                        // Update values
-                        this.statusCache = currentStatus;
-
-                        // Inform the user
-                        app.sendToast('Oops! There was a mistake :( ');
-
-                        return;
-                    }
-
-                    // Update values
-                    this.statusCache = this.updateStatusCache(statusHolder);
-
-                    // Inform the user
-                    app.sendToast('Task done');
-
-                }else{
-
-                    // Update values
-                    this.statusCache = currentStatus;
-
-                    // Inform the user
-                    app.sendToast('Oops! Device is sleeping. Reboot it please :(');
-                    
-                }
-
-                // Execute extra actions
-                callback();
-                
-            }, data);
-
-        });
-    }
 
 
 
@@ -279,8 +173,15 @@ export class ModelComponentsController {
         brightness[1] = Math.round(brightness[1]);
         brightness[2] = Math.round(brightness[2]);
 
+        // Get the label
+        let domElementCommand = domElement.getAttribute('x-command');
+
+        if ( domElementCommand === 'routine' ){
+            domElementCommand = domElement.getAttribute('x-routine');
+        }
+
         // Setting the brightness square color
-        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')';
+        document.querySelector('[x-label-for="'+ domElementCommand +'"]').style.background = 'rgb('+brightness[0]+','+brightness[1]+','+brightness[2]+')';
 
         // Resetting the slider
         domElement.setAttribute( 'value', value );
@@ -313,8 +214,15 @@ export class ModelComponentsController {
         colorRGB[1] = Math.round(colorRGB[1]);
         colorRGB[2] = Math.round(colorRGB[2]);
 
+        // Get the label
+        let domElementCommand = domElement.getAttribute('x-command');
+
+        if ( domElementCommand === 'routine' ){
+            domElementCommand = domElement.getAttribute('x-routine');
+        }
+
         // Setting the brightness square color
-        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').style.background = 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')';
+        document.querySelector('[x-label-for="'+ domElementCommand +'"]').style.background = 'rgb('+colorRGB[0]+','+colorRGB[1]+','+colorRGB[2]+')';
             
         // Resetting the slider
         domElement.setAttribute( 'value', value );
@@ -328,7 +236,7 @@ export class ModelComponentsController {
      * defined step-value
      * 
      */
-    updateTimerSlider = function ( value ){
+    updateTimerSlider = function ( domElement, value ){
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
@@ -354,8 +262,15 @@ export class ModelComponentsController {
             squareInfo += 'h';
         }
 
+        // Get the label
+        let domElementCommand = domElement.getAttribute('x-command');
+
+        if ( domElementCommand === 'routine' ){
+            domElementCommand = domElement.getAttribute('x-routine');
+        }
+
         // Setting the brightness square color
-        document.querySelector('[x-label-for="'+ domElement.getAttribute('x-command') +'"]').innerHTML = squareInfo;
+        document.querySelector('[x-label-for="'+ domElementCommand +'"]').innerHTML = squareInfo;
             
         // Resetting the slider
         domElement.setAttribute( 'value', value );
@@ -372,25 +287,36 @@ export class ModelComponentsController {
      */
     updateComponentsFromCache = function (){
 
-        for (var command in this.statusCache) {
+        console.log('[GUI]: Starting updateComponentsFromCache()');
+
+        let thisClass = this;
+
+        for (var command in thisClass.statusCache) {
+
+            //console.log('command ->', command);
 
             // Take the command element
             let commandDomElement = document.querySelector('[x-command="'+ command +'"]');
+
 
             // Dont update the command components that does not exists
             if ( commandDomElement == null ){
                 continue;
             }
+            
 
             // Update component when not calling a routine
             if ( command !== 'routine'){
+
+                //console.warn ( commandDomElement, thisClass.statusCache[command].value );
+                
                 // Update it
-                this.updateComponent( commandDomElement, this.statusCache[command].value );
+                thisClass.updateComponent( commandDomElement, thisClass.statusCache[command].value );
                 continue;
             }
             
             // Special procedure to update component when calling a routine
-            for (var routine in this.statusCache['routine']) {
+            for (var routine in thisClass.statusCache['routine']) {
 
                 let routineDomElement = document.querySelector('[x-command="routine"][x-routine="'+ routine +'"]');
 
@@ -400,12 +326,197 @@ export class ModelComponentsController {
                 }
 
                 // Update it
-                this.updateComponent( routineDomElement, this.statusCache['routine'][routine].value );
+                thisClass.updateComponent( routineDomElement, thisClass.statusCache['routine'][routine].value );
                 
             }
         }
 
     }
+
+
+
+    /*
+     *
+     * This send 'sync' command and get the
+     * response. Then, save it into statusCache
+     * 
+     */
+    statusCacheSync = function ( device, callback ){
+
+        let thisClass = this;
+
+        // Send the message to the device
+        app.spinnerType = 'bar';
+
+        window.device.sendAndGet( device, 'sync', function( result ) {
+
+            // Result could not be achieved
+            if ( result === false ){
+
+                // Execute extra functions and quit
+                callback( result = false );
+                return;
+            }
+
+            // We have a result, save it
+            for (var command in thisClass.statusCache ) {
+
+                // Update component when not calling a routine
+                if ( command !== 'routine'){
+                    thisClass.statusCache[command].value = result.data[command];
+                    continue;
+                }
+
+                // Special procedure to update component when calling a routine
+                for (var routine in thisClass.statusCache['routine']) {
+                    thisClass.statusCache['routine'][routine].value = result.data[routine];
+                }
+            }
+
+            // Execute extra functions and quit
+            callback( result );
+        });
+    }
+
+
+
+    /*
+     *
+     * Detect input components with the right tags,
+     * build the order, send it to the server,
+     * update the statusCache and re-set the values 
+     * of components
+     * 
+     * once executed, this runs in the backgrounds until refresh or $.off()
+     */
+    detectAndSync = function ( device , callback ){
+
+        let thisClass = this;
+
+        // Debug purposes only
+        console.log('[GUI]: Starting detectAndSync()');
+
+        // Build a function to be called when event is shot
+        function _func (){
+
+            // Save current state
+            let currentStatus = thisClass.statusCache;
+            
+
+            // Save future status
+            let statusHolder   = {
+                command : null,
+                routine : false,
+                field   : null,
+                value   : null
+            };
+
+            // Save sendable fields
+            let command        = event.target.getAttribute('x-command');
+            let routine        = event.target.getAttribute('x-routine');
+
+            // Save cache vars for building final string
+            let order          = '';
+            let data           = '';
+
+            // Build the basic part of the order
+            order = 'for|' + device + '|' + command;
+            statusHolder['command'] = command;
+
+            // Add the name of routine if present
+            if ( typeof routine !== 'undefined' && routine != null ) {
+                data += 'name#' + routine + '|';
+                statusHolder['command'] = routine;
+                statusHolder['routine'] = true;
+            }
+
+            // Add other information fields
+            // For switches
+            let inputType = event.target.getAttribute('type');
+            if( inputType === 'checkbox' ){
+                data += 'value#' + event.target.checked + '|';
+                statusHolder['field'] = 'value';
+                statusHolder['value'] = event.target.checked;
+            }
+
+            // For sliders
+            if( inputType === 'range' ){
+                data += 'value#' + event.target.getAttribute('value') + '|';
+                statusHolder['field'] = 'value';
+                statusHolder['value'] = event.target.getAttribute('value');
+            }
+
+            // Build the entire order
+            order += '|' + data;
+
+            // Filter possible starting or ending strange chars
+            if (order.startsWith("|"))
+                order = order.slice(1);
+                
+            if (order.endsWith("|"))
+                order = order.slice(0, -1);  
+
+            // Debug purposes only
+            console.warn( '[DEBUG]: Message to send: ', order );
+
+            // Sending the order to the device
+            app.spinnerType = 'bar';
+
+            window.device.sendAndGet( device, command, (result) => {
+
+                // Debug purposes only
+                console.warn('[DEBUG]: Message recieved: ', result );
+
+                // Device DOESNT answer
+                if( result === false ){
+
+                    // Update values
+                    thisClass.statusCache = currentStatus;
+
+                    // Inform the user
+                    app.sendToast('Oops! Device is sleeping. Reboot it please :(');
+
+                    return;
+                }
+
+
+                // Device answer something
+                // There was an error by device
+                if ( result.data.state === 'error' ) {
+
+                    // Update values
+                    thisClass.statusCache = currentStatus;
+
+                    // Inform the user
+                    app.sendToast('Oops! There was a mistake :( ');
+
+                    // Execute extra actions
+                    callback();
+
+                    return;
+                }
+
+                // Success response
+                // Update values
+                thisClass.statusCache = thisClass.updateStatusCache(statusHolder);
+
+                // Inform the user
+                app.sendToast('Task done');
+
+                // Execute extra actions
+                callback();
+                
+            }, data);
+
+        }
+
+        // Destroy the detector for input changes
+        document.removeEventListener("change", _func );
+
+        // Building a detector for status change
+        document.addEventListener("change", _func );
+    }
+
 
     
 

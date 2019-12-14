@@ -4,7 +4,74 @@ export class ModelComponentsController {
 
         // Construct a cache memory for status
         this.statusCache = {};
+        this.events = [];
 
+    }
+
+
+
+    /*
+     *
+     * Send 'sync' command, get the
+     * response. Then, process and save it 
+     * into statusCache
+     * 
+     */
+    syncStatusCache = function ( device, callback ){
+
+        console.log('[GUI]: Syncing Status Cache');
+
+        // Building a function to process incoming data
+        function stringToReal( value ){
+
+            if ( value.match(/^([-+]?([0-9]*\.[0-9]+|[0-9]+))$/) !== null ) {
+
+                return Number(value);
+
+            } else if( value.match(/^(true|false){1}$/) !== null ) {
+
+                return JSON.parse(value.toLowerCase());
+                
+            }else{
+                return String(value);
+            }
+        }
+        
+        // Saving the environment of class auto reference
+        let thisClass = this;
+
+        // Send the message to the device
+        app.spinnerType = 'bar';
+
+        window.device.sendAndGet( device, 'sync', function( result ) {
+
+            // Result could not be achieved
+            if ( result === false ){
+
+                // Execute extra functions and quit
+                callback( result = false );
+                return;
+            }
+
+            // We have a result, save it
+            for (var command in thisClass.statusCache ) {
+
+                // Update component when not calling a routine
+                if ( command !== 'routine'){
+
+                    thisClass.statusCache[command].value = stringToReal( result.data[command] );
+                    continue;
+                }
+
+                // Special procedure to update component when calling a routine
+                for (var routine in thisClass.statusCache['routine']) {
+                    thisClass.statusCache['routine'][routine].value = stringToReal( result.data[routine] );
+                }
+            }
+
+            // Execute extra functions and quit
+            callback( result );
+        });
     }
 
 
@@ -22,6 +89,8 @@ export class ModelComponentsController {
      *   }
      */
     updateStatusCache = function ( statusHolder = {}){
+
+        console.log('[GUI]: Updating Status Cache');
 
         // Check statusHolder
         if ( typeof statusHolder !== 'object' )
@@ -57,28 +126,27 @@ export class ModelComponentsController {
      * GUI components on each change
      * 
      */
+    
+
     initComponents = function (){
 
-        console.log('[GUI]: Starting initComponents()');
+        console.log('[GUI]: Building Components Watchdog');
 
         // Bugfix for environment reference
         let thisClass = this;
 
-        // Update GUI elements from cache values
-
-        function _func (){
+        this.events['_initComponents'] = function (){
 
             // Update representation of value
             thisClass.updateComponent ( event.target );
         }
 
-        document.removeEventListener("input", _func );
+        // Update GUI elements from cache values
+        document.removeEventListener("input", this.events['_initComponents'] );
 
-        document.addEventListener("input", _func );
+        document.addEventListener("input", this.events['_initComponents'] );
 
     }
-
-
 
 
 
@@ -90,33 +158,37 @@ export class ModelComponentsController {
      */
     updateComponent = function ( domElement, value ){
 
+        console.log('[GUI]: Updating Component Status');
+
         let componentType = domElement.getAttribute("x-component-type");
+
+        let thisClass = this;
 
         switch (componentType) {
 
             case 'switch':
 
-                this.updateSwitch( domElement, value );
+                thisClass.updateSwitch( domElement, value );
                 break;
 
             case 'brightness-slider':
 
-                this.updateBrightnessSlider( domElement, value );
+                thisClass.updateBrightnessSlider( domElement, value );
                 break;
 
             case 'color-slider':
             
-                this.updateColorSlider( domElement, value );
+                thisClass.updateColorSlider( domElement, value );
                 break;
 
             case 'timer-slider':
         
-                this.updateTimerSlider( domElement, value );
+                thisClass.updateTimerSlider( domElement, value );
                 break;
         
             default:
 
-                console.log('x-component-type not found in component: ' + domElement );
+                console.log('[GUI] Component Type Not Found');
                 break;
         }
 
@@ -287,28 +359,22 @@ export class ModelComponentsController {
      */
     updateComponentsFromCache = function (){
 
-        console.log('[GUI]: Starting updateComponentsFromCache()');
+        console.log('[GUI]: Updating Components From Status Cache');
 
         let thisClass = this;
 
         for (var command in thisClass.statusCache) {
 
-            //console.log('command ->', command);
-
             // Take the command element
             let commandDomElement = document.querySelector('[x-command="'+ command +'"]');
 
-
             // Dont update the command components that does not exists
-            if ( commandDomElement == null ){
+            if ( commandDomElement == null || typeof commandDomElement == 'undefined'){
                 continue;
             }
-            
 
             // Update component when not calling a routine
             if ( command !== 'routine'){
-
-                //console.warn ( commandDomElement, thisClass.statusCache[command].value );
                 
                 // Update it
                 thisClass.updateComponent( commandDomElement, thisClass.statusCache[command].value );
@@ -321,7 +387,7 @@ export class ModelComponentsController {
                 let routineDomElement = document.querySelector('[x-command="routine"][x-routine="'+ routine +'"]');
 
                 // Dont update routine components that does not exists
-                if ( routineDomElement === null ){
+                if ( routineDomElement == null || typeof routineDomElement == 'undefined'){
                     continue;
                 }
 
@@ -335,48 +401,7 @@ export class ModelComponentsController {
 
 
 
-    /*
-     *
-     * This send 'sync' command and get the
-     * response. Then, save it into statusCache
-     * 
-     */
-    statusCacheSync = function ( device, callback ){
-
-        let thisClass = this;
-
-        // Send the message to the device
-        app.spinnerType = 'bar';
-
-        window.device.sendAndGet( device, 'sync', function( result ) {
-
-            // Result could not be achieved
-            if ( result === false ){
-
-                // Execute extra functions and quit
-                callback( result = false );
-                return;
-            }
-
-            // We have a result, save it
-            for (var command in thisClass.statusCache ) {
-
-                // Update component when not calling a routine
-                if ( command !== 'routine'){
-                    thisClass.statusCache[command].value = result.data[command];
-                    continue;
-                }
-
-                // Special procedure to update component when calling a routine
-                for (var routine in thisClass.statusCache['routine']) {
-                    thisClass.statusCache['routine'][routine].value = result.data[routine];
-                }
-            }
-
-            // Execute extra functions and quit
-            callback( result );
-        });
-    }
+    
 
 
 
@@ -402,7 +427,6 @@ export class ModelComponentsController {
             // Save current state
             let currentStatus = thisClass.statusCache;
             
-
             // Save future status
             let statusHolder   = {
                 command : null,

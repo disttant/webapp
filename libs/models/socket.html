@@ -88,7 +88,6 @@
         $('body').find('[component]').hide();
 
         console.log('[GUI]: Creating statusCache{}');
-
         ModelComponents.statusCache = {
             power : {
                 value : false,
@@ -105,7 +104,7 @@
         ModelComponents.initComponents();
 
         // Sync from device, retrieve data and set statusCache
-        ModelComponents.statusCacheSync( device, function( result ){
+        ModelComponents.syncStatusCache( device, function( result ){
 
             // If result can not be achieved
             if ( result === false ){
@@ -126,17 +125,13 @@
             $('body').find('[error]').hide();
             $('body').find('[component]').show();
 
-            // Event: Detect component change and send it to the server
-            ModelComponents.detectAndSync(device, function(){
-                
-            });
-
         });
 
 
-
-        // Set GUI to statusCache values
-        //ModelComponents.updateComponentsFromCache();
+        // Event: Detect component change and send it to the server
+        ModelComponents.detectAndSync(device, function(){
+                
+        });
 
         
 

@@ -130,6 +130,9 @@
 
         // Event: Detect component change and send it to the server
         ModelComponents.detectAndSync(device, function(){
+
+            // Set GUI to statusCache values
+            window.ModelComponents.updateComponentsFromCache();
                 
         });
 

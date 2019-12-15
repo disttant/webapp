@@ -1,10 +1,88 @@
+/*
+ *  This class is a components library for making panels for hardware models with ease
+ * 
+ *  Alby Hernández // me@achetronic.com // 15-12-2019
+ * 
+ *  CONSTRUCTOR:           Create a class property to store the status of the device
+ *  -->
+ * 
+ *  
+ *  METHODS:
+ * 
+ *  --> syncStatusCache:            Communicate with the device and retrieve the response. Then update statusCache
+ * 
+ *      NEEDS:                      Device to communicate with, An arrow function to execute after that
+ *      RETURNS:                    VOID
+ * 
+ *  --> updateStatusCache           This function changes safetly an item into statusCache 
+ * 
+ *      NEEDS:                      A JSON with the following structure
+ *                          
+ *                                  {
+ *                                      command : "{power|color|brightness|pomodoro}",
+ *                                      routine : {true|false},
+ *                                      field   : "value"
+*                                       value   : "{value}" 
+ *                                  }
+ * 
+ *      RETURNS:                    A JSON with statusCache
+ * 
+ *  --> initComponents:             Create an event listener to watch changes of component and update them
+ * 
+ *      NEEDS:                      VOID
+ *      RETURNS:                    VOID
+ * 
+ * --> updateComponent:             Change the value of a GUI component
+ * 
+ *      NEEDS:                      A DOM element with x-component-type tag. A value to be set
+ *      RETURNS:                    VOID
+ * 
+ * --> updateSwitch:                Change the value of a GUI switch component
+ * 
+ *      NEEDS:                      A DOM element with checkbox type tag. A value to be set
+ *      RETURNS:                    VOID
+ * 
+ * --> updateBrightnessSlider:      Change the value of a GUI brightness slider component and set 
+ *                                  the background color into its tag square
+ * 
+ *      NEEDS:                      A DOM element with range type tag. A value to be set
+ *      RETURNS:                    VOID
+ * 
+ * --> updateColorSlider:           Change the value of a GUI color slider component and set 
+ *                                  the background color into its tag square
+ * 
+ *      NEEDS:                      A DOM element with range type tag. A value to be set
+ *      RETURNS:                    VOID
+ * 
+ * --> updateTimerSlider:           Change the value of a GUI timer slider component and set 
+ *                                  the number into its tag square
+ * 
+ *      NEEDS:                      A DOM element with range type tag. A value to be set
+ *      RETURNS:                    VOID
+ * 
+ * --> updateComponentsFromCache:   Update all the values and graphical position of GUI components
+ *                                  taking the values from statusCache
+ * 
+ *      NEEDS:                      VOID
+ *      RETURNS:                    VOID
+ *
+ * --> detectAndSync:               Create an event listener to detect changes on GUI components
+ *                                  build the string to be sent to the device, send it and parse
+ *                                  the response. Then update the statusCache with changes and execute
+ *                                  a callback function
+ * 
+ *      NEEDS:                      Device name to sync with. Callback to be executed after processing
+ *      RETURNS:                    VOID
+ * 
+ * 
+ */
+
 export class ModelComponentsController {
 
     constructor () {
 
         // Construct a cache memory for status
         this.statusCache = {};
-        this.events = [];
 
     }
 
@@ -126,8 +204,6 @@ export class ModelComponentsController {
      * GUI components on each change
      * 
      */
-    
-
     initComponents = function (){
 
         console.log('[GUI]: Building Components Watchdog');
@@ -135,17 +211,20 @@ export class ModelComponentsController {
         // Bugfix for environment reference
         let thisClass = this;
 
-        this.events['_initComponents'] = function (){
-
-            // Update representation of value
-            thisClass.updateComponent ( event.target );
-        }
-
         // Update GUI elements from cache values
-        document.removeEventListener("input", this.events['_initComponents'] );
+        $( 'body' ).off( 'input' );
 
-        document.addEventListener("input", this.events['_initComponents'] );
+        $( 'body' ).on( 'input', function(){
+            thisClass.updateComponent ( event.target );
+        });
 
+        /*
+        Vanilla JS version under development: 
+        The problem is about identifying and removing handler
+
+        //document.removeEventListener("input", function (){} );
+        //document.addEventListener("input", function (){} );
+        */
     }
 
 
@@ -535,14 +614,18 @@ export class ModelComponentsController {
         }
 
         // Destroy the detector for input changes
-        document.removeEventListener("change", _func );
+        $( 'body' ).off( 'change' );
 
         // Building a detector for status change
-        document.addEventListener("change", _func );
+        $( 'body' ).on( 'change', _func );
+
+        /*
+        Vanilla JS under development
+        // Destroy the detector for input changes
+        document.querySelector("body").removeEventListener("change", function (){} );
+        // Building a detector for status change
+        document.querySelector("body").addEventListener("change", function (){} );
+        */
     }
-
-
-    
-
 
 }

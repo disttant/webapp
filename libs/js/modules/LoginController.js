@@ -1,4 +1,4 @@
-export class loginController {
+export class LoginController {
 
     setSession = function () {
 

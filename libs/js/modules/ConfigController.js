@@ -1,6 +1,22 @@
-// Config file
+/*
+ *  This class contains the config strings used in the rest of the app
+ * 
+ *  Alby Hernández // me@achetronic.com // 15-12-2019
+ * 
+ *  CONSTRUCTOR:
+ *  -->
+ * 
+ *  
+ *  METHODS:
+ * 
+ *  --> getConfig:          This method returns the asked property value ( it is a JSON, not a pure method )
+ * 
+ *      NEEDS:              VOID
+ *      RETURNS:            Value of called property
+ * 
+ */
 
-export class configController {
+export class ConfigController {
 
     getConfig = function () {
 

@@ -100,7 +100,7 @@
  * 
  */
 
-export class deviceController {
+export class DeviceController {
 
 
 

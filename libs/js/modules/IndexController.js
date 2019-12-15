@@ -1,35 +1,48 @@
-/* *
- *
- *
+/*
+ *  This class contains the methods related to the index file
  * 
+ *  Alby Hernández // me@achetronic.com // 15-12-2019
  * 
- * 
- * 
- * 
- * 
+ *  CONSTRUCTOR:
+ *  -->
  * 
  *  
- * */
+ *  METHODS:
+ * 
+ *  --> parseJWT:           This function returns a JSON Object with the payload of a given JWT already parsed
+ * 
+ *      NEEDS:              A JWT to parse 
+ *      RETURNS:            A JSON with the payload
+ * 
+ *  --> getAllUrlParams     This function returns a JSON Object with all URI parameters of the given URI
+ * 
+ *      NEEDS:              The URI to parse
+ *      RETURNS:            A JSON with all URI parameters
+ * 
+ */
 
 
 
-export class index {
+export class IndexController {
 
 
 
-    /* *
+    /*
     *
     * This function must check the input data field
     * existance and patterns
     * 
-    * */
-    /*constructor(data) {
-
-        
-
-    }*/
+    */
+    constructor(data) { }
 
 
+
+    /*
+    *
+    * This function returns a JSON Object with 
+    * the payload of a given JWT already parsed
+    * 
+    */
     parseJWT = function (token) {
 
         var base64Url = token.split('.')[1];
@@ -43,6 +56,13 @@ export class index {
     }
 
 
+
+    /*
+    *
+    * This function returns a JSON Object all
+    * URI parameters of the given URI
+    * 
+    */
     getAllUrlParams = function (url) {
 
         // get query string from url (optional) or window
@@ -107,8 +127,6 @@ export class index {
         
         return obj;
     }
-
-
 
 
 }

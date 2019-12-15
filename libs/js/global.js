@@ -2,15 +2,15 @@
 import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
 
 // Importing custom libraries
-import * as config_md from './modules/config.js';
-import * as index_md from './modules/index.js';
-import * as oauth2_md from './modules/oauth2.js';
-import * as login_md from './modules/login.js';
-import * as app_md from './modules/app.js';
-import * as group_md from './modules/groups.js';
-import * as device_md from './modules/devices.js';
-import * as color_md from './modules/color.js';
-import * as ModelComponents_md from './modules/ModelComponentsController.js';
+import * as ConfigModule             from './modules/ConfigController.js';
+import * as IndexModule              from './modules/IndexController.js';
+import * as Oauth2Module             from './modules/Oauth2Controller.js';
+import * as LoginModule              from './modules/LoginController.js';
+import * as AppModule                from './modules/AppController.js';
+import * as GroupModule              from './modules/GroupsController.js';
+import * as DeviceModule             from './modules/DevicesController.js';
+import * as ColorModule              from './modules/ColorController.js';
+import * as ModelComponentsModule    from './modules/ModelComponentsController.js';
 
 
 
@@ -20,7 +20,7 @@ import * as ModelComponents_md from './modules/ModelComponentsController.js';
  * Initialize this module
  * 
  * */
-window.config = (new config_md.configController()).getConfig();
+window.config = (new ConfigModule.ConfigController()).getConfig();
 
 
 
@@ -30,7 +30,7 @@ window.config = (new config_md.configController()).getConfig();
  * Initialize this module
  * 
  * */
-window.index = new index_md.index();
+window.index = new IndexModule.IndexController();
 
 
 
@@ -40,7 +40,7 @@ window.index = new index_md.index();
  * Initialize this module
  * 
  * */
-window.oauth = new oauth2_md.oauthController(config.oauth);
+window.oauth = new Oauth2Module.OauthController(config.oauth);
 
 
 
@@ -50,7 +50,7 @@ window.oauth = new oauth2_md.oauthController(config.oauth);
  * Initialize this module
  * 
  * */
-window.login = new login_md.loginController();
+window.login = new LoginModule.LoginController();
 
 
 
@@ -60,7 +60,7 @@ window.login = new login_md.loginController();
  * Initialize this module
  * 
  * */
-window.app = new app_md.appController();
+window.app = new AppModule.AppController();
 
 
 
@@ -70,7 +70,7 @@ window.app = new app_md.appController();
  * Initialize this module
  * 
  * */
-window.group = new group_md.groupController(config.group);
+window.group = new GroupModule.GroupController(config.group);
 
 
 /* *
@@ -79,7 +79,7 @@ window.group = new group_md.groupController(config.group);
  * Initialize this module
  * 
  * */
-window.device = new device_md.deviceController(config.device);
+window.device = new DeviceModule.DeviceController(config.device);
 
 
 /* *
@@ -88,7 +88,7 @@ window.device = new device_md.deviceController(config.device);
  * Initialize this module
  * 
  * */
-window.color = new color_md.colorController();
+window.color = new ColorModule.ColorController();
 
 
 
@@ -98,7 +98,7 @@ window.color = new color_md.colorController();
  * Initialize this module
  * 
  * */
-window.ModelComponents = new ModelComponents_md.ModelComponentsController();
+window.ModelComponents = new ModelComponentsModule.ModelComponentsController();
 
 
 

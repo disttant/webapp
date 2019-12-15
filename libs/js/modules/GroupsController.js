@@ -69,7 +69,7 @@
  * 
  */
 
-export class groupController {
+export class GroupController {
 
 
 

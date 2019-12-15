@@ -1,39 +1,70 @@
-/* *
- *
- *
+/*
+ *  This class groups some app-related methods to show spinners, modals, toasts and more
+ *  programatically
  * 
+ *  Alby Hernández // me@achetronic.com // 15-12-2019
  * 
- * 
- * 
- * 
- * 
+ *  CONSTRUCTOR:
+ *  -->
  * 
  *  
- * */
+ *  METHODS:
+ * 
+ *  --> spinner:            Show or hide several kinds of spinner
+ * 
+ *      NEEDS:              show/hide as input to show/hide the spinner defined by class.spinnerType 
+ *                          that can be one of the following: 'page', 'bar', 'module';
+ *      RETURNS:            VOID
+ * 
+ *  --> moduleLoad          Save module name and data into sessionStorage and load the module into the module wrapper
+ * 
+ *      NEEDS:              Name of the file .m (without extension) to be loaded in the wrapper, A JSON with 
+ *                          needed information to be stored in sessionStorage joined to the called module
+ *      RETURNS:            VOID
+ * 
+ *  --> genRandomId:        Generate a random string of numbers prepended by an underscore
+ * 
+ *      NEEDS:              VOID
+ *      RETURNS:            A string like '_25489'
+ * 
+ *  --> sentToast:          Generate a toast message
+ * 
+ *      NEEDS:              The message to be shown
+ *      RETURNS:            VOID
+ * 
+ *  --> sendModal:          Generate a modal in front of the screen
+ * 
+ *      NEEDS:              The title of the modal, The content of the modal (HTML is valid too), A function to 
+ *                          be executed when the button of modal is clicked
+ *      RETURNS:            VOID
+ * 
+ */
 
 
 
-export class appController {
+export class AppController {
+
+
+    
+    spinnerType = 'page';
 
 
 
-    /* *
+    /*
     *
     * This function must check the input data field
     * existance and patterns
     * 
-    * */
+    */
     /*constructor(data) {
 
         
 
     }*/
 
-    spinnerType = 'page';
-
     
 
-    /* *
+    /*
     *
     * This function shows or hides the spinner
     * of the app. It has three modes can be set
@@ -42,7 +73,7 @@ export class appController {
     * before calling an AJAX. The spinner will show
     * and hide automatically
     * 
-    * */
+    */
     spinner = function ( mode ){
 
         switch (mode){
@@ -88,14 +119,14 @@ export class appController {
 
 
 
-    /* *
+    /*
     *
     * This function must check and write the headers 
     * (when passed) for the asked module into sessionStorage. 
     * After that, the asked module will be loaded
     * 
-    * */
-    moduleLoad = function ( moduleName, headersData){
+    */
+    moduleLoad = function ( moduleName, headersData ){
 
         let headers = null;
 
@@ -111,8 +142,6 @@ export class appController {
         } catch (e) {
             headersData = null;
         }
-
-        //console.warn(headersData);
 
         // Build and save the module headers
         headers = {
@@ -155,22 +184,24 @@ export class appController {
 
 
 
-    /* *
+    /*
     *
-    * This function -----
+    * Generates a string of random numbers
+    * like _4865278
     * 
-    * */
+    */
     genRandomId = function () {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
 
 
 
-    /* *
+    /*
     *
-    * This function -----
+    * This function generates a toast message
+    * at the bottom of the app
     * 
-    * */
+    */
     sendToast = function (msg){
 
         let theAlert =
@@ -196,12 +227,12 @@ export class appController {
 
 
 
-    /* *
+    /*
     *
     * This function changes the content of modal
     * and exec callback after clicking
     * 
-    * */
+    */
     sendModal = function (title, body, callback){
 
         let modalKey = this.genRandomId();

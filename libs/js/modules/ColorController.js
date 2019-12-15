@@ -1,5 +1,5 @@
 
-export class colorController {
+export class ColorController {
 
     /*
      *

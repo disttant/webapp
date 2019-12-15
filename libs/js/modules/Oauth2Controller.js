@@ -13,7 +13,7 @@
 
 
 
-export class oauthController {
+export class OauthController {
 
 
 

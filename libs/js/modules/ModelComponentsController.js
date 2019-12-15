@@ -131,6 +131,14 @@ export class ModelComponentsController {
                 return;
             }
 
+            // Result could be achieved but error
+            if ( result.data.hasOwnProperty('state') === true && result.data.state == 'error' ){
+
+                // Execute extra functions and quit
+                callback( result = false );
+                return;
+            }
+
             // We have a result, save it
             for (var command in thisClass.statusCache ) {
 

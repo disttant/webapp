@@ -108,6 +108,9 @@
 
             // If result can not be achieved
             if ( result === false ){
+
+                app.sendToast( 'Oops! Device made a mistake. Retry, please.' );
+
                 $('body').find('[loader]').hide();
                 $('body').find('[error]').show();
                 $('body').find('[component]').hide();

@@ -100,7 +100,7 @@
             </div>
             <div class="my-auto">
                 <label class="switch">
-                    <input type="checkbox" x-command="routine" x-routine="nightmares" x-component-type="switch">
+                    <input type="checkbox" x-command="routine" x-routine="nightmare" x-component-type="switch">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -137,25 +137,28 @@ $(function() {
     * 
     */
     var device = $('#modelName').html();
+    $('body').find('[loader]').show();
+    $('body').find('[error]').hide();
+    $('body').find('[component]').hide();
 
     // Retrieve status from device
 
     ModelComponents.statusCache = {
 
         power : {
-            value : true,
+            value : false,
         },
         brightness : {
-            value : 130,
+            value : 127,
         },
         color: {
-            value: 80,
+            value: 43,
         },
         routine : {
             presence    : {
                 value : false,
             },
-            nightmares  : {
+            nightmare  : {
                 value : false,
             },
             party       : {
@@ -165,54 +168,47 @@ $(function() {
 
     }
 
-    // Init components
+
+
+    // Event: Update GUI components on input change
     ModelComponents.initComponents();
 
-    // Set initial values
-    ModelComponents.updateComponentsFromCache();
+    // Sync from device, retrieve data and set statusCache
+    ModelComponents.syncStatusCache( device, function( result ){
 
-    
+        // If result can not be achieved
+        if ( result === false ){
 
+            app.sendToast( 'Oops! Device made a mistake. Retry, please.' );
 
-    
-
-    /*
-     *
-     * SETTING INITIAL VALUES
-     * 
-     */
-    // Show the loader and hide module
-    //$('body').find('[loader]').show();
-    //$('body').find('[error]').hide();
-    //$('body').find('[component]').hide();
-
-    // Ask the server for the status
-    //initStatusCache ();
-    //app.spinnerType = 'bar';
-    /*
-    window.device.sendAndGet( device, 'sync', function( result ) {
-        if ( result !== false ){
-
-            // Analyze the response
-
-            // show the GUI
-            initComponents ();
             $('body').find('[loader]').hide();
-            $('body').find('[component]').show();
+            $('body').find('[error]').show();
+            $('body').find('[component]').hide();
             return;
         }
 
+        // Show the cache
+        console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
+
+        // Set GUI to statusCache values
+        window.ModelComponents.updateComponentsFromCache();
+
+        // Show the components
         $('body').find('[loader]').hide();
-        $('body').find('[error]').show();
-        $('body').find('[component]').hide();
-        
+        $('body').find('[error]').hide();
+        $('body').find('[component]').show();
 
     });
-    */
 
-    
 
-    
+    // Event: Detect component change and send it to the server
+    ModelComponents.detectAndSync(device, function(){
+
+        // Set GUI to statusCache values
+        window.ModelComponents.updateComponentsFromCache();
+            
+    });
+
 
 });
 </script>

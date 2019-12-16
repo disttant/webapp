@@ -14,17 +14,28 @@
  *      NEEDS:                      Device to communicate with, An arrow function to execute after that
  *      RETURNS:                    VOID
  * 
- *  --> updateStatusCache           This function changes safetly an item into statusCache 
+ *  --> updateStatusCache:          This update a list of properties in statusCache 
+ *                                  given by the input parameter of the method
  * 
  *      NEEDS:                      A JSON with the following structure
- *                          
+ *                                  {
+ *                                      power      : true | "true",
+ *                                      brightness : 75 | "75",
+ *                                      color      : 125 | "125",
+ *                                      .
+ *                                      .
+ *                                      .
+ *                                  }
+ *      RETURNS:                    VOID 
+ * 
+ *  --> updateStatusCacheField      This function changes safetly an item into statusCache 
+ * 
+ *      NEEDS:                      A JSON with the following structure
  *                                  {
  *                                      command : "{power|color|brightness|pomodoro}",
- *                                      routine : {true|false},
  *                                      field   : "value"
-*                                       value   : "{value}" 
+ *                                      value   : "{value}" 
  *                                  }
- * 
  *      RETURNS:                    A JSON with statusCache
  * 
  *  --> initComponents:             Create an event listener to watch changes of component and update them
@@ -98,6 +109,49 @@ export class ModelComponentsController {
     syncStatusCache = function ( device, callback ){
 
         console.log('[GUI]: Syncing Status Cache');
+        
+        // Saving the environment of class auto reference
+        let thisClass = this;
+
+        // Send the message to the device
+        app.spinnerType = 'bar';
+
+        window.device.sendAndGet( device, 'sync', function( result ) {
+
+            console.warn ( result );
+
+            // Result could not be achieved
+            if ( result === false ){
+
+                // Execute extra functions and quit
+                callback( result = false );
+                return;
+            }
+
+            thisClass.updateStatusCache( result.data );
+
+            callback( result );
+        });
+    }
+
+
+
+    /*
+     *
+     * This update a list of properties in statusCache 
+     * given by the input parameter of the method
+     *   {
+     *     power      : true | "true",
+     *     brightness : 75 | "75",
+     *     color      : 125 | "125",
+     *     .
+     *     .
+     *     .
+     *   }
+     * 
+     * 
+     */
+    updateStatusCache = function ( newPropertiesObj ){
 
         // Building a function to process incoming data
         function stringToReal( value ){
@@ -114,50 +168,18 @@ export class ModelComponentsController {
                 return String(value);
             }
         }
-        
-        // Saving the environment of class auto reference
-        let thisClass = this;
 
-        // Send the message to the device
-        app.spinnerType = 'bar';
+        // We have a result, save it
+        for (var order in newPropertiesObj ) {
 
-        window.device.sendAndGet( device, 'sync', function( result ) {
+            this.updateStatusCacheField ( { 
+                command :  order,
+                field   : 'value',
+                value   :  stringToReal(newPropertiesObj[order]),
+            })
 
-            // Result could not be achieved
-            if ( result === false ){
+        }
 
-                // Execute extra functions and quit
-                callback( result = false );
-                return;
-            }
-
-            // Result could be achieved but error
-            if ( result.data.hasOwnProperty('state') === true && result.data.state == 'error' ){
-
-                // Execute extra functions and quit
-                callback( result = false );
-                return;
-            }
-
-            // We have a result, save it
-            for (var command in thisClass.statusCache ) {
-
-                // Update component when not calling a routine
-                if ( command !== 'routine'){
-
-                    thisClass.statusCache[command].value = stringToReal( result.data[command] );
-                    continue;
-                }
-
-                // Special procedure to update component when calling a routine
-                for (var routine in thisClass.statusCache['routine']) {
-                    thisClass.statusCache['routine'][routine].value = stringToReal( result.data[routine] );
-                }
-            }
-
-            // Execute extra functions and quit
-            callback( result );
-        });
     }
 
 
@@ -169,12 +191,11 @@ export class ModelComponentsController {
      * done like the following
      *   {
      *     command : "power/color/...",
-     *     routine : true/false,
-     *     field   : "step/state/..."
-     *     value   : "value-here" 
+     *     field   : "value"
+     *     value   : "{value}" 
      *   }
      */
-    updateStatusCache = function ( statusHolder = {}){
+    updateStatusCacheField = function ( statusHolder = {}){
 
         console.log('[GUI]: Updating Status Cache');
 
@@ -184,21 +205,23 @@ export class ModelComponentsController {
 
         if ( statusHolder.hasOwnProperty('command') !== true )
             return this.statusCache;
-
-        if ( statusHolder.hasOwnProperty('routine') !== true )
-            return this.statusCache;
-
+        
         if ( statusHolder.hasOwnProperty('field') !== true )
             return this.statusCache;
         
         if ( statusHolder.hasOwnProperty('value') !== true )
             return this.statusCache;
 
-        // 
-        if ( statusHolder.routine === true ){
-            this.statusCache['routine'][statusHolder.command][statusHolder.field] = statusHolder.value;
-        }else{
+        // Try to change the command in main properties
+        if ( this.statusCache.hasOwnProperty(statusHolder.command) ){
+
             this.statusCache[statusHolder.command][statusHolder.field] = statusHolder.value;
+        }
+
+        // Command is not present in main properties. Try into routines
+        if ( this.statusCache['routine'].hasOwnProperty(statusHolder.command) ){
+
+            this.statusCache['routine'][statusHolder.command][statusHolder.field] = statusHolder.value;
         }
 
         return this.statusCache;
@@ -226,13 +249,6 @@ export class ModelComponentsController {
             thisClass.updateComponent ( event.target );
         });
 
-        /*
-        Vanilla JS version under development: 
-        The problem is about identifying and removing handler
-
-        //document.removeEventListener("input", function (){} );
-        //document.addEventListener("input", function (){} );
-        */
     }
 
 
@@ -593,7 +609,7 @@ export class ModelComponentsController {
 
                 // Device answer something
                 // There was an error by device
-                if ( result.data.state === 'error' ) {
+                if ( result.data.response === 'error' ) {
 
                     // Update values
                     thisClass.statusCache = currentStatus;
@@ -609,7 +625,7 @@ export class ModelComponentsController {
 
                 // Success response
                 // Update values
-                thisClass.statusCache = thisClass.updateStatusCache(statusHolder);
+                thisClass.updateStatusCache( result.data );
 
                 // Inform the user
                 app.sendToast('Task done');
@@ -627,13 +643,6 @@ export class ModelComponentsController {
         // Building a detector for status change
         $( 'body' ).on( 'change', _func );
 
-        /*
-        Vanilla JS under development
-        // Destroy the detector for input changes
-        document.querySelector("body").removeEventListener("change", function (){} );
-        // Building a detector for status change
-        document.querySelector("body").addEventListener("change", function (){} );
-        */
     }
 
 }

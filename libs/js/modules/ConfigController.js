@@ -68,6 +68,14 @@ export class ConfigController {
 
                 "timers" : [],
                 "cached" : false,
+                "allowed" : {
+
+                    "light-v1"     : "#ffeb3b",
+                    "lamp"         : "#ffbc00",
+                    "socket-v1"    : "#ff5252",
+                    "multisocket"  : "#00b0ff",
+                    "undefined"    : "#90a4ae"
+                }
 
             },
 
@@ -111,16 +119,6 @@ export class ConfigController {
                 debug: true
             
             },
-
-            "model" : {
-
-                "light"        : "#ffeb3b",
-                "lamp"         : "#ffbc00",
-                "socket"       : "#ff5252",
-                "multisocket"  : "#00b0ff",
-                "undefined"    : "#90a4ae"
-
-            }
 
         };
 

@@ -218,9 +218,11 @@ export class DeviceController {
         let classDevice = this;
         let send = classDevice.sendCommand( order, device, function( sendResult ) {
 
+            let timeNow = Date.now();
+
             if( sendResult !== false ){
 
-                classDevice.checkMessages( device, order, recieve, cyclenow, function( message ) {
+                classDevice.checkMessages( device, order, recieve, cyclenow, timeNow, function( message ) {
 
                     callback( message );
 
@@ -243,7 +245,7 @@ export class DeviceController {
      *
      */
 
-    checkMessages = function ( device, order, recieve, cyclenow, callback ) {
+    checkMessages = function ( device, order, recieve, cyclenow, sentTime, callback ) {
 
         if( cyclenow === this.cycleout ) {
 
@@ -262,7 +264,7 @@ export class DeviceController {
 
             if( result !== false ) {
 
-                for( let i = result.length - 1 ; i >= 0 ; i-- ) {
+                for( let i = 0 ; i < result.length ; i++ ) {
                     
                     let message = deviceClass.parseMessage( result[i].message );
 
@@ -275,19 +277,22 @@ export class DeviceController {
                     if( message.order !== order )
                         continue;
 
+                    if( Date.parse( result[i].created_at) < sentTime )
+                        continue;
+
                     recieve = true;
                     callback( message );
                     break;
 
                 }
 
-                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
+                deviceClass.checkMessages( device, order, recieve, cyclenow, sentTime, callback );
 
             }
 
             else {
 
-                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
+                deviceClass.checkMessages( device, order, recieve, cyclenow, sentTime, callback );
 
             }
 

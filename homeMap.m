@@ -264,10 +264,10 @@
                         let color = '';
 
                         // Defining the color of the cell according to the device type
-                        if(config.model.hasOwnProperty(type)){
-                            color = config.model[type];
+                        if(config.models.allowed.hasOwnProperty(type)){
+                            color = config.models.allowed[type];
                         }else{
-                            color = config.model.undefined;
+                            color = config.models.allowed.undefined;
                         }
 
                         $('[x-coord-x="'+ coords[0] +'"] > [x-coord-y="'+ coords[1] +'"]').css('background-color', color);
@@ -319,10 +319,10 @@
                             let color = '';
                             let index = nocoords.findIndex(item => item.name === deviceName);
 
-                            if(config.model.hasOwnProperty(nocoords[index].type)){
-                                color = config.model[nocoords[index].type];
+                            if(config.models.allowed.hasOwnProperty(nocoords[index].type)){
+                                color = config.models.allowed[nocoords[index].type];
                             }else{
-                                color = 'gray';
+                                color = config.models.allowed.undefined;
                             }
 
                             let y_value = Number(clicked.attr('x-coord-y'));
@@ -362,7 +362,7 @@
                 $('#panel-wrapper').empty();
                 
                 // We have defined model
-                if(config.model.hasOwnProperty(modelType)){
+                if(config.models.allowed.hasOwnProperty(modelType)){
 
                     $.get({
                         url: './libs/models/' + modelType + '.html', 

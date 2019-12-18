@@ -31,6 +31,13 @@ $(function () {
 
 
 
+    // Process the toast queue
+    setInterval(() => {
+        app.processOneToast();
+    }, 100);
+
+
+
     // Detecting network status
     window.addEventListener('online', function(e) {
         $('#infobar-conn-error').addClass('d-none');
@@ -106,13 +113,10 @@ $(function () {
         });
 
     });
-
-
-    
-
-    
     
 });
+
+
 
 
 

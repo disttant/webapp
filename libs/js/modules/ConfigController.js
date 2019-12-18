@@ -40,14 +40,17 @@ export class ConfigController {
 
                     "index"
 
-                ]
+                ],
+                
+                "timers"  : [],
 
             },
 
             "app" : {
 
                 "default" : "homeMaker",
-                "timers"  : []
+                "toasts"  : [],
+                "timers"  : [],
 
             },
 

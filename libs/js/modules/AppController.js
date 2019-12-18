@@ -27,9 +27,14 @@
  *      NEEDS:              VOID
  *      RETURNS:            A string like '_25489'
  * 
- *  --> sentToast:          Generate a toast message
+ *  --> sentToast:          Generate a toast message into the queue
  * 
  *      NEEDS:              The message to be shown
+ *      RETURNS:            VOID
+ * 
+ *  --> processOneToast:    Show a toast and remove it from the queue
+ * 
+ *      NEEDS:              VOID
  *      RETURNS:            VOID
  * 
  *  --> sendModal:          Generate a modal in front of the screen
@@ -204,26 +209,38 @@ export class AppController {
     */
     sendToast = function (msg){
 
-        let theAlert =
-            '<div id="toast" class="alert alert-dismissible fade show m-2 bg-black text-light toast-width" role="alert">'+
-                msg +
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                    '<i class="material-icons md-light md-18 align-middle">close</i>'+
-                '</button>'+
-            '</div>';
-    
-        $('#toastWrapper').append(theAlert);
-    
-        $('div[class~="alert"][id^="toast"]').hide().show('fast', 'linear');
-    
-        window.setTimeout(function() {
-    
-            $('div[class~="alert"][id^="toast"]').fadeTo(250, 0).slideUp(250, function(){
-                $(this).remove(); 
-            });
-    
-        }, 3000);
+        config.app.toasts.push( msg ); 
+        
     }
+
+
+
+    /*
+    *
+    * This function process one toast 
+    * at each time
+    * 
+    */
+    processOneToast = function () {
+
+        // Check number of messages in queue
+        if( config.app.toasts.length < 1 ){
+            return;
+        }
+
+        // Some toast on screen, go out
+        if( $('#toast').is(':hidden') == false ){
+            return;
+        }
+
+        $('#toast').html( config.app.toasts[0] ).slideDown( 400 ).delay(3000).slideUp( 400 );
+        config.app.toasts.shift();
+
+        // Do something every 9 seconds
+        //setTimeout(this.testQueue, 3800);
+    };
+
+    
 
 
 

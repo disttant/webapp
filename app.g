@@ -125,9 +125,10 @@
     
 
 
-
     <!-- Toast bar-->
-    <div id="toastWrapper" class="fixed-bottom w-100"></div>
+    <div id="toastWrapper" class="fixed-bottom w-100">
+        <div id="toast" class="alert m-2 bg-black text-light toast-width" role="alert" style="display: none;"></div>
+    </div>
 
 
 

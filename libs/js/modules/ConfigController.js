@@ -22,15 +22,55 @@ export class ConfigController {
 
         let config = new Object();
 
-        let URL_broker = "http://broker.dalher.net/";
+        let URL_broker = "http://adaptative.api.dalher.net/";
         let URL_broker_version = "v1";
 
         config = {
+            "oauth" : {
+
+                auth_uri        : "http://accounts.dalher.net/oauth/authorize",
+                client_id       : "1",
+                redirect_uri    : "http://adaptative.dalher.net/?g=gimme",
+                scope           : "adaptative_r adaptative_w adaptative_d"
+            
+            },
 
             "api" : {
 
                 
 
+            },
+
+            "group" : {
+   
+                numberofmessagestoget   : 3,
+                getgrouplist            : URL_broker + URL_broker_version +"/groups/list",
+                creategroup             : URL_broker + URL_broker_version +"/groups/",
+                deletegroup             : URL_broker + URL_broker_version +"/groups/",
+                getmessages             : URL_broker + URL_broker_version +"/groups/messages/",
+                getrelatedgroups        : URL_broker + URL_broker_version +"/groups/list/related",
+                getfullgroups           : URL_broker + URL_broker_version +"/groups/list/full",
+                getfullgroupwithinfo    : URL_broker + URL_broker_version +"/group/list/related/",
+                debug: true
+            
+            },
+
+            "device" : {
+
+                numberofmessagestoget      : 3,
+                getfreedevices             : URL_broker + URL_broker_version +"/devices/list/free",
+                sendmessage                : URL_broker + URL_broker_version +"/devices/message/",
+                getmessages                : URL_broker + URL_broker_version +"/devices/messages/",
+                getdevices                 : URL_broker + URL_broker_version +"/devices/list",
+                createdevice               : URL_broker + URL_broker_version +"/devices/",
+                deletedevice               : URL_broker + URL_broker_version +"/devices/",
+                adddevicetogroup           : URL_broker + URL_broker_version +"/devices/relation/",
+                deletedevicefromgroup      : URL_broker + URL_broker_version +"/devices/relation/",
+                changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
+                savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
+                numberofcyclesuntilgetout  : 20,
+                debug: true
+            
             },
 
             "global" : {
@@ -80,47 +120,6 @@ export class ConfigController {
                     "undefined"    : "#90a4ae"
                 }
 
-            },
-
-            "oauth" : {
-
-                auth_uri        : "http://accounts.dalher.net/oauth/authorize",
-                client_id       : "14",
-                redirect_uri    : "http://adaptative.dalher.net/?g=gimme",
-                scope           : "broker_r broker_w broker_d"
-            
-            },
-
-            "group" : {
-   
-                numberofmessagestoget   : 3,
-                getgrouplist            : URL_broker + URL_broker_version +"/groups/list",
-                creategroup             : URL_broker + URL_broker_version +"/groups/",
-                deletegroup             : URL_broker + URL_broker_version +"/groups/",
-                getmessages             : URL_broker + URL_broker_version +"/groups/messages/",
-                getrelatedgroups        : URL_broker + URL_broker_version +"/groups/list/related",
-                getfullgroups           : URL_broker + URL_broker_version +"/groups/list/full",
-                getfullgroupwithinfo    : URL_broker + URL_broker_version +"/group/list/related/",
-                debug: true
-            
-            },
-
-            "device" : {
-
-                numberofmessagestoget      : 3,
-                getfreedevices             : URL_broker + URL_broker_version +"/devices/list/free",
-                sendmessage                : URL_broker + URL_broker_version +"/devices/message/",
-                getmessages                : URL_broker + URL_broker_version +"/devices/messages/",
-                getdevices                 : URL_broker + URL_broker_version +"/devices/list",
-                createdevice               : URL_broker + URL_broker_version +"/devices/",
-                deletedevice               : URL_broker + URL_broker_version +"/devices/",
-                adddevicetogroup           : URL_broker + URL_broker_version +"/devices/relation/",
-                deletedevicefromgroup      : URL_broker + URL_broker_version +"/devices/relation/",
-                changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
-                savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
-                numberofcyclesuntilgetout  : 5,
-                debug: true
-            
             },
 
         };

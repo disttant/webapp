@@ -54,7 +54,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-0 border-0">
             <div class="modal-header border-0">
-                <h5 class="modal-title" id="modal-title">...</h5>
+                <h5 class="modal-title font-weight-light" id="modal-title">...</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

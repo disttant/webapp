@@ -218,11 +218,9 @@ export class DeviceController {
         let classDevice = this;
         let send = classDevice.sendCommand( order, device, function( sendResult ) {
 
-            let timeNow = Date.now();
-
             if( sendResult !== false ){
 
-                classDevice.checkMessages( device, order, recieve, cyclenow, timeNow, function( message ) {
+                classDevice.checkMessages( device, order, recieve, cyclenow, function( message ) {
 
                     callback( message );
 
@@ -245,13 +243,12 @@ export class DeviceController {
      *
      */
 
-    checkMessages = function ( device, order, recieve, cyclenow, sentTime, callback ) {
+    checkMessages = function ( device, order, recieve, cyclenow, callback ) {
 
         if( cyclenow === this.cycleout ) {
 
             callback( false );
             return;
-
         }
 
         if( recieve === true )
@@ -264,35 +261,36 @@ export class DeviceController {
 
             if( result !== false ) {
 
+                let sentOrder     = new RegExp('^((\\|)?for\\|'+device+'\\|'+order+'(\\|[a-z]+\\#[a-z0-9]+)*(\\|)?){1}$');
+                let expectedOrder = new RegExp('^((\\|)?from\\|'+device+'\\|'+order+'(\\|[a-z]+\\#[a-z0-9]+)*(\\|)?){1}$');
+
                 for( let i = 0 ; i < result.length ; i++ ) {
                     
-                    let message = deviceClass.parseMessage( result[i].message );
+                    let parsedMessage = deviceClass.parseMessage( result[i].message ) ;
 
-                    if( message.type !== 'from' )
-                        continue;
+                    // Sent message found, go out
+                    if ( result[i].message.match(sentOrder) !== null ){
+                        break;
+                    }
 
-                    if( message.device !== device )
-                        continue;
-
-                    if( message.order !== order )
-                        continue;
-
-                    if( Date.parse( result[i].created_at) < sentTime )
-                        continue;
+                    // Expected message not found, go out
+                    if ( result[i].message.match(expectedOrder) == null ){
+                        break;
+                    }
 
                     recieve = true;
-                    callback( message );
+                    callback( parsedMessage );
                     break;
 
                 }
 
-                deviceClass.checkMessages( device, order, recieve, cyclenow, sentTime, callback );
+                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
 
             }
 
             else {
 
-                deviceClass.checkMessages( device, order, recieve, cyclenow, sentTime, callback );
+                deviceClass.checkMessages( device, order, recieve, cyclenow, callback );
 
             }
 

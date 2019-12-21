@@ -374,9 +374,12 @@
                         $('#modelName').empty().append(modelName);
                         $('#modelType').empty().append(modelType);
                         $('#modelDescription').empty();
-                        if ( modelDescription !== null && modelDescription.toLowerCase() !== 'null' ){
+
+                        // Write the description only if there IS a description
+                        if ( modelDescription !== null && modelDescription.toLowerCase() !== 'null' && modelDescription !== 'undefined'){
                             $('#modelDescription').append(modelDescription);
                         }
+
                     });
                     
                 // We have UNdefined model

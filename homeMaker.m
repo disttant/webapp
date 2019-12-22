@@ -59,26 +59,32 @@
                 '<!-- New group -->' +
                 '<div class="card border">' +
                     '<div class="card-header " id="heading'+ newId +'">' +
-                        '<div class="d-flex justify-content-between align-items-center">' +
-                            '<div class="mr-auto p-2 text-capitalize">'+
-                                item.name +
-                            '</div>'+
-                            '<div>'+
-                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="remove-group" x-hiden-value="'+item.name.toLowerCase()+'" >'+
-                                    '<i class="material-icons md-dark md-24 align-middle">close</i>'+
-                                '</a>'+
-                            '</div>'+
-                            '<div>'+
-                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
-                                    '<i class="material-icons md-dark md-24 align-middle">arrow_drop_down</i>'+
-                                '</a>'+
-                            '</div>'+
-                            '<div>'+
-                                '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="'+item.name.toLowerCase()+'">'+
-                                    '<i class="material-icons md-dark md-24 align-middle">map</i>'+
-                                '</a>'+
-                            '</div>'+
-                        '</div>'+
+                    
+                            '<div class="row w-100 mx-auto">'+
+                                '<div class="col-md-8 py-3 px-0">'+
+                                    item.name +
+                                '</div>'+
+                                '<div class="col-md-4 py-2 px-0">'+
+                                    '<div class="d-flex justify-content-end align-items-center">' +
+                                        '<div>'+
+                                            '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="remove-group" x-hiden-value="'+item.name.toLowerCase()+'" >'+
+                                                '<i class="material-icons md-dark md-18 align-middle">close</i>'+
+                                            '</a>'+
+                                        '</div>'+
+                                        '<div>'+
+                                            '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
+                                                '<i class="material-icons md-dark md-18 align-middle">arrow_drop_down</i>'+
+                                            '</a>'+
+                                        '</div>'+
+                                        '<div>'+
+                                            '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="'+item.name.toLowerCase()+'">'+
+                                                '<i class="material-icons md-dark md-18 align-middle">map</i>'+
+                                            '</a>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>' +
+
                     '</div>'+
                     '<div id="collapse'+newId+'" class="collapse" aria-labelledby="heading'+ newId +'" data-parent="#groups-accordion">'+
                         '<div class="card-body">'+
@@ -118,7 +124,7 @@
                                 '</div>'+
                                 '<div class="d-flex align-items-center flex-shrink-1">'+
                                     '<a href="#" x-btn-function="free-device" role="button" x-hiden-value="' + device.name.toLowerCase() + '" class="btn btn-light" >'+
-                                        '<i class="material-icons align-middle">close</i>'+
+                                        '<i class="material-icons md-dark md-18 align-middle">close</i>'+
                                     '</a>'+
                                 '</div>'+
                             '</div>'+
@@ -130,7 +136,7 @@
                 $('#collapse' + newId + ' > .card-body').append(
                     '<div class="d-flex mt-3">'+
                         '<a href="#" role="button" x-btn-function="relate-device" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
-                            '<i class="material-icons align-middle">add</i>'+
+                            '<i class="material-icons md-dark md-18 align-middle">add</i>'+
                         '</a>' +
                     '</div>'
                 );

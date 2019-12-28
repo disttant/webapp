@@ -67,11 +67,6 @@
                                 '<div class="col-md-4 py-2 px-0">'+
                                     '<div class="d-flex justify-content-end align-items-center">' +
                                         '<div>'+
-                                            '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="remove-group" x-hiden-value="'+item.name.toLowerCase()+'" >'+
-                                                '<i class="material-icons md-dark md-18 align-middle">close</i>'+
-                                            '</a>'+
-                                        '</div>'+
-                                        '<div>'+
                                             '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
                                                 '<i class="material-icons md-dark md-18 align-middle">arrow_drop_down</i>'+
                                             '</a>'+
@@ -88,7 +83,9 @@
                     '</div>'+
                     '<div id="collapse'+newId+'" class="collapse" aria-labelledby="heading'+ newId +'" data-parent="#groups-accordion">'+
                         '<div class="card-body">'+
-                            'No devices added yet' +
+                            '<div>' +
+                                'No devices added yet' +
+                            '</div>'+
                         '</div>'+
                     '</div>'+
                 '</div>';
@@ -134,12 +131,26 @@
 
                 // Button for adding devices
                 $('#collapse' + newId + ' > .card-body').append(
-                    '<div class="d-flex mt-3">'+
+                    '<div class="d-inline-flex mt-3 mr-2">'+
                         '<a href="#" role="button" x-btn-function="relate-device" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
                             '<i class="material-icons md-dark md-18 align-middle">add</i>'+
                         '</a>' +
                     '</div>'
                 );
+
+                // Button for removing groups
+                $('#collapse' + newId + ' > .card-body').append(
+                    '<div class="d-inline-flex mt-3 mr-2">'+
+                        '<a href="#" role="button" x-btn-function="remove-group" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
+                            '<i class="material-icons md-dark md-18 align-middle">delete</i>'+
+                        '</a>' +
+                    '</div>'
+                );
+
+
+                
+
+
 
             });
         });

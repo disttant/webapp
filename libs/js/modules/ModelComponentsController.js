@@ -246,7 +246,10 @@ export class ModelComponentsController {
         $( 'body' ).off( 'input' );
 
         $( 'body' ).on( 'input', function(){
+
             thisClass.updateComponent ( event.target );
+
+            //thisClass.updateComponentsFromCache();
         });
 
     }
@@ -360,6 +363,7 @@ export class ModelComponentsController {
 
         // Resetting the slider
         domElement.setAttribute( 'value', value );
+        domElement.value = value;
     
     }
 
@@ -401,6 +405,7 @@ export class ModelComponentsController {
             
         // Resetting the slider
         domElement.setAttribute( 'value', value );
+        domElement.value = value;
     }
 
 
@@ -449,6 +454,7 @@ export class ModelComponentsController {
             
         // Resetting the slider
         domElement.setAttribute( 'value', value );
+        domElement.value = value;
 
     }
 
@@ -476,6 +482,8 @@ export class ModelComponentsController {
                 continue;
             }
 
+            
+
             // Update component when not calling a routine
             if ( command !== 'routine'){
                 
@@ -496,8 +504,9 @@ export class ModelComponentsController {
 
                 // Update it
                 thisClass.updateComponent( routineDomElement, thisClass.statusCache['routine'][routine].value );
-                
+
             }
+            
         }
 
     }

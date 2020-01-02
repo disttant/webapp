@@ -61,10 +61,12 @@
                     '<div class="card-header " id="heading'+ newId +'">' +
                     
                             '<div class="row w-100 mx-auto">'+
-                                '<div class="col-md-8 py-3 px-0">'+
-                                    item.name +
+                                '<div class="col-sm-8 py-3 px-0">'+
+                                    '<span class="text-break">' +
+                                        item.name +
+                                    '</span>' +
                                 '</div>'+
-                                '<div class="col-md-4 py-2 px-0">'+
+                                '<div class="col-sm-4 py-2 px-0 border rounded-lg px-2 bg-white">'+
                                     '<div class="d-flex justify-content-end align-items-center">' +
                                         '<div>'+
                                             '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
@@ -113,9 +115,11 @@
                                     '<div class="d-flex flex-column">' +
                                         '<div class="py-1">' + device.name + '</div>' +
                                         '<div class="py-1">' +
-                                            '<small class="text-muted">' +
-                                                device.description +
-                                            '</small>' +
+                                            '<a href="#" x-btn-function="change-description" role="button" x-hiden-value="' + device.name.toLowerCase() + '" class="btn btn-link text-decoration-none p-0" >'+
+                                                '<small class="text-muted">' +
+                                                    device.description +
+                                                '</small>' +
+                                            '</a>'+
                                         '</div>' +
                                     '</div>' +
                                 '</div>'+
@@ -153,6 +157,58 @@
 
 
             });
+        });
+
+
+
+        // Detecting device description change
+        $('body').on('click', 'a[x-btn-function="change-description"]', function(){
+
+            let deviceName = $(this).attr('x-hiden-value');
+
+            // Changing the spinner mode to infinite bar
+            app.spinnerType = 'bar';
+
+            let modalBody = null;
+            modalBody = '<input type="text" id="device-description" class="form-control">';
+
+            
+            // Building the modal and relating the device
+            app.sendModal(
+                'Change description'
+                , 
+
+                modalBody,
+
+                function(){
+
+                    // Getting the description from modal
+                    let deviceDescription = $('#modal-body > #device-description').val();
+
+                    device.changeProfile(
+                        deviceName
+                        , 
+
+                        function( response ){
+
+                            //app.sendToast('Device was related successfully');
+                            if ( response === false ){
+
+                                app.sendToast('Description could not be changed');
+                                return;
+
+                            }
+
+                            app.moduleLoad('homeMaker');
+
+                        },
+
+                        deviceDescription
+                    );
+
+                }
+            );
+
         });
 
 

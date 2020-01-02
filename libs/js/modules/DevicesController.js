@@ -489,7 +489,7 @@ export class DeviceController {
                 if( debug === true )
                     console.log( "===> Perfil actualizado" );
 
-                callback( false );
+                callback( true );
             },
             error: function ( response ) {
 

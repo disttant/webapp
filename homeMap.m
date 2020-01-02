@@ -8,7 +8,7 @@
             <div id="homemap-header" class="d-flex flex-row align-items-center mx-auto text-muted h5 font-weight-light alert alert-light border rounded" role="alert">
                 <div class="px-2">
                     <a href="#" onclick="app.moduleLoad('homeMaker')">
-                        <i class="material-icons md-dark md-24 align-middle">home</i>
+                        <i class="material-icons md-dark md-24 align-middle">ballot</i>
                     </a>
                 </div>
                 <div class="px-2">

@@ -22,15 +22,15 @@ export class ConfigController {
 
         let config = new Object();
 
-        let URL_broker = "http://adaptative.api.dalher.net/";
+        let URL_broker = "http://adaptative.api.alke.systems/";
         let URL_broker_version = "v1";
 
         config = {
             "oauth" : {
 
-                auth_uri        : "http://accounts.dalher.net/oauth/authorize",
+                auth_uri        : "http://accounts.alke.systems/oauth/authorize",
                 client_id       : "1",
-                redirect_uri    : "http://adaptative.dalher.net/?g=gimme",
+                redirect_uri    : "http://adaptative.alke.systems/?g=gimme",
                 scope           : "adaptative_r adaptative_w adaptative_d"
             
             },

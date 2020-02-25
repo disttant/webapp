@@ -27,7 +27,7 @@ setInterval(function(){
 $(function () {
 
     // Default module to load for first time
-    app.moduleLoad('homeMaker');
+    app.moduleLoad('home');
 
 
 

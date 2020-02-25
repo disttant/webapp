@@ -7,7 +7,7 @@
             <!-- Location bar -->
             <div id="homemap-header" class="d-flex flex-row align-items-center mx-auto text-muted h5 font-weight-light alert alert-light border rounded" role="alert">
                 <div class="px-2">
-                    <a href="#" onclick="app.moduleLoad('homeMaker')">
+                    <a href="#" onclick="app.moduleLoad('home')">
                         <i class="material-icons md-dark md-24 align-middle">ballot</i>
                     </a>
                 </div>
@@ -73,17 +73,17 @@
             let moduleHeaders;
 
             if (sessionStorage.getItem("app.module.headers") === null) {
-                app.moduleLoad('homeMaker');
+                app.moduleLoad('home');
             }
 
             moduleHeaders = JSON.parse(sessionStorage.getItem('app.module.headers'));
             
             if(moduleHeaders.hasOwnProperty('data') == false){
-                app.moduleLoad('homeMaker');
+                app.moduleLoad('home');
             };
 
             if(moduleHeaders.data.hasOwnProperty('group') == false){
-                app.moduleLoad('homeMaker');
+                app.moduleLoad('home');
             };
         }
 

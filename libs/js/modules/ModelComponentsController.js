@@ -94,7 +94,7 @@ export class ModelComponentsController {
 
         // Construct a cache memory for status
         this.statusCache = {};
-
+        this.debug       = true;
     }
 
 

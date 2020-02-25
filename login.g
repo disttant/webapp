@@ -35,12 +35,6 @@
                     </button>
                 </div>
 
-                <div class="d-flex justify-content-center py-2">
-                    <!-- Register button -->
-                    <button type="button" class="btn btn-block btn-dark text-white mx-3" id="register">
-                        Register
-                    </button>
-                </div>
             </div>
         </div>
 

@@ -2,15 +2,15 @@
 import * as jwt_md from './node_modules/jwt-decode/build/jwt-decode.min.js';
 
 // Importing custom libraries
-import * as ConfigModule             from './modules/ConfigController.js';
-import * as IndexModule              from './modules/IndexController.js';
-import * as Oauth2Module             from './modules/Oauth2Controller.js';
-import * as LoginModule              from './modules/LoginController.js';
-import * as AppModule                from './modules/AppController.js';
-import * as GroupModule              from './modules/GroupsController.js';
-import * as DeviceModule             from './modules/DevicesController.js';
-import * as ColorModule              from './modules/ColorController.js';
-import * as ModelComponentsModule    from './modules/ModelComponentsController.js';
+import * as ConfigModule             from './controllers/ConfigController.js';
+import * as IndexModule              from './controllers/IndexController.js';
+import * as Oauth2Module             from './controllers/Oauth2Controller.js';
+import * as LoginModule              from './controllers/LoginController.js';
+import * as AppModule                from './controllers/AppController.js';
+import * as GroupModule              from './controllers/GroupsController.js';
+import * as DeviceModule             from './controllers/DevicesController.js';
+import * as ColorModule              from './controllers/ColorController.js';
+import * as ModelComponentsModule    from './controllers/ModelComponentsController.js';
 
 
 

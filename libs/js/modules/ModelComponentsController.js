@@ -529,9 +529,12 @@ export class ModelComponentsController {
     detectAndSync = function ( device , callback ){
 
         let thisClass = this;
+        let debug = this.debug;
 
-        // Debug purposes only
-        console.log('[GUI]: Starting detectAndSync()');
+        if( debug === true ){
+            // Debug purposes only
+            console.log('[GUI]: Starting detectAndSync()');
+        }
 
         // Build a function to be called when event is shot
         function _func (){
@@ -582,26 +585,36 @@ export class ModelComponentsController {
                 statusHolder['value'] = event.target.getAttribute('value');
             }
 
-            // Build the entire order
-            order += '|' + data;
+            if( debug === true ){
+                // Build the entire order
+                order += '|' + data;
 
-            // Filter possible starting or ending strange chars
-            if (order.startsWith("|"))
-                order = order.slice(1);
+                // Debug purposes only: filter possible starting or ending strange chars for showing the message
+                if (order.startsWith("|"))
+                    order = order.slice(1);
+                    
+                if (order.endsWith("|"))
+                    order = order.slice(0, -1);  
+
+                console.warn( '[DEBUG]: Message to send: ', order );
+            }
+
+            // filter possible starting or ending strange chars in 'data' string
+            if (data.startsWith("|"))
+                data = data.slice(1);
                 
-            if (order.endsWith("|"))
-                order = order.slice(0, -1);  
-
-            // Debug purposes only
-            console.warn( '[DEBUG]: Message to send: ', order );
+            if (data.endsWith("|"))
+                data = data.slice(0, -1); 
 
             // Sending the order to the device
             app.spinnerType = 'bar';
 
             window.device.sendAndGet( device, command, (result) => {
 
-                // Debug purposes only
-                console.warn('[DEBUG]: Message recieved: ', result );
+                if( debug === true ){
+                    // Debug purposes only
+                    console.warn('[DEBUG]: Message recieved: ', result );
+                }
 
                 // Device DOESNT answer
                 if( result === false ){

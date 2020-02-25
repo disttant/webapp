@@ -345,7 +345,7 @@ $(function () {
 
         let groupName = $(this).attr('x-hiden-value');
 
-        app.moduleLoad('homeMap', {'group' : groupName});
+        app.moduleLoad('room', {'group' : groupName});
     });
 
 

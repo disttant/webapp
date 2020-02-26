@@ -51,7 +51,7 @@ export class ConfigController {
                 getrelatedgroups        : URL_broker + URL_broker_version +"/groups/list/related",
                 getfullgroups           : URL_broker + URL_broker_version +"/groups/list/full",
                 getfullgroupwithinfo    : URL_broker + URL_broker_version +"/group/list/related/",
-                debug: true
+                debug: false
             
             },
 
@@ -69,7 +69,7 @@ export class ConfigController {
                 changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
                 savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
                 numberofcyclesuntilgetout  : 20,
-                debug: true
+                debug: false
             
             },
 
@@ -88,7 +88,7 @@ export class ConfigController {
 
             "app" : {
 
-                "default" : "homeMaker",
+                "default" : "home",
                 "toasts"  : [],
                 "timers"  : [],
 

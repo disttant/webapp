@@ -173,14 +173,14 @@ export class AppController {
 
         // Load the module
         $.get({
-            url: moduleName + '.m', 
+            url: 'modules/' + moduleName + '.html', 
             cache: config.modules.cached
         })
         .done(function( data ) {
             $('body').find("#module-wrapper").empty().html(data);
         })
         .fail(function() {
-            $("#module-wrapper").load('404.m');
+            $("#module-wrapper").load('modules/404.html');
         })
         .always(function(){
             //window.sessionStorage.removeItem('app.module.headers');

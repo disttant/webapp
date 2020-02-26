@@ -133,7 +133,7 @@ $(function () {
     // Define the spinner type
     app.spinnerType = 'page';
 
-    $.get(uriParams.g + '.g')
+    $.get('global_modules/' + uriParams.g + '.html')
     .done(function() {
 
         currModule = uriParams.g;
@@ -151,16 +151,12 @@ $(function () {
         // Define the spinner type
         app.spinnerType = 'page';
 
-        $("#index-wrapper").load(currModule + '.g', function(){
+        $("#index-wrapper").load('global_modules/' + currModule + '.html', function(){
 
             // Define the spinner type
             app.spinnerType = 'page';
 
             $.getScript('libs/js/actions/' + currModule + '.js')
-            .done(function() {})
-            .fail(function(){
-                console.warn('LOG: No actions needed');
-            });
 
         });
 

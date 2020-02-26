@@ -57,7 +57,7 @@ $(function() {
         }
 
         // Show the cache
-        console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
+        //console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
 
         // Set GUI to statusCache values
         window.ModelComponents.updateComponentsFromCache();

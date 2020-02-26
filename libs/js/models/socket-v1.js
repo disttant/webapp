@@ -10,7 +10,7 @@ $(function() {
     $('body').find('[error]').hide();
     $('body').find('[component]').hide();
 
-    console.log('[GUI]: Creating statusCache{}');
+    //console.log('[GUI]: Creating statusCache{}');
     ModelComponents.statusCache = {
         power : {
             value : false,
@@ -41,7 +41,7 @@ $(function() {
         }
 
         // Show the cache
-        console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
+        //console.log('[GUI]: statusCache: ', window.ModelComponents.statusCache);
 
         // Set GUI to statusCache values
         window.ModelComponents.updateComponentsFromCache();

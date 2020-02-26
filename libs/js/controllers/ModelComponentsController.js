@@ -120,7 +120,9 @@ export class ModelComponentsController {
 
         window.device.sendAndGet( device, 'sync', function( result ) {
 
-            console.warn ( result );
+            if( this.debug === true ){
+                console.warn ( result );
+            }
 
             // Result could not be achieved
             if ( result === false ){

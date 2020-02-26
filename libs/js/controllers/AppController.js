@@ -180,7 +180,7 @@ export class AppController {
             $('body').find("#module-wrapper").empty().html(data);
         })
         .fail(function() {
-            $("#module-wrapper").load('modules/404.html');
+            $("#module-wrapper").load('modules/error.html');
         })
         .always(function(){
             //window.sessionStorage.removeItem('app.module.headers');

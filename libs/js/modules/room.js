@@ -311,7 +311,7 @@ $(function () {
             if(config.models.allowed.hasOwnProperty(modelType)){
 
                 $.get({
-                    url: './libs/models/' + modelType + '.html', 
+                    url: 'models/' + modelType + '.html', 
                     cache: config.models.cached
                 }).then(function( response ){
                     $('#panel-wrapper').html(response);
@@ -332,7 +332,7 @@ $(function () {
             }else{
 
                 $.get({
-                    url: './libs/models/undefined.html', 
+                    url: 'models/undefined.html', 
                     cache: config.models.cached
                 }).then(function( response ){
                     $('#panel-wrapper').html(response);

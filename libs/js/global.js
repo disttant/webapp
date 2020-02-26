@@ -156,7 +156,7 @@ $(function () {
             // Define the spinner type
             app.spinnerType = 'page';
 
-            $.getScript('libs/js/actions/' + currModule + '.js')
+            $.getScript('libs/js/global_modules/' + currModule + '.js')
 
         });
 

@@ -108,7 +108,7 @@ export class ModelComponentsController {
      */
     syncStatusCache = function ( device, callback ){
 
-        if( debug === true ){
+        if( this.debug === true ){
             console.log('[GUI]: Syncing Status Cache');
         }
         
@@ -199,7 +199,7 @@ export class ModelComponentsController {
      */
     updateStatusCacheField = function ( statusHolder = {}){
 
-        if( debug === true ){
+        if( this.debug === true ){
             console.log('[GUI]: Updating Status Cache');
         }
 
@@ -241,7 +241,7 @@ export class ModelComponentsController {
      */
     initComponents = function (){
 
-        if( debug === true ){
+        if( this.debug === true ){
             console.log('[GUI]: Building Components Watchdog');
         }
 
@@ -270,7 +270,7 @@ export class ModelComponentsController {
      */
     updateComponent = function ( domElement, value ){
 
-        if( debug === true ){
+        if( this.debug === true ){
             console.log('[GUI]: Updating Component Status');
         }
 
@@ -301,7 +301,7 @@ export class ModelComponentsController {
                 break;
         
             default:
-                if( debug === true ){
+                if( this.debug === true ){
                     console.log('[GUI] Component Type Not Found');
                 }
                 break;
@@ -320,7 +320,7 @@ export class ModelComponentsController {
 
         // Check if switch is a checkbox
         if( domElement.getAttribute("type") !== 'checkbox' ){
-            if( debug === true ){
+            if( this.debug === true ){
                 console.log ( '[GUI]: Switch malformed' )
             }
         }
@@ -347,7 +347,7 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            if( debug === true ){
+            if( this.debug === true ){
                 console.log ( '[GUI]: Slider malformed' )
             }
         }
@@ -392,7 +392,7 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            if( debug === true ){
+            if( this.debug === true ){
                 console.log ( '[GUI]: Slider malformed' )
             }
         }
@@ -435,7 +435,7 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            if( debug === true ){
+            if( this.debug === true ){
                 console.log ( '[GUI]: Slider malformed' )
             }
         }
@@ -485,7 +485,7 @@ export class ModelComponentsController {
      */
     updateComponentsFromCache = function (){
 
-        if( debug === true ){
+        if( this.debug === true ){
             console.log('[GUI]: Updating Components From Status Cache');
         }
 
@@ -548,9 +548,8 @@ export class ModelComponentsController {
     detectAndSync = function ( device , callback ){
 
         let thisClass = this;
-        let debug = this.debug;
 
-        if( debug === true ){
+        if( this.debug === true ){
             // Debug purposes only
             console.log('[GUI]: Starting detectAndSync()');
         }
@@ -604,7 +603,7 @@ export class ModelComponentsController {
                 statusHolder['value'] = event.target.getAttribute('value');
             }
 
-            if( debug === true ){
+            if( this.debug === true ){
                 // Build the entire order
                 order += '|' + data;
 
@@ -630,7 +629,7 @@ export class ModelComponentsController {
 
             window.device.sendAndGet( device, command, (result) => {
 
-                if( debug === true ){
+                if( this.debug === true ){
                     // Debug purposes only
                     console.warn('[DEBUG]: Message recieved: ', result );
                 }

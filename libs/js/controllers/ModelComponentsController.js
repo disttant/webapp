@@ -108,7 +108,9 @@ export class ModelComponentsController {
      */
     syncStatusCache = function ( device, callback ){
 
-        console.log('[GUI]: Syncing Status Cache');
+        if( debug === true ){
+            console.log('[GUI]: Syncing Status Cache');
+        }
         
         // Saving the environment of class auto reference
         let thisClass = this;
@@ -197,7 +199,9 @@ export class ModelComponentsController {
      */
     updateStatusCacheField = function ( statusHolder = {}){
 
-        console.log('[GUI]: Updating Status Cache');
+        if( debug === true ){
+            console.log('[GUI]: Updating Status Cache');
+        }
 
         // Check statusHolder
         if ( typeof statusHolder !== 'object' )
@@ -237,7 +241,9 @@ export class ModelComponentsController {
      */
     initComponents = function (){
 
-        console.log('[GUI]: Building Components Watchdog');
+        if( debug === true ){
+            console.log('[GUI]: Building Components Watchdog');
+        }
 
         // Bugfix for environment reference
         let thisClass = this;
@@ -264,7 +270,9 @@ export class ModelComponentsController {
      */
     updateComponent = function ( domElement, value ){
 
-        console.log('[GUI]: Updating Component Status');
+        if( debug === true ){
+            console.log('[GUI]: Updating Component Status');
+        }
 
         let componentType = domElement.getAttribute("x-component-type");
 
@@ -293,8 +301,9 @@ export class ModelComponentsController {
                 break;
         
             default:
-
-                console.log('[GUI] Component Type Not Found');
+                if( debug === true ){
+                    console.log('[GUI] Component Type Not Found');
+                }
                 break;
         }
 
@@ -311,7 +320,9 @@ export class ModelComponentsController {
 
         // Check if switch is a checkbox
         if( domElement.getAttribute("type") !== 'checkbox' ){
-            console.log ( '[GUI]: Switch malformed' )
+            if( debug === true ){
+                console.log ( '[GUI]: Switch malformed' )
+            }
         }
 
         // Not a forced value?, let it live
@@ -336,7 +347,9 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            console.log ( '[GUI]: Slider malformed' )
+            if( debug === true ){
+                console.log ( '[GUI]: Slider malformed' )
+            }
         }
     
         // Check if i have a forced number
@@ -379,7 +392,9 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            console.log ( '[GUI]: Slider malformed' )
+            if( debug === true ){
+                console.log ( '[GUI]: Slider malformed' )
+            }
         }
 
         if (typeof value !== 'number' ){
@@ -420,7 +435,9 @@ export class ModelComponentsController {
 
         // Check if this is a slider
         if( domElement.getAttribute('type') !== 'range' ){
-            console.log ( '[GUI]: Slider malformed' )
+            if( debug === true ){
+                console.log ( '[GUI]: Slider malformed' )
+            }
         }
 
         if (typeof value !== 'number' ){
@@ -468,7 +485,9 @@ export class ModelComponentsController {
      */
     updateComponentsFromCache = function (){
 
-        console.log('[GUI]: Updating Components From Status Cache');
+        if( debug === true ){
+            console.log('[GUI]: Updating Components From Status Cache');
+        }
 
         let thisClass = this;
 

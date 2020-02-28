@@ -274,7 +274,7 @@ $(function () {
         let groupName = $(this).attr('x-hiden-value');
 
         // Check if user really wanted to click
-        if( confirm('Deleting '+ groupName +'. Are you sure?') === false ) 
+        if( confirm('Deleting room '+ groupName +'. Are you sure?') === false ) 
             return;
 
         // Changing the spinner mode to infinite bar
@@ -282,12 +282,12 @@ $(function () {
 
         group.deleteGroup(groupName, function( result ){
             if(result === false ){
-                app.sendToast('Oops! Could delete that group');
+                app.sendToast('Oops! Could delete that room');
                 return;
             }
 
             app.moduleLoad('home');
-            app.sendToast('Group was deleted successfully');
+            app.sendToast('Room deleted successfully');
 
         });
     });
@@ -301,12 +301,12 @@ $(function () {
         app.spinnerType = 'bar';
 
         // Building the selectable
-        modalBody  = '<input type="text" class="form-control form-control-lg" id="group-name" placeholder="Write a cool name">';
-        modalBody += '<small class="d-block py-2 text-muted">Just lower case characters allowed</small>';
+        modalBody  = '<input type="text" class="form-control form-control-lg" id="group-name" placeholder="Name">';
+        modalBody += '<small class="d-block py-2 text-muted">Lower case, no symbols, no spaces</small>';
 
         // Building the modal and relating the device
         app.sendModal(
-            'Add a group', 
+            'Add a room', 
 
             modalBody,
 
@@ -317,7 +317,7 @@ $(function () {
 
                 // Check if the field is empty
                 if( newGroupName === '' ){
-                    app.sendToast('Oops! Group name not allowed');
+                    app.sendToast('Oops! Room name not allowed');
                     return;
                 }
 
@@ -328,11 +328,11 @@ $(function () {
                 group.createGroup(newGroupName, function( response ){
 
                     if ( response === false ){
-                        app.sendToast('Oops! New group could not be added. Try again');
+                        app.sendToast('Oops! Room could not be added. Try again');
                         return;
                     }
                     app.moduleLoad('home');
-                    app.sendToast('Group was added successfully');
+                    app.sendToast('Room was added successfully');
                 });
             }
         );

@@ -243,7 +243,7 @@ $(function () {
                 // AÑADIR CANAL AL MAPA
                 let clicked = $(this);
                 let defaultOption = 'Choose...';
-                let title = 'Select Device to add to this cell';
+                let title = 'Select device to put here';
                 let bodyStart = '<select id="device-name" class="flex-fill form-control"><option>'+ defaultOption +'</option>';
                 let bodyContent = '';
                 let bodyEnd = '</select>';
@@ -291,7 +291,7 @@ $(function () {
             }else{
 
                 // NO HAY CANALES LIBRES EN EL GRUPO
-                app.sendToast('Oops! You have no more devices into the group');
+                app.sendToast('Oops! No free devices in this room');
 
             }
 

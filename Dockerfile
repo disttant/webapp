@@ -42,7 +42,10 @@ RUN find /var/www -type d -exec chmod 755 {} \;
 
 
 #### FINAL OPERATIONS
-COPY docker-files/init.sh /init.sh
+RUN rm -rf /init.sh && touch /init.sh
+RUN echo "#!/bin/bash" >> /init.sh
+RUN echo "service nginx start" >> /init.sh
+RUN echo "/bin/bash" >> /init.sh
 RUN chown root:root /init.sh
 RUN chmod +x /init.sh
 EXPOSE 80 443

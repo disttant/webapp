@@ -19,7 +19,7 @@ RUN apt-get install -y -qq --force-yes git > /dev/null
 RUN mkdir -p /tmp/app
 
 # Download the entire project
-COPY . /tmp/laravel/
+COPY . /tmp/app/
 
 # Moving app to the right place
 RUN cp -r /tmp/app/* /var/www/html

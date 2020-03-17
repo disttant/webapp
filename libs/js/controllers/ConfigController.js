@@ -22,16 +22,16 @@ export class ConfigController {
 
         let config = new Object();
 
-        let URL_broker = "http://api.adaptative.alke.systems/";
+        let URL_broker = "https://api.farpres.com/";
         let URL_broker_version = "v1";
 
         config = {
             "oauth" : {
 
-                auth_uri        : "http://accounts.alke.systems/oauth/authorize",
+                auth_uri        : "https://accounts.farpres.com/oauth/authorize",
                 client_id       : "1",
-                redirect_uri    : "http://webapp.adaptative.alke.systems/?g=gimme",
-                scope           : "adaptative_r adaptative_w adaptative_d"
+                redirect_uri    : "https://webapp.farpres.com/?g=gimme",
+                scope           : "api_r api_w api_d"
             
             },
 

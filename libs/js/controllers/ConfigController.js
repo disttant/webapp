@@ -22,15 +22,15 @@ export class ConfigController {
 
         let config = new Object();
 
-        let URL_broker = "https://api.farpres.com/";
+        let URL_broker = "https://api.disttant.com/";
         let URL_broker_version = "v1";
 
         config = {
             "oauth" : {
 
-                auth_uri        : "https://accounts.farpres.com/oauth/authorize",
+                auth_uri        : "https://accounts.disttant.com/oauth/authorize",
                 client_id       : "1",
-                redirect_uri    : "https://webapp.farpres.com/?g=gimme",
+                redirect_uri    : "https://webapp.disttant.com/?g=gimme",
                 scope           : "api_r api_w api_d"
             
             },

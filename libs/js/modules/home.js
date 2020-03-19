@@ -24,41 +24,41 @@ $(function () {
 
             // Build new element into the accordion
             newGroup = 
-            '<!-- New group -->' +
-            '<div class="card border">' +
-                '<div class="card-header " id="heading'+ newId +'">' +
+            `<!-- New group -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header" id="heading`+ newId +`">
                 
-                        '<div class="row w-100 mx-auto">'+
-                            '<div class="col-sm-8 py-3 px-0">'+
-                                '<span class="text-break">' +
-                                    item.name +
-                                '</span>' +
-                            '</div>'+
-                            '<div class="col-sm-4 py-2 px-0 border rounded-lg px-2 bg-white">'+
-                                '<div class="d-flex justify-content-end align-items-center">' +
-                                    '<div>'+
-                                        '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse'+newId+'" aria-expanded="true" aria-controls="collapse'+newId+'">'+
-                                            '<i class="material-icons md-dark md-18 align-middle">arrow_drop_down</i>'+
-                                        '</a>'+
-                                    '</div>'+
-                                    '<div>'+
-                                        '<a href="#" class="btn ml-3 btn-light" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="'+item.name.toLowerCase()+'">'+
-                                            '<i class="material-icons md-dark md-18 align-middle">map</i>'+
-                                        '</a>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>' +
+                        <div class="row w-100 mx-auto">
+                            <div class="col-sm-8 py-3 px-0">
+                                <span class="text-break h4 font-weight-light">
+                                    `+ item.name +`
+                                </span>
+                            </div>
+                            <div class="col-sm-4 py-2 px-0 rounded-lg px-2 bg-transparent">
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <div>
+                                        <a href="#" class="shadow-sm btn ml-3 btn-light rounded-circle" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse`+newId+`" aria-expanded="true" aria-controls="collapse`+newId+`">
+                                            <i class="material-icons md-dark md-18 align-middle">arrow_drop_down</i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#" class="shadow-sm btn ml-3 btn-light rounded-circle" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="`+item.name.toLowerCase()+`">
+                                            <i class="material-icons md-dark md-18 align-middle">map</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                '</div>'+
-                '<div id="collapse'+newId+'" class="collapse" aria-labelledby="heading'+ newId +'" data-parent="#groups-accordion">'+
-                    '<div class="card-body">'+
-                        '<div>' +
-                            'No devices added yet' +
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-            '</div>';
+                </div>
+                <div id="collapse`+newId+`" class="collapse" aria-labelledby="heading`+ newId +`" data-parent="#groups-accordion">
+                    <div class="card-body">
+                        <div>
+                            No devices added yet
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 
             // Append the element to the accordion flow
             $('#groups-accordion').append(newGroup);
@@ -77,46 +77,51 @@ $(function () {
                 if ( device.description == null ) { device.description = 'No description' }
 
                 $('#collapse' + newId + ' > .card-body > .list-group').append( 
-                    '<li class="list-group-item p-0">' +
-                        '<div class="d-flex">' +
-                            '<div class="py-3 w-100">'+
-                                '<div class="d-flex flex-column">' +
-                                    '<div class="py-1">' + device.name + '</div>' +
-                                    '<div class="py-1">' +
-                                        '<a href="#" x-btn-function="change-description" role="button" x-hiden-value="' + device.name.toLowerCase() + '" class="btn btn-link text-decoration-none p-0" >'+
-                                            '<small class="text-muted">' +
-                                                device.description +
-                                            '</small>' +
-                                        '</a>'+
-                                    '</div>' +
-                                '</div>' +
-                            '</div>'+
-                            '<div class="d-flex align-items-center flex-shrink-1">'+
-                                '<a href="#" x-btn-function="free-device" role="button" x-hiden-value="' + device.name.toLowerCase() + '" class="btn btn-light" >'+
-                                    '<i class="material-icons md-dark md-18 align-middle">close</i>'+
-                                '</a>'+
-                            '</div>'+
-                        '</div>'+
-                    '</li>'
+                    `<li class="list-group-item p-0">
+                        <div class="d-flex">
+                            <div class="py-3 w-100">
+                                <div class="d-flex flex-column">
+                                    <div class="py-1">` + device.name + `</div>
+                                    <div class="py-1">
+                                        <a href="#" x-btn-function="change-description" role="button" x-hiden-value="` + device.name.toLowerCase() + `" class="btn btn-link text-decoration-none p-0" >
+                                            <small class="text-muted">
+                                                `+ device.description +`
+                                            </small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center flex-shrink-1">
+                                <a href="#" x-btn-function="free-device" role="button" x-hiden-value="` + device.name.toLowerCase() + `" class="btn btn-light" >
+                                    <i class="material-icons md-dark md-18 align-middle">close</i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>`
                 );
             });
 
+            // Space between devices and buttons
+            $('#collapse' + newId + ' > .card-body').append(
+                `<div class="d-flex mt-5"></div>`
+            );
+
             // Button for adding devices
             $('#collapse' + newId + ' > .card-body').append(
-                '<div class="d-inline-flex mt-3 mr-2">'+
-                    '<a href="#" role="button" x-btn-function="relate-device" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
-                        '<i class="material-icons md-dark md-18 align-middle">add</i>'+
-                    '</a>' +
-                '</div>'
+                `<div class="d-inline-flex mt-3 mr-2">
+                    <a href="#" role="button" x-btn-function="relate-device" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light rounded-circle">
+                        <i class="material-icons md-dark md-18 align-middle">add</i>
+                    </a>
+                </div>`
             );
 
             // Button for removing groups
             $('#collapse' + newId + ' > .card-body').append(
-                '<div class="d-inline-flex mt-3 mr-2">'+
-                    '<a href="#" role="button" x-btn-function="remove-group" x-hiden-value="'+ item.name.toLowerCase() +'" class="btn btn-light">'+
-                        '<i class="material-icons md-dark md-18 align-middle">delete</i>'+
-                    '</a>' +
-                '</div>'
+                `<div class="d-inline-flex mt-3 mr-2">
+                    <a href="#" role="button" x-btn-function="remove-group" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light rounded-circle">
+                        <i class="material-icons md-dark md-18 align-middle">delete</i>
+                    </a>
+                </div>`
             );
 
 

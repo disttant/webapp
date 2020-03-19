@@ -7,7 +7,7 @@ body {
     margin: 0px;
     min-height: 100%;
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: #eeeeee;
     /*border: 1px solid red;*/
 }
 a:link {
@@ -108,10 +108,6 @@ Chrome*/
     background-color: #333333 !important;
 }
 
-.bg-yellow {
-    background-color: #EDD75D !important;
-}
-
 .bg-grey {
     background-color: #90a4ae !important;
 }
@@ -124,18 +120,12 @@ Chrome*/
     background-color: #efefef !important;
 }
 
-
 .mb-6 {
     margin-bottom: 4rem !important;
 }
 
 .mb-7 {
     margin-bottom: 4.5rem !important;
-}
-
-
-.text-yellow {
-    color: #EDD75D !important;
 }
 
 .text-black {
@@ -159,7 +149,7 @@ Chrome*/
     overflow: hidden;
     width: 100%;
     height: 5px;
-    background-color: #F2F3AE;
+    background-color: #e0c3fc;
     /*margin: 20px auto;*/
 }
 
@@ -173,7 +163,7 @@ Chrome*/
     content: '';
     position: absolute;
     height: 100%;
-    background-color: #EDD75D;
+    background-color: #8ec5fc;
     animation: indeterminate_first 1.5s infinite ease-out;
 }
 
@@ -181,7 +171,7 @@ Chrome*/
     content: '';
     position: absolute;
     height: 100%;
-    background-color: #666666;
+    background-color: #fff;
     animation: indeterminate_second 1.5s infinite ease-in;
 }
 
@@ -229,18 +219,22 @@ Chrome*/
 }
 
 #sidebar-menu {
+    background-color: white; 
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%) !important;
     position: fixed; 
     top: 0; 
     right: 0; 
     z-index: 1001 !important; 
-    background-color: white;  
     height: 100vh;
 }
 
-#sidebar-menu a {
-    
-    text-decoration: none;
-    text-transform: capitalize;
+#sidebar-content a{
+    color: white;
+}
+
+#sidebar-content a:hover {
+
+    background-color: #333333 !important;
 }
 
 
@@ -322,24 +316,59 @@ Chrome*/
 
 
 
-
-
-
-/* Modelos para el Mapa */
-/*.lightDot{
-    height: 1.5rem;
-    width: 1.5rem;
-    background-color: yellow;
-    border-radius: 100%;
-    display: inline-block;
-    margin: -3px;
-    padding: -3px;
+/*
+ *
+ *  CUSTOM CUTENESS
+ *
+ */
+.bg-fade {
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 }
-.btn{
-    outline-style: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important;
-}*/
+
+.btn-fade {
+  color: #fff;
+  background: #e0c3fc -webkit-gradient(linear, left top, left bottom, from(#8ec5fc), to(#e0c3fc)) repeat-x;
+  background: #e0c3fc linear-gradient(120deg, #8ec5fc, #e0c3fc) repeat-x;
+  border-color: #e0c3fc;
+}
+
+.btn-fade:hover {
+  color: #fff;
+  background: #c792fa -webkit-gradient(linear, left top, left bottom, from(#5cacfb), to(#c792fa)) repeat-x;
+  background: #c792fa linear-gradient(120deg, #5cacfb, #c792fa) repeat-x;
+  border-color: #c792fa;
+}
+
+.btn-fade:focus, .btn-fade.focus {
+  color: #fff;
+  background: #c792fa -webkit-gradient(linear, left top, left bottom, from(#5cacfb), to(#c792fa)) repeat-x;
+  background: #c792fa linear-gradient(180deg, #5cacfb, #c792fa) repeat-x;
+  border-color: #c792fa;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(66, 166, 245, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(66, 166, 245, 0.5);
+}
+
+.btn-fade.disabled, .btn-fade:disabled {
+  color: #fff;
+  background-color: #a0a0a0;
+  border-color: #a0a0a0;
+  background-image: none;
+}
+
+.btn-fade:not(:disabled):not(.disabled):active, .btn-fade:not(:disabled):not(.disabled).active,
+.show > .btn-fade.dropdown-toggle {
+  color: #fff;
+  background-color: #5cacfb;
+  background-image: none;
+  border-color: #0b75c9;
+}
+
+.btn-fade:not(:disabled):not(.disabled):active:focus, .btn-fade:not(:disabled):not(.disabled).active:focus,
+.show > .btn-fade.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(66, 166, 245, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(66, 166, 245, 0.5);
+}
+
 
 
 

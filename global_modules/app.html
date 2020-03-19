@@ -20,10 +20,10 @@
 
     <div id="sidebar-menu" class="shadow overflow-auto" style="z-index: 1050 !important;">
 
-        <div id="sidebar-content" class="d-flex flex-column bg-black text-light min-vh-100">
+        <div id="sidebar-content" class="d-flex flex-column text-light min-vh-100">
 
             <!-- Sidebar header -->
-            <div id="sidebar-header" class="p-2 bg-yellow">
+            <div id="sidebar-header" class="p-2 bg-secondary">
                 <div class="d-flex flex-column">
                     <!-- The Infobar -->
                     <div class="p-2 text-dark">
@@ -37,20 +37,26 @@
                 </div>
             </div>
 
-            <div class="p-3">
-                <i class="material-icons md-24 md-light align-middle pr-2">home</i>
-                <a href="#" onclick="app.moduleLoad('home')" class="text-light align-middle">Home</a>
-            </div>
+            <a href="#" onclick="app.moduleLoad('home')">
+                <div class="p-3 ">
+                    <i class="material-icons md-light align-middle mr-2">home</i>
+                    <span class="align-middle text-light">Home</span>
+                </div>
+            </a>
 
-            <div class="p-3">
-                <i class="material-icons md-24 md-light align-middle pr-2">face</i>
-                <a href="http://accounts.alke.systems" target="_blank" class="text-light align-middle">Account</a>
-            </div>
+            <a href="https://accounts.disttant.com" target="_blank">
+                <div class="p-3 ">
+                    <i class="material-icons md-light align-middle mr-2">face</i>
+                    <span class="align-middle text-light">Account</span>
+                </div>
+            </a>
 
-            <div class="p-3">
-                <i class="material-icons md-24 md-light align-middle pr-2">power_settings_new</i>
-                <a id="logout" href="#" class="text-light align-middle">Logout</a>
-            </div>
+            <a href="#" id="logout">
+                <div class="p-3 ">
+                    <i class="material-icons md-light align-middle mr-2">power_settings_new</i>
+                    <span class="align-middle text-light">Logout</span>
+                </div>
+            </a>
 
         </div>
 
@@ -75,7 +81,7 @@
                 </div>
             </div>
             <div id="modal-footer" class="modal-footer border-0">
-                <button type="button" class="btn btn-light bg-black text-light" x-modal-key="default">
+                <button type="button" class="btn btn-fade" x-modal-key="default">
                     <i class="material-icons md-24 md-light align-middle">done</i>
                 </button>
             </div>
@@ -89,18 +95,19 @@
 <div id="app-wrapper" class="d-none min-vh-100">
 
     <!-- Top bar -->
-    <nav id="app-navbar" class="navbar sticky-top navbar-dark bg-black p-0">
+    <nav id="app-navbar" class="navbar sticky-top navbar-dark bg-white p-0" style="background-color: white !important;">
 
-        <div class="d-flex align-items-center justify-content-between w-100 py-2 px-3">
+        <div class="d-flex align-items-center justify-content-between w-100 py-3 px-3">
             <!-- Brand -->
-            <div class="align-self-center h4 my-auto font-weight-light text-yellow">
-                Adaptative
+            <div class="align-self-center h4 my-auto">
+                <span class="align-middle text-lowercase font-weight-light">disttant</span>
+                <span class="mx-1 align-middle text-secondary text-lowercase font-weight-light">webapp</span>
             </div>
 
             <!-- Menu button -->
             <div>
-                <button id="sidebarOpener" class="btn">
-                    <i class="material-icons md-24 md-light align-middle">menu</i>
+                <button id="sidebarOpener" class="btn btn-link">
+                    <i class="material-icons md-24 md-dark align-middle">menu</i>
                 </button>
             </div>
         </div>

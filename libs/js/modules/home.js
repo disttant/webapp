@@ -25,25 +25,21 @@ $(function () {
             // Build new element into the accordion
             newGroup = 
             `<!-- New group -->
-            <div class="card border-0 shadow-sm">
+            <div class="card border-bottom shadow-sm">
                 <div class="card-header" id="heading`+ newId +`">
                 
                         <div class="row w-100 mx-auto">
-                            <div class="col-sm-8 py-3 px-0">
-                                <span class="text-break h4 font-weight-light">
+                            <div class="col-8 my-auto px-0">
+                                <span class="text-break h5 font-weight-light">
                                     `+ item.name +`
                                 </span>
                             </div>
-                            <div class="col-sm-4 py-2 px-0 rounded-lg px-2 bg-transparent">
+                            <div class="col-4 py-2 rounded-lg px-2 bg-transparent">
                                 <div class="d-flex justify-content-end align-items-center">
+                                    <!-- Open the group -->
                                     <div>
-                                        <a href="#" class="shadow-sm btn ml-3 btn-light rounded-circle" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse`+newId+`" aria-expanded="true" aria-controls="collapse`+newId+`">
+                                        <a href="#" class="btn ml-3 btn-light shadow-sm" role="button" aria-pressed="true" data-toggle="collapse" data-target="#collapse`+newId+`" aria-expanded="true" aria-controls="collapse`+newId+`">
                                             <i class="material-icons md-dark md-18 align-middle">arrow_drop_down</i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="shadow-sm btn ml-3 btn-light rounded-circle" role="button" aria-pressed="true" x-btn-function="enter-group" x-hiden-value="`+item.name.toLowerCase()+`">
-                                            <i class="material-icons md-dark md-18 align-middle">map</i>
                                         </a>
                                     </div>
                                 </div>
@@ -53,8 +49,8 @@ $(function () {
                 </div>
                 <div id="collapse`+newId+`" class="collapse" aria-labelledby="heading`+ newId +`" data-parent="#groups-accordion">
                     <div class="card-body">
-                        <div>
-                            No devices added yet
+                        <div class="py-3">
+                            <span class="text-black">No devices added yet</span>
                         </div>
                     </div>
                 </div>
@@ -77,7 +73,7 @@ $(function () {
                 if ( device.description == null ) { device.description = 'No description' }
 
                 $('#collapse' + newId + ' > .card-body > .list-group').append( 
-                    `<li class="list-group-item p-0">
+                    `<li class="list-group-item p-0 border-bottom-0">
                         <div class="d-flex">
                             <div class="py-3 w-100">
                                 <div class="d-flex flex-column">
@@ -91,11 +87,21 @@ $(function () {
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center flex-shrink-1">
-                                <a href="#" x-btn-function="free-device" role="button" x-hiden-value="` + device.name.toLowerCase() + `" class="btn btn-light" >
+
+                            <!-- Delete the device -->
+                            <div class="d-inline-flex align-items-center flex-shrink-1 ml-2 invisible" x-toggle="edit">
+                                <a href="#" x-btn-function="free-device" role="button" x-hiden-value="` + device.name.toLowerCase() + `" class="btn btn-light shadow-sm" >
                                     <i class="material-icons md-dark md-18 align-middle">close</i>
                                 </a>
                             </div>
+
+                            <!-- Go to the device -->
+                            <div class="d-inline-flex align-items-center flex-shrink-1 ml-2">
+                                <a href="#" x-btn-function="control-device" role="button" x-hiden-value="` + device.name.toLowerCase() + `" class="btn btn-light shadow-sm" >
+                                    <i class="material-icons md-dark md-18 align-middle">settings_overscan</i>
+                                </a>
+                            </div>
+
                         </div>
                     </li>`
                 );
@@ -108,8 +114,8 @@ $(function () {
 
             // Button for adding devices
             $('#collapse' + newId + ' > .card-body').append(
-                `<div class="d-inline-flex mt-3 mr-2">
-                    <a href="#" role="button" x-btn-function="relate-device" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light rounded-circle">
+                `<div class="d-inline-flex mt-3 mr-2 invisible" x-toggle="edit">
+                    <a href="#" role="button" x-btn-function="relate-device" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light shadow-sm">
                         <i class="material-icons md-dark md-18 align-middle">add</i>
                     </a>
                 </div>`
@@ -117,16 +123,17 @@ $(function () {
 
             // Button for removing groups
             $('#collapse' + newId + ' > .card-body').append(
-                `<div class="d-inline-flex mt-3 mr-2">
-                    <a href="#" role="button" x-btn-function="remove-group" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light rounded-circle">
+                `<div class="d-inline-flex mt-3 mr-2 invisible" x-toggle="edit">
+                    <a href="#" role="button" x-btn-function="remove-group" x-hiden-value="`+ item.name.toLowerCase() +`" class="btn btn-light shadow-sm">
                         <i class="material-icons md-dark md-18 align-middle">delete</i>
                     </a>
                 </div>`
             );
 
-
-            
-
+            // Space between devices and buttons
+            $('#collapse' + newId + ' > .card-body').append(
+                `<div class="d-flex mt-1"></div>`
+            );
 
 
         });
@@ -171,14 +178,10 @@ $(function () {
                             return;
 
                         }
-
                         app.moduleLoad('home');
-
                     },
-
                     deviceDescription
                 );
-
             }
         );
 
@@ -210,13 +213,26 @@ $(function () {
 
 
 
+    // Detecting device entrance
+    $('body').on('click', 'a[x-btn-function="control-device"]', function(){
+
+        // Store the device
+        let deviceName = $(this).attr('x-hiden-value');        
+
+        // We have to call the panel
+        app.moduleLoad('device', {device: deviceName})
+
+    });
+
+
+
     // Detecting agregation try
     $('body').on('click', 'a[x-btn-function="relate-device"]', function(){
 
         let groupName = $(this).attr('x-hiden-value');
 
         // Changing the spinner mode to infinite bar
-        app.spinnerType = 'bar';
+        app.spinnerType = 'module';
 
         //app.moduleSpinner('show');
         device.getFreeDevices(function( result ){
@@ -345,13 +361,12 @@ $(function () {
 
 
 
-    // Detecting enter-to-map click
-    $('body').on('click', 'a[x-btn-function="enter-group"]', function(){
-
-        let groupName = $(this).attr('x-hiden-value');
-
-        app.moduleLoad('room', {'group' : groupName});
+    // Detecting device removal
+    $('body').on('click', 'a[x-btn-function="toggle-edit-mode"]', function(){
+        $('body').find('[x-toggle="edit"]').toggleClass('invisible');
     });
+
+
 
 
 

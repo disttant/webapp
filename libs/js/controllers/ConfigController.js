@@ -29,8 +29,8 @@ export class ConfigController {
             "oauth" : {
 
                 auth_uri        : "https://accounts.disttant.com/oauth/authorize",
-                client_id       : "1",
-                redirect_uri    : "https://webapp.disttant.com/?g=gimme",
+                client_id       : "4",
+                redirect_uri    : "http://192.168.0.42:8001/?g=gimme",
                 scope           : "api_r api_w api_d"
             
             },
@@ -58,16 +58,16 @@ export class ConfigController {
             "device" : {
 
                 numberofmessagestoget      : 3,
-                getfreedevices             : URL_broker + URL_broker_version +"/devices/list/free",
-                sendmessage                : URL_broker + URL_broker_version +"/devices/message/",
-                getmessages                : URL_broker + URL_broker_version +"/devices/messages/",
                 getdevices                 : URL_broker + URL_broker_version +"/devices/list",
+                getfreedevices             : URL_broker + URL_broker_version +"/devices/list/free",
                 createdevice               : URL_broker + URL_broker_version +"/devices/",
                 deletedevice               : URL_broker + URL_broker_version +"/devices/",
+                changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
+                getprofile                 : URL_broker + URL_broker_version +"/devices/profile/",
+                sendmessage                : URL_broker + URL_broker_version +"/devices/message/",
+                getmessages                : URL_broker + URL_broker_version +"/devices/messages/",
                 adddevicetogroup           : URL_broker + URL_broker_version +"/devices/relation/",
                 deletedevicefromgroup      : URL_broker + URL_broker_version +"/devices/relation/",
-                changeprofile              : URL_broker + URL_broker_version +"/devices/profile/",
-                savemapcoords              : URL_broker + URL_broker_version +"/devices/relation/coordinates/",
                 numberofcyclesuntilgetout  : 20,
                 debug: false
             

@@ -1,0 +1,60 @@
+/* Generic menu styles */
+.menu {
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+.menu a {
+    color: white;
+}
+
+.menu a:hover {
+    background-color: #333;
+    
+}
+
+/* Scroll menu styles */
+.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+    /*display: none;*/
+}
+  
+.scrollmenu a {
+    display: inline-block;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+}
+  
+
+/* Sidebar menu styles */
+.side_panel{
+    display: none;
+    width: 20rem;
+}
+
+
+
+/* Responsiveness */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .scrollmenu {
+        display: none;
+    }
+
+    .side_panel {
+        display: block;
+        z-index: 1010;
+    }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {  }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }

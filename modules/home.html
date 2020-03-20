@@ -1,34 +1,40 @@
 <!-- Module HTML goes here -->
-<div class="d-flex justify-content-start mb-4 my-2 container">
-    <a href="#" class="btn btn-fade mr-2 rounded-circle" role="button" aria-pressed="true" x-btn-function="add-group">
-        <i class="material-icons md-18 align-middle">add</i>
-    </a>
+<div class="container d-flex flex-column flex-grow-1">
 
-    <a href="#" class="btn btn-fade mr-2 disabled rounded-circle" role="button" aria-pressed="true" x-btn-function="add-group">
-        <i class="material-icons md-18 align-middle">mic</i>
-    </a>
-</div>
+    <div id="homemap-header" class="d-flex align-items-center alert alert-light border rounded bg-fade" role="alert">
+        <a href="#" class="btn btn-light mr-2 shadow-sm" role="button" aria-pressed="true" x-btn-function="add-group">
+            <i class="material-icons md-dark md-18 align-middle">add</i>
+        </a>
 
+        <a href="#" class="btn btn-light mr-2 shadow-sm" role="button" aria-pressed="true" x-btn-function="toggle-edit-mode">
+            <i class="material-icons md-dark md-18 align-middle">edit</i>
+        </a>
 
-
-
-
-
-
-
-<!-- Groups wrapper loaded with devices inside -->
-<div id="groups-accordion" class="accordion container" >
-    <div id="home-nogroup-alert" class="alert alert-secondary" role="alert">
-        <i class="material-icons md-dark md-24 align-middle">arrow_upward</i>
-        <span class="align-middle pl-3">
-            Add wonderful rooms here! :D
-        </span>
+        <a href="#" class="btn btn-light mr-2 shadow-sm disabled" role="button" aria-pressed="true" x-btn-function="add-group">
+            <i class="material-icons md-dark md-18 align-middle">mic</i>
+        </a>
     </div>
-    
-    <!-- New group -->
+
+
+
+
+
+
+
+
+    <!-- Groups wrapper loaded with devices inside -->
+    <div id="groups-accordion" class="accordion container p-0" >
+        <div id="home-nogroup-alert" class="alert alert-secondary" role="alert">
+            <i class="material-icons md-dark md-24 align-middle">arrow_upward</i>
+            <span class="align-middle pl-3">
+                Add wonderful rooms here! :D
+            </span>
+        </div>
+        
+        <!-- New group -->
+    </div>
+
 </div>
-
-
 
 <!-- Module logic -->
 <script src="libs/js/modules/home.js"></script>

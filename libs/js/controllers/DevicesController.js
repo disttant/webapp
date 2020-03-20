@@ -9,14 +9,14 @@
  *  Must be an array with the following data:
  * 
  *  -> numberofmessagestoget:       The number of messages to get with the method getResponse (recommend 2-5).
- *  -> getfreedevices:              The URL to the endpoint of the API to get the free devices of the user.
- *  -> sendmessage:                 The URL to the endpoint of the API to send a message to a device.
- *  -> getmessages:                 The URL to the endpoint of the API to get the last messages of a device.
- *  -> getdevices:                  The URL to the endpoint of the API to get the list of devices.
- *  -> createdevice:                The URL to the endpoint of the API to create a device.
- *  -> deletedevice:                The URL to the endpoint of the API to delete a device.
- *  -> changeprofile:               The URL to the endpoint of the API to change profile data.linear-activity
- *  -> savemapcoords:               The URL to the endpoint of the API to save the coords of the map position of a device into database
+ *  -> getfreedevices:              The URL of the API to get the free devices of the user.
+ *  -> sendmessage:                 The URL of the API to send a message to a device.
+ *  -> getmessages:                 The URL of the API to get the last messages of a device.
+ *  -> getdevices:                  The URL of the API to get the list of devices.
+ *  -> createdevice:                The URL of the API to create a device.
+ *  -> deletedevice:                The URL of the API to delete a device.
+ *  -> changeprofile:               The URL of the API to change profile data.linear-activity
+ *  -> getprofile:                  The URL of the API to get profile
  *  -> numberofcyclesuntilgetout:   The number of times to look for a response into the channel messages.
  * 
  *  METHODS:
@@ -91,10 +91,10 @@
  *      NEEDS:              Device to change the profile info, function to be execute when complete, description to put into the profile, type of device to put into the profile
  *      GIVEN TO CALLBACK:  True / False
  *      RETURNS:            True / False
+ *
+ *  --> getProfile:         Get the profile of a Device.
  * 
- *  --> saveMapCoords:      Save into device profile the coords of his position into the map.
- * 
- *      NEEDS:              Device to save the map coords, coord "x" of the map, coord "y" of the map, function to be execute when complete
+ *      NEEDS:              Device to get the profile info, function to be execute when complete
  *      GIVEN TO CALLBACK:  True / False
  *      RETURNS:            True / False
  * 
@@ -174,11 +174,11 @@ export class DeviceController {
         if( data.changeprofile.match( URL_pattern ) === null )
             return { error: 'changeprofile URL does not seem to be a real URL' };
 
-        if( typeof data.savemapcoords !== 'string' )
-            return { error: 'savemapcoords URL is not a string' };
+        if( typeof data.getprofile !== 'string' )
+            return { error: 'getprofile URL is not a string' };
 
-        if( data.savemapcoords.match( URL_pattern ) === null )
-            return { error: 'savemapcoords URL does not seem to be a real URL' };
+        if( data.getprofile.match( URL_pattern ) === null )
+            return { error: 'getprofile URL does not seem to be a real URL' };
 
         if( typeof data.numberofcyclesuntilgetout !== 'number' )
             return { error: 'numberofcyclesuntilgetout URL is not a number' };
@@ -195,8 +195,8 @@ export class DeviceController {
         this.URL_getdevices             = data.getdevices;
         this.URL_createdevice           = data.createdevice;
         this.URL_deletedevice           = data.deletedevice;
+        this.URL_getprofile             = data.getprofile;
         this.URL_changeprofile          = data.changeprofile;
-        this.URL_savemapcoords          = data.savemapcoords;
         this.cycleout                   = data.numberofcyclesuntilgetout;
         this.debug                      = data.debug;
 
@@ -351,77 +351,9 @@ export class DeviceController {
 
     /*
      *
-     *  Method to update the coords of the map position
-     *
-     */
-
-    saveMapCoords = function ( device, x, y, callback ) {
-
-        if( typeof callback !== 'function' )
-            return false;
-
-        if( typeof x !== 'number' )
-            return false;
-
-        if( typeof y !== 'number' )
-            return false;
-
-        let body = new Object();
-
-        body['map_x'] = x;
-        body['map_y'] = y;
-
-        let url = this.URL_savemapcoords + device;
-        let debug = this.debug;
-
-        $.ajax({
-
-            url: url,
-            type: 'put',
-
-            headers: {
-
-                "Authorization" : "Bearer "+ localStorage.access_token,
-                "Content-Type"  : "application/json",
-                "Accept"        : "application/json"
-
-            },
-            data: JSON.stringify( body ),
-            beforeSend: function() {
-
-                if( debug === true )
-                    console.log( "======> Actualizando coordenadas del dispositivo" );
-
-            },
-            success: function( response ) {
-
-                if( debug === true )
-                    console.log( "===> Coordenadas actualizadas" );
-
-                callback( true );
-            },
-            error: function ( response ) {
-
-                if( debug === true )
-                    console.log( "===> [Error]" );
-
-                callback( false );
-            }
-
-        });
-
-        return true;
-
-    }
-
-
-
-    /*
-     *
      *  Method to update the info i nthe profile of a device
      *
      */
-
     changeProfile = function ( device, callback, description='', type='' ) {
 
         if( typeof callback !== 'function' )
@@ -490,6 +422,66 @@ export class DeviceController {
                     console.log( "===> Perfil actualizado" );
 
                 callback( true );
+            },
+            error: function ( response ) {
+
+                if( debug === true )
+                    console.log( "===> [Error]" );
+
+                callback( false );
+            }
+
+        });
+
+        return true;
+
+    }
+
+
+
+    /*
+     *
+     *  Method to get the profile of a device
+     *
+     */
+    getProfile = function ( device, callback ) {
+
+        if( typeof callback !== 'function' )
+            return false;
+
+        if( typeof device !== 'string' )
+            return false;
+
+        if( device.match(/^[a-z0-9]+$/gi) === null )
+            return false;
+
+        let url = this.URL_getprofile + device;
+        let debug = this.debug;
+
+        $.ajax({
+
+            url: url,
+            type: 'get',
+
+            headers: {
+
+                "Authorization" : "Bearer "+ localStorage.access_token,
+                "Content-Type"  : "application/json",
+                "Accept"        : "application/json"
+
+            },
+            beforeSend: function() {
+
+                if( debug === true )
+                    console.log( "======> Obteniendo perfil del dispositivo" );
+
+            },
+            success: function( response ) {
+
+                if( debug === true )
+                    console.log( "===> Perfil obtenido" );
+
+                callback( response );
             },
             error: function ( response ) {
 

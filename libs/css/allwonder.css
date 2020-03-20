@@ -1,0 +1,37 @@
+#allwonder-wrapper {
+    min-height: 100vh;
+}
+
+@media (max-width: 576px) { 
+
+    #allwonder-wrapper .card {
+        min-height: 100vh !important;
+        min-width: 100vw !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+
+}
+
+@media (min-width: 576px) { 
+
+    #allwonder-wrapper {
+        background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+    }
+
+}
+
+@media (min-width: 768px) { 
+
+
+}
+
+@media (min-width: 992px) { 
+
+
+}
+
+@media (min-width: 1200px) { 
+
+
+}

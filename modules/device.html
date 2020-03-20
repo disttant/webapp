@@ -1,0 +1,41 @@
+<div class="container d-flex flex-column flex-grow-1">
+
+    <!-- Location bar -->
+    <div id="homemap-header" class="d-flex align-items-center text-muted h5 font-weight-light alert alert-light border rounded bg-fade" role="alert">
+        <div class="px-2">
+            <a href="#" onclick="app.moduleLoad('home')" class="btn btn-light shadow-sm">
+                <i class="material-icons md-dark md-18 align-middle">home</i>
+            </a>
+        </div>
+        <!--
+        <div class="px-2">
+            <i class="material-icons md-light md-24 align-middle">arrow_right</i>
+        </div>
+        <div id="group-name" class="px-2 text-capitalize text-light"></div>
+        -->
+    </div>
+
+    <!-- Model here -->
+    <div id="panel-wrapper" class="d-flex flex-grow-1">
+        <div class="alert alert-light w-100" role="alert">
+            <div class="d-flex flex-column">
+                <div>
+                    <div class="h5 font-weight-bold text-capitalize">Lets play!</div>
+                </div>
+                <div>
+                    <hr />
+                </div>
+                <div>
+                    <span class="d-block">Touch a device to control it!</span>
+                    <small>Or a free square to join another</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Module logic -->
+<script src="libs/js/modules/device.js"></script>

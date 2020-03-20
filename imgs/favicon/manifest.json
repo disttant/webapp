@@ -1,6 +1,6 @@
 {
- "name": "Adaptative",
- "description" : "Webapp for Adaptative",
+ "name": "Disttant",
+ "description" : "Webapp for Disttant",
  "icons": [
   {
    "src": "\/imgs\/favicon\/android-icon-36x36.png",
@@ -45,6 +45,6 @@
  "scope": "/",
  "start_url": "/?g=app",
  "theme_color": "#333333",
- "background_color": "#f8f8f8"
+ "background_color": "#eeeeee"
 
 }

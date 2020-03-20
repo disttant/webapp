@@ -30,7 +30,7 @@ export class ConfigController {
 
                 auth_uri        : "https://accounts.disttant.com/oauth/authorize",
                 client_id       : "4",
-                redirect_uri    : "http://192.168.0.42:8001/?g=gimme",
+                redirect_uri    : "https://webapp.disttant.com/?g=gimme",
                 scope           : "api_r api_w api_d"
             
             },

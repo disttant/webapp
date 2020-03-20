@@ -29,7 +29,7 @@ export class ConfigController {
             "oauth" : {
 
                 auth_uri        : "https://accounts.disttant.com/oauth/authorize",
-                client_id       : "4",
+                client_id       : "1",
                 redirect_uri    : "https://webapp.disttant.com/?g=gimme",
                 scope           : "api_r api_w api_d"
             
@@ -97,13 +97,6 @@ export class ConfigController {
             "modules" : {
 
                 "cached" : false,
-
-            },
-
-            "map" : {
-
-                "width"        : 12,
-                "height"       : 12
 
             },
             

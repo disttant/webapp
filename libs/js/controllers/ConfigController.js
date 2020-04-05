@@ -103,9 +103,9 @@ export class ConfigController {
                 "cached" : false,
                 "allowed" : {
 
-                    "light-v1"     : "#ffeb3b",
+                    "light-one"    : "#ffeb3b",
                     "lamp"         : "#ffbc00",
-                    "socket-v1"    : "#ff5252",
+                    "socket-one"   : "#ff5252",
                     "multisocket"  : "#00b0ff",
                     "undefined"    : "#90a4ae"
                 }

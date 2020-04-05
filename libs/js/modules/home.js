@@ -246,7 +246,7 @@ $(function () {
                 return;
             }
 
-            if( result.length === 0 ){
+            if( result.devices.length === 0 ){
                 app.sendToast('There are not free devices');
                 return;
             }
@@ -254,7 +254,7 @@ $(function () {
             // Building the selectable
             modalBody = '<select id="device-name" class="custom-select custom-select-lg rounded-0">';
 
-            result.forEach( function( item ){
+            result.devices.forEach( function( item ){
                 modalBody += '<option value="'+item.name+'">'+item.name +'</option>';
             });     
 

@@ -264,17 +264,17 @@ export class DeviceController {
                 let sentOrder     = new RegExp('^((\\|)?for\\|'+device+'\\|'+order+'(\\|[a-z]+\\#[a-z0-9]+)*(\\|)?){1}$');
                 let expectedOrder = new RegExp('^((\\|)?from\\|'+device+'\\|'+order+'(\\|[a-z]+\\#[a-z0-9]+)*(\\|)?){1}$');
 
-                for( let i = 0 ; i < result.length ; i++ ) {
+                for( let i = 0 ; i < result.device.messages.length ; i++ ) {
                     
-                    let parsedMessage = deviceClass.parseMessage( result[i].message ) ;
+                    let parsedMessage = deviceClass.parseMessage( result.device.messages[i].message ) ;
 
                     // Sent message found, go out
-                    if ( result[i].message.match(sentOrder) !== null ){
+                    if ( result.device.messages[i].message.match(sentOrder) !== null ){
                         break;
                     }
 
                     // Expected message not found, go out
-                    if ( result[i].message.match(expectedOrder) == null ){
+                    if ( result.device.messages[i].message.match(expectedOrder) == null ){
                         break;
                     }
 
@@ -366,6 +366,7 @@ export class DeviceController {
             return false;
 
         let body = new Object();
+        body['name'] = device;
 
         if( description !== '' ) {
 
@@ -394,7 +395,7 @@ export class DeviceController {
         if( ( body.description === '' ) && ( body.type === '' ) )
             return false;
 
-        let url = this.URL_changeprofile + device;
+        let url = this.URL_changeprofile;
         let debug = this.debug;
 
         $.ajax({
@@ -455,7 +456,7 @@ export class DeviceController {
         if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        let url = this.URL_getprofile + device;
+        let url = this.URL_getprofile;
         let debug = this.debug;
 
         $.ajax({
@@ -470,6 +471,9 @@ export class DeviceController {
                 "Accept"        : "application/json"
 
             },
+            data: JSON.stringify({
+                "name" : device
+            }),
             beforeSend: function() {
 
                 if( debug === true )
@@ -570,7 +574,7 @@ export class DeviceController {
         if( typeof callback !== 'function' )
             return false;
 
-        let url = this.URL_createdevice + device;
+        let url = this.URL_createdevice;
         let debug = this.debug;
 
         $.ajax({
@@ -591,6 +595,11 @@ export class DeviceController {
                     console.log( "======> Creando dispositivo "+ device );
 
             },
+            data: JSON.stringify({
+                "name" : device,
+                "type" : "new",
+                "description" : "new device"
+            }),
             success: function( response ) {
 
                 if( debug === true )
@@ -631,7 +640,7 @@ export class DeviceController {
         if( typeof callback !== 'function' )
             return false;
 
-        let url = this.URL_deletedevice + device;
+        let url = this.URL_deletedevice + "/" + device;
         let debug = this.debug;
 
         $.ajax({
@@ -754,7 +763,7 @@ export class DeviceController {
 
         let debug = this.debug;
 
-        var url = this.URL_adddevicetogroup + device + "/" + group;
+        var url = this.URL_adddevicetogroup;
 
         $.ajax({
 
@@ -768,6 +777,10 @@ export class DeviceController {
                 "Accept"        : "application/json"
 
             },
+            data: JSON.stringify({
+                "group" : group,
+                "device" : device
+            }),
             beforeSend: function() {
 
                 if( debug === true )
@@ -814,7 +827,7 @@ export class DeviceController {
         if( typeof callback !== 'function' )
             return false;
 
-        var url = this.URL_deletedevicefromgroup + device;
+        var url = this.URL_deletedevicefromgroup + "/" + device;
         let debug = this.debug;
 
         $.ajax({
@@ -876,7 +889,7 @@ export class DeviceController {
 
         let debug = this.debug;
 
-        var url = this.URL_getmessages + device + "/" + this.nummessages;
+        var url = this.URL_getmessages + "/" + device + "/" + this.nummessages;
     
         $.ajax({
     
@@ -953,7 +966,6 @@ export class DeviceController {
 
         var url = this.URL_sendmessage + device;
         let debug = this.debug;
-        message = "{\"message\":\""+ message +"\"}";
 
         $.ajax({
 
@@ -966,7 +978,10 @@ export class DeviceController {
                 "Accept"        : "application/json"
 
             },
-            data: message,
+            data: JSON.stringify({
+                "name" : device,
+                "message" : message
+            }),
             beforeSend: function() {
 
                 if( debug === true )

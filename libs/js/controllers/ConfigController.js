@@ -22,7 +22,7 @@ export class ConfigController {
 
         let config = new Object();
 
-        let URL_broker = "https://api.disttant.com/";
+        let URL_broker = "https://api.disttant.com";
 
         config = {
             "oauth" : {
@@ -103,11 +103,10 @@ export class ConfigController {
                 "cached" : false,
                 "allowed" : {
 
-                    "light-one"    : "#ffeb3b",
-                    "lamp"         : "#ffbc00",
-                    "socket-one"   : "#ff5252",
-                    "multisocket"  : "#00b0ff",
-                    "undefined"    : "#90a4ae"
+                    "light-one"         : "#ffeb3b",
+                    "socket-one"        : "#ff5252",
+                    "thermostat-one"    : "#00b0ff",
+                    "undefined"         : "#90a4ae"
                 }
 
             },

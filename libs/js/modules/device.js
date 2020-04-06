@@ -54,7 +54,7 @@ $(function () {
     // Write the group name over the content
     //$('#group-name').append(groupOpenned);
 
-    console.warn(typeof deviceOpenned)
+    //console.warn(typeof deviceOpenned)
 
     device.getProfile(deviceOpenned, function(result){
 

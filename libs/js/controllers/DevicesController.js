@@ -456,7 +456,7 @@ export class DeviceController {
         if( device.match(/^[a-z0-9]+$/gi) === null )
             return false;
 
-        let url = this.URL_getprofile;
+        let url = this.URL_getprofile + '/' + device;
         let debug = this.debug;
 
         $.ajax({
@@ -471,9 +471,6 @@ export class DeviceController {
                 "Accept"        : "application/json"
 
             },
-            data: JSON.stringify({
-                "name" : device
-            }),
             beforeSend: function() {
 
                 if( debug === true )
@@ -964,7 +961,7 @@ export class DeviceController {
         if( data !== 'none' )
             message = message + '|' + data;
 
-        var url = this.URL_sendmessage + device;
+        var url = this.URL_sendmessage;
         let debug = this.debug;
 
         $.ajax({

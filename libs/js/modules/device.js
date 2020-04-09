@@ -54,7 +54,7 @@ $(function () {
     // Write the group name over the content
     //$('#group-name').append(groupOpenned);
 
-    console.warn(typeof deviceOpenned)
+    //console.warn(typeof deviceOpenned)
 
     device.getProfile(deviceOpenned, function(result){
 
@@ -64,9 +64,9 @@ $(function () {
         }
 
         // Store the params of the device
-        let modelName        = result.name;
-        let modelType        = result.type;
-        let modelDescription = result.description;
+        let modelName        = result.device.name;
+        let modelType        = result.device.type;
+        let modelDescription = result.device.description;
         let offsetToPanel    = $('#panel-wrapper').offset().top;
 
         $('#panel-wrapper').empty();
